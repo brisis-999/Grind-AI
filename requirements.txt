@@ -7,3 +7,4 @@ supabase
 groq
 pysqlite3-binary
 typing-extensions>=4.0.0
+google-search-results
