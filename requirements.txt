@@ -1,9 +1,9 @@
 streamlit==1.49.0
 langchain-groq==0.1.0
+google-generativeai
 google-search-results==2.4.2
-pydantic==2.11.7
-typing-extensions>=4.0.0
-pysqlite3-binary
 supabase
 groq
 pillow
+pysqlite3-binary
+typing-extensions>=4.0.0
