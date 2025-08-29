@@ -6,7 +6,7 @@ try:
 except (ImportError, KeyError):
     pass
 
-# app.py - GRIND 133.0: Sin errores de sintaxis
+# app.py - GRIND 200: La Super IA Entrenadora
 import streamlit as st
 from langchain_groq import ChatGroq
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
