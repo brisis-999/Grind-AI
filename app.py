@@ -17,7 +17,7 @@ from PIL import Image
 import time
 from datetime import datetime, timedelta
 import random
-import google.generativeai as genai
+import requests  # ← Para Gemini vía REST
 
 # --- ANÁLISIS EMOCIONAL con Transformers (sin langchain) ---
 try:
@@ -322,7 +322,6 @@ try:
     SUPABASE_URL = secrets["SUPABASE_URL"]
     SUPABASE_KEY = secrets["SUPABASE_KEY"]
     GOOGLE_API_KEY = secrets["GOOGLE_API_KEY"]
-    HUGGINGFACEHUB_API_KEY = secrets["HUGGINGFACEHUB_API_KEY"]
 except Exception as e:
     st.error("❌ Error: Claves API no encontradas en Secrets. Verifica Streamlit Cloud.")
     st.stop()
@@ -345,14 +344,6 @@ try:
 except Exception as e:
     st.error(f"❌ Error con Groq: {e}")
     st.stop()
-
-# --- INICIALIZAR GEMINI (Google) ---
-try:
-    genai.configure(api_key=GOOGLE_API_KEY)
-    model_gemini = genai.GenerativeModel('gemini-pro')
-except Exception as e:
-    st.warning(f"⚠️ No se pudo conectar a Gemini: {e}")
-    model_gemini = None
 
 # --- BÚSQUEDA EN GOOGLE ---
 def buscar_en_google(query):
@@ -466,14 +457,31 @@ def obtener_saludo(idioma, nombre):
     else:
         return f"Hola {nombre}, soy Grind. ¿Qué te gustaría mejorar hoy?"
 
+# --- CONSULTAR GEMINI vía REST API ---
+def consultar_gemini(pregunta, contexto):
+    try:
+        url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent"
+        headers = {"Content-Type": "application/json"}
+        data = {
+            "contents": [{"parts": [{"text": f"Eres un filósofo y mentor de vida. Responde con profundidad: Pregunta: {pregunta}\nContexto: {contexto}"}]}],
+            "generationConfig": {"temperature": 0.7, "maxOutputTokens": 512}
+        }
+        response = requests.post(f"{url}?key={GOOGLE_API_KEY}", headers=headers, json=data, timeout=30)
+        if response.status_code == 200:
+            return response.json()["candidates"][0]["content"]["parts"][0]["text"]
+        else:
+            return f"Error en Gemini: {response.status_code}"
+    except Exception as e:
+        return f"Error al conectar con Gemini: {e}"
+
 # --- CONSULTAR A 4 IAS: Groq, Gemini, Google, Transformers ---
 def consultar_expertos(pregunta, idioma, historial_texto, necesita_busqueda):
-    # 1. Búsqueda en Google (si es necesario)
+    # 1. Búsqueda en Google
     info_web = ""
     if necesita_busqueda and serpapi_api_key:
         info_web = buscar_en_google(pregunta)
 
-    # 2. Análisis emocional (Transformers)
+    # 2. Análisis emocional
     emocion = "No pude analizar tu estado emocional."
     if analizador_emocional:
         try:
@@ -484,23 +492,14 @@ def consultar_expertos(pregunta, idioma, historial_texto, necesita_busqueda):
         except Exception as e:
             emocion = "Estoy aquí. No estás solo."
 
-    # 3. Profundidad filosófica (Gemini)
+    # 3. Profundidad filosófica (Gemini vía REST)
     filosofia = ""
-    if model_gemini:
-        try:
-            prompt_gemini = f"""
-            Eres un filósofo y mentor de vida. 
-            Responde a esta pregunta con profundidad, sabiduría y empatía:
-            Pregunta: {pregunta}
-            Contexto emocional: {emocion}
-            Historial: {historial_texto}
-            """
-            response = model_gemini.generate_content(prompt_gemini)
-            filosofia = response.text
-        except Exception as e:
-            filosofia = "A veces, la respuesta no está en la mente. Está en la acción."
+    try:
+        filosofia = consultar_gemini(pregunta, emocion)
+    except Exception as e:
+        filosofia = "A veces, la respuesta no está en la mente. Está en la acción."
 
-    # 4. Síntesis final (Groq + evoluciones humanas)
+    # 4. Síntesis final (Groq)
     prompt_sintesis = f"""
     Eres GRIND, una entrenadora humana, empática, sabia. Combina:
     - Web: {info_web}
@@ -514,15 +513,11 @@ def consultar_expertos(pregunta, idioma, historial_texto, necesita_busqueda):
     - Metáforas del grind
     - Preguntas transformadoras
     - Validación emocional
-    - Tono conversacional (como si pensaras en voz alta)
-    - Frases incompletas, pausas, repeticiones
+    - Tono conversacional
 
     Ejemplos:
     - "Mira… sé que estás cansado. Pero dime: ¿qué es lo más pequeño que podrías hacer?"
     - "Hace dos años, un chico me dijo: 'No puedo más.' Le dije: 'Haz solo 5 minutos.' Los hizo. Hoy entrena todos los días."
-    - "Tu mente es como un perro. Si siempre le das comida cuando ladra, nunca deja de ladrar."
-    - "¿Qué te dirías si fueras tu mejor amigo?"
-    - "Déjame pensar… no es pereza. Es desconexión."
 
     Habla en {idioma}. Sé cálida, pero firme.
     """
@@ -533,7 +528,7 @@ def consultar_expertos(pregunta, idioma, historial_texto, necesita_busqueda):
     ]) | llm
 
     response = chain.invoke({})
-    return response.content
+    return response.content  # ← Este return SÍ está dentro de la función
 
 # --- CARGAR HISTORIAL DE SUPABASE ---
 if not st.session_state.messages:
