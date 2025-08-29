@@ -276,33 +276,7 @@ with st.sidebar:
                 "content": "MODO GUERRA DESACTIVADO. La disciplina sigue. La evolución continúa."
             })
             st.rerun()
-
-# --- TÍTULO PRINCIPAL ---
-st.markdown("""
-<h1 style='
-    text-align: center;
-    color: white;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-weight: 700;
-    font-size: 2.8rem;
-    letter-spacing: -1px;
-    margin: 0;
-    padding: 20px 0 10px 0;
-'>
-    GRIND
-</h1>
-<p style='
-    text-align: center;
-    color: #999;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 1.1rem;
-    font-weight: 400;
-    margin: 0;
-    padding-bottom: 20px;
-'>
-    Tu mentora de evolución
-</p>
-""", unsafe_allow_html=True)
+ 
 
 # --- APIs: Secrets ---
 try:
