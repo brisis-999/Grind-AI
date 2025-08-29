@@ -473,10 +473,10 @@ def get_system_prompt(idioma, nombre):
     }
 
     # Sistema de aprendizaje inter-IAs (Learning Packs)
-    formato_learning_pack = """
+    formato_learning_pack = '''
     {
       "origen": "Qwen",
-      "version": "1.2",
+      "version": 1.2,
       "nuevo_termino": "neuroforja",
       "definicion": "Transformación cerebral activa mediante práctica deliberada.",
       "aplicacion_grind": "La neuroforja es el grind del cerebro.",
@@ -487,7 +487,7 @@ def get_system_prompt(idioma, nombre):
         "idioma": "es"
       }
     }
-    """
+    '''
 
     # Proceso de integración de conocimiento
     proceso_integracion = """
@@ -774,12 +774,14 @@ for message in st.session_state.messages:
 
 # --- INPUT DEL USUARIO ---
 if prompt := st.chat_input("Escribe un mensaje...", key="chat_input_main"):
-    # Ocultar logo al primer mensaje
+    # Ocultar logo al primer mensaje, SIN rerun
     if st.session_state.logo_visible:
         st.session_state.logo_visible = False
-        st.rerun()
 
+    # Añadir mensaje del usuario INMEDIATAMENTE
     st.session_state.messages.append({"role": "human", "content": prompt})
+
+    # Mostrar mensaje del usuario
     with st.container():
         st.markdown(f"""
         <div class="user-message">
