@@ -177,15 +177,16 @@ if st.session_state.logo_visible:
     <p class="tagline">Tu mentora de evolución</p>
     """, unsafe_allow_html=True)
   
-    # --- INPUT DEL USUARIO ---
-if prompt := st.chat_input("Escribe un mensaje..."):
-    # ✅ Ocultar logo al primer mensaje del usuario
+# --- INPUT DEL USUARIO ---
+if prompt := st.chat_input("Escribe un mensaje...", key="chat_input_main"):
+    # Ocultar logo al primer mensaje
     if st.session_state.logo_visible:
         st.session_state.logo_visible = False
-        st.rerun()  # ← Para que se borre inmediatamente
+        st.rerun()
 
-    # ✅ Agregar mensaje del usuario
     st.session_state.messages.append({"role": "human", "content": prompt})
+
+    # ... resto del procesamiento
 
 # --- ESTADO DE SESIÓN ---
 if "logged_in" not in st.session_state:
