@@ -138,11 +138,24 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# --- ESTADO: Mostrar logo al inicio ---
+# --- ESTADO DE SESIÓN: Inicializar TODO ---
 if "logo_visible" not in st.session_state:
     st.session_state.logo_visible = True
 
-# --- FASE 1: Mostrar solo el logo (sin chat, sin input) ---
+if "messages" not in st.session_state:
+    st.session_state.messages = []
+
+if "logged_in" not in st.session_state:
+    st.session_state.logged_in = True  # Simulado
+if "current_user" not in st.session_state:
+    st.session_state.current_user = "Eliezer"
+if "user_email" not in st.session_state:
+    st.session_state.user_email = "eliezer@grind.ai"
+if "modo_guerra" not in st.session_state:
+    st.session_state.modo_guerra = False
+# ... otras variables que uses
+
+# --- FASE 1: Mostrar logo si está visible y no hay mensajes ---
 if st.session_state.logo_visible:
     st.markdown("""
     <style>
@@ -178,14 +191,14 @@ if st.session_state.logo_visible:
 
 # --- FASE 2: Chat activo (logo ya no visible) ---
 else:
-    # --- Mostrar mensajes del chat ---
+    # Mostrar mensajes
     for message in st.session_state.messages:
         if message["role"] == "human":
             with st.container():
                 st.markdown(f"""
                 <div style="display: flex; justify-content: flex-end; margin: 8px 0;">
                     <div style="background: linear-gradient(90deg, #1E90FF, #00BFFF); color: white; padding: 12px 16px; border-radius: 18px 18px 0 18px; max-width: 80%;">
-                        {message['content']}
+                        {message["content"]}
                     </div>
                 </div>
                 """, unsafe_allow_html=True)
@@ -194,102 +207,18 @@ else:
                 st.markdown(f"""
                 <div style="display: flex; justify-content: flex-start; margin: 8px 0;">
                     <div style="color: white; padding: 0; max-width: 80%; line-height: 1.6;">
-                        {message['content']}
+                        {message["content"]}
                     </div>
                 </div>
                 """, unsafe_allow_html=True)
 
-    # ✅ Input de chat: SOLO EN ESTA FASE
+    # Input del usuario
     if prompt := st.chat_input("Escribe un mensaje...", key="chat_input_main"):
-        # --- Agregar mensaje del usuario ---
         st.session_state.messages.append({"role": "human", "content": prompt})
+        # ... lógica de IA aquí
 
-        # --- Aquí va la lógica de la IA (sin st.rerun) ---
-        try:
-            idioma = detectar_idioma(prompt)
-            system_prompt = get_system_prompt(idioma, st.session_state.current_user or "Usuario")
-
-            necesita_busqueda = any(word in prompt.lower() for word in [
-                "qué pasó", "what happened", "qu'est-ce qui s'est passé"
-            ])
-
-            if necesita_busqueda and serpapi_api_key:
-                with st.empty() as typing_placeholder:
-                    typing_placeholder.markdown("""
-                    <div style="display: flex; justify-content: flex-start; margin: 8px 0;">
-                        <div style="color: #888; font-size: 0.9rem;">
-                            🔍 buscando información actualizada...
-                        </div>
-                    </div>
-                    """, unsafe_allow_html=True)
-                time.sleep(1.5)
-                info = buscar_en_google(prompt)
-                full_prompt = f"{info}\nPregunta: {prompt}\nResponde como GRIND, con empatía y sabiduría."
-                chain = ChatPromptTemplate.from_messages([("system", system_prompt), ("human", full_prompt)]) | llm
-                response = chain.invoke({})
-                respuesta_final = response.content
-            else:
-                if st.session_state.modo_guerra:
-                    prompt_guerra = f"Eres GRIND en MODO GUERRA. Responde con frases cortas, duras. Pregunta: {prompt}"
-                    chain = ChatPromptTemplate.from_messages([("human", prompt_guerra)]) | llm
-                    response = chain.invoke({})
-                    respuesta_final = response.content
-                else:
-                    chat_history = []
-                    for msg in st.session_state.messages[-6:]:
-                        if msg["role"] == "human":
-                            chat_history.append(HumanMessage(content=msg["content"]))
-                        else:
-                            chat_history.append(AIMessage(content=msg["content"]))
-                    chain = ChatPromptTemplate.from_messages([
-                        ("system", system_prompt),
-                        MessagesPlaceholder(variable_name="chat_history"),
-                        ("human", "{input}")
-                    ]) | llm
-                    response = chain.invoke({"input": prompt, "chat_history": chat_history})
-                    respuesta_final = response.content
-
-            # --- Mostrar respuesta con animación ---
-            with st.empty() as message_placeholder:
-                words = respuesta_final.split()
-                displayed_text = ""
-                for i in range(len(words) + 1):
-                    current_text = " ".join(words[:i])
-                    message_placeholder.markdown(f"""
-                    <div style="display: flex; justify-content: flex-start; margin: 8px 0;">
-                        <div style="color: white; max-width: 80%; line-height: 1.6;">
-                            {current_text}▌
-                        </div>
-                    </div>
-                    """, unsafe_allow_html=True)
-                    time.sleep(0.05)
-                message_placeholder.markdown(f"""
-                <div style="display: flex; justify-content: flex-start; margin: 8px 0;">
-                    <div style="color: white; max-width: 80%; line-height: 1.6;">
-                        {respuesta_final}
-                    </div>
-                </div>
-                """, unsafe_allow_html=True)
-
-            # --- Guardar en Supabase ---
-            if supabase_client and st.session_state.logged_in:
-                try:
-                    supabase_client.table("chats").insert({
-                        "user_id": st.session_state.user_email,
-                        "role": "assistant",
-                        "content": respuesta_final,
-                        "timestamp": datetime.now().isoformat()
-                    }).execute()
-                except Exception as e:
-                    st.error(f"Error guardando en Supabase: {e}")
-
-            st.session_state.messages.append({"role": "assistant", "content": respuesta_final})
-
-        except Exception as e:
-            st.error(f"❌ Error: {e}")
-
-# --- CONTROL: Ocultar logo al primer mensaje (fuera del else) ---
-if st.session_state.logo_visible and st.session_state.messages:
+# --- CONTROL: Ocultar logo si hay al menos un mensaje ---
+if st.session_state.logo_visible and len(st.session_state.messages) > 0:
     st.session_state.logo_visible = False
 
 # --- ESTADO DE SESIÓN ---
