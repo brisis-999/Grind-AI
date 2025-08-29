@@ -162,43 +162,60 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# --- LOGO ANIMADO: GRIND centrado, rojo vino, sin duplicados ---
-st.markdown("""
-<style>
-@keyframes pulse {
-    0% { opacity: 0.8; transform: scale(1); }
-    50% { opacity: 1; transform: scale(1.03); }
-    100% { opacity: 0.8; transform: scale(1); }
-}
-.logo-container {
-    text-align: center;
-    margin: 60px 0 20px 0;
-}
-.logo-animated {
-    font-family: 'Courier New', monospace;
-    font-weight: 900;
-    font-size: 72px;
-    color: #E63946;
-    display: inline-block;
-    animation: pulse 2s infinite;
-    text-transform: uppercase;
-    letter-spacing: -2px;
-}
-.tagline {
-    font-family: 'Helvetica Neue', Arial, sans-serif;
-    font-size: 18px;
-    color: #BBBBBB;
-    text-align: center;
-    margin-top: 8px;
-    display: block;
-}
-</style>
+# --- ESTADO: Mostrar logo al inicio ---
+if "logo_visible" not in st.session_state:
+    st.session_state.logo_visible = True
 
-<div class="logo-container">
-    <div class="logo-animated">GRIND</div>
-    <p class="tagline">Tu mentora de evolución</p>
-</div>
-""", unsafe_allow_html=True)
+# --- LOGO ANIMADO: Solo si está visible ---
+if st.session_state.logo_visible:
+    st.markdown("""
+    <style>
+    @keyframes pulse {
+        0% { opacity: 0.8; transform: scale(1); }
+        50% { opacity: 1; transform: scale(1.03); }
+        100% { opacity: 0.8; transform: scale(1); }
+    }
+    .logo-container {
+        text-align: center;
+        margin: 60px 0 10px 0;
+    }
+    .logo-animated {
+        font-family: 'Courier New', monospace;
+        font-weight: 900;
+        font-size: 72px;
+        color: #E63946;
+        display: inline-block;
+        animation: pulse 2s infinite;
+        text-transform: uppercase;
+        letter-spacing: -2px;
+    }
+    .tagline {
+        font-family: 'Helvetica Neue', Arial, sans-serif;
+        font-size: 18px;
+        color: #BBBBBB;
+        text-align: center;
+        margin-top: 8px;
+        display: block;
+    }
+    </style>
+
+    <div class="logo-container">
+        <div class="logo-animated">GRIND</div>
+        <p class="tagline">Tu mentora de evolución</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # --- INPUT DEL USUARIO ---
+if prompt := st.chat_input("Escribe un mensaje...", key="chat_input_main"):
+    # ✅ Ocultar logo al primer mensaje
+    if st.session_state.logo_visible:
+        st.session_state.logo_visible = False
+        st.rerun()  # ← Fuerza recarga para que el logo desaparezca
+
+    # ✅ Agregar mensaje del usuario
+    st.session_state.messages.append({"role": "human", "content": prompt})
+
+    # ... resto de la lógica de IA ...
 
 # --- ESTADO DE SESIÓN ---
 if "logged_in" not in st.session_state:
