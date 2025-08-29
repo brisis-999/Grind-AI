@@ -6,7 +6,7 @@ try:
 except (ImportError, KeyError):
     pass
 
-# app.py - GRIND 200: Estética Qwen perfecta
+# app.py - GRIND 133.0: Sin errores de sintaxis
 import streamlit as st
 from langchain_groq import ChatGroq
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
@@ -15,29 +15,15 @@ from serpapi import GoogleSearch
 from supabase import create_client
 from PIL import Image
 import time
-from datetime import datetime
+from datetime import datetime, timedelta
 import random
 
-# --- ESTADO DE SESIÓN: Inicializar todo ---
-if "logo_visible" not in st.session_state:
-    st.session_state.logo_visible = True
-if "messages" not in st.session_state:
-    st.session_state.messages = []
-if "logged_in" not in st.session_state:
-    st.session_state.logged_in = True
-if "current_user" not in st.session_state:
-    st.session_state.current_user = "Eliezer Feliz Luciano"
-if "user_email" not in st.session_state:
-    st.session_state.user_email = "eliezer@grind.ai"
-if "modo_guerra" not in st.session_state:
-    st.session_state.modo_guerra = False
-
-# --- CSS: Estilo Qwen perfecto ---
+# --- CSS ESTILO CHATGPT + SIN FONDO EN ASISTENTE ---
 st.markdown("""
 <style>
     body {
         color: white;
-        background-color: #0a1428;
+        background-color: #000000;
         font-family: "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
     }
     .main .block-container {
@@ -46,14 +32,14 @@ st.markdown("""
         padding-bottom: 80px;
     }
     section[data-testid="stSidebar"] {
-        background-color: #1A1B1F;
+        background-color: #202123;
         border-right: 1px solid #333;
         width: 260px !important;
         min-width: 260px !important;
     }
     .stButton>button {
         border-radius: 8px;
-        background-color: #202123;
+        background-color: #2A2B32;
         color: white;
         border: 1px solid #444;
         width: 100%;
@@ -61,19 +47,17 @@ st.markdown("""
         padding: 10px 15px;
         margin-bottom: 8px;
         font-size: 14px;
-        transition: all 0.2s;
     }
     .stButton>button:hover {
-        background-color: #2A2B32;
-        border-color: #0078d4;
-        color: #0078d4;
+        background-color: #343541;
+        color: white;
     }
     [data-testid="stChatInput"] textarea {
         border-radius: 16px !important;
-        background-color: #e6f0ff !important;
-        color: #0a1428 !important;
-        border: 1px solid #b0c4de !important;
-        padding: 16px 20px !important;
+        background-color: #40414F !important;
+        color: white !important;
+        border: 1px solid #565761 !important;
+        padding: 20px 50px 20px 20px !important;
         font-size: 16px !important;
         height: 60px !important;
         resize: none;
@@ -83,7 +67,7 @@ st.markdown("""
         right: 15px;
         top: 50%;
         transform: translateY(-50%);
-        background-color: #0078d4 !important;
+        background-color: #1E90FF;
         border: none;
         border-radius: 50%;
         width: 40px;
@@ -92,10 +76,6 @@ st.markdown("""
         align-items: center;
         justify-content: center;
         cursor: pointer;
-        transition: all 0.2s ease;
-    }
-    [data-testid="stChatInput"] button:hover {
-        background-color: #005a9e !important;
     }
     [data-testid="stChatInput"] button::before {
         content: "➤";
@@ -103,39 +83,45 @@ st.markdown("""
         font-size: 18px;
         font-weight: bold;
     }
+    [data-testid="stChatMessageContent"] {
+        max-width: 85%;
+    }
     .user-message {
         display: flex;
         justify-content: flex-end;
-        margin: 12px 0;
+        margin-bottom: 10px;
     }
     .user-message > div {
-        background: linear-gradient(90deg, #1E90FF, #00BFFF);
+        background-color: #1E90FF;
         color: white;
         padding: 12px 16px;
         border-radius: 18px 18px 0 18px;
         max-width: 80%;
         text-align: left;
-        box-shadow: 0 2px 4px rgba(30, 144, 255, 0.2);
     }
     .assistant-message {
         display: flex;
         justify-content: flex-start;
-        margin: 12px 0;
+        margin-bottom: 10px;
     }
     .assistant-message > div {
         background-color: transparent;
         color: white;
         padding: 0;
+        border-radius: 0;
         max-width: 80%;
         text-align: left;
         font-size: 16px;
         line-height: 1.6;
     }
-    .assistant-message h1, .assistant-message h2, .assistant-message h3 {
+    .sidebar-title {
+        text-align: center;
         color: white;
+        font-weight: 700;
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+        padding: 10px;
         border-bottom: 1px solid #333;
-        padding-bottom: 8px;
-        margin-bottom: 16px;
     }
     .disclaimer {
         font-size: 12px;
@@ -146,115 +132,66 @@ st.markdown("""
         border-top: 1px solid #333;
         width: 100%;
     }
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
+    .assistant-message h1 {
+        font-size: 1.8rem;
+        color: white;
+        border-bottom: 2px solid #1E90FF;
+        padding-bottom: 8px;
+        margin-bottom: 16px;
     }
-    .chat-container {
-        animation: fadeIn 0.4s ease-out;
+    .assistant-message h2 {
+        font-size: 1.4rem;
+        color: #ccc;
+        margin-top: 16px;
+    }
+    .assistant-message strong {
+        color: #fff;
+    }
+    .assistant-message ul, .assistant-message ol {
+        margin-left: 20px;
+    }
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+    }
+    .logo-animated {
+        animation: pulse 2s infinite;
+        display: inline-block;
     }
 </style>
 """, unsafe_allow_html=True)
 
-# --- LOGO ANIMADO: Solo al inicio ---
-if st.session_state.logo_visible:
-    st.markdown("""
-    <style>
-    @keyframes pulse {
-        0% { opacity: 0.8; transform: scale(1); }
-        50% { opacity: 1; transform: scale(1.03); }
-        100% { opacity: 0.8; transform: scale(1); }
-    }
-    .logo-pulse {
-        font-family: 'Courier New', monospace;
+# --- LOGO PROFESIONAL ANIMADO ---
+st.markdown(
+    """
+    <div style="text-align: center; margin-bottom: 20px;">
+      <h1 style="
+        font-family: 'Helvetica Neue', Arial, sans-serif;
         font-weight: 900;
-        font-size: 72px;
-        color: #E63946;
-        text-align: center;
-        margin: 60px 0 10px 0;
-        animation: pulse 2s infinite;
+        font-size: 64px;
+        color: #000000;
+        letter-spacing: -1px;
         text-transform: uppercase;
-        letter-spacing: -2px;
-    }
-    .tagline {
+        border-bottom: 3px solid #E63946;
+        padding-bottom: 15px;
+        display: inline-block;
+      " class="logo-animated">
+        GRIND
+      </h1>
+      <p style="
         font-family: 'Helvetica Neue', Arial, sans-serif;
         font-size: 18px;
-        color: #BBBBBB;
-        text-align: center;
-        margin-top: 0;
-        margin-bottom: 30px;
-    }
-    </style>
-
-    <div class="logo-pulse">GRIND</div>
-    <p class="tagline">Tu mentora de evolución</p>
-    """, unsafe_allow_html=True)
-
-# --- SIDEBAR ---
-with st.sidebar:
-    if st.button("➕ + Nuevo Chat", key="new_chat"):
-        st.session_state.messages = []
-        st.session_state.logo_visible = True
-        st.rerun()
-
-    st.markdown("---")
-
-    # Opciones del botón "+" (como en Qwen)
-    st.markdown("### 🧠 Opciones rápidas")
-    if st.button("🎯 Desarrollo web"):
-        st.session_state.messages = [{"role": "human", "content": "Quiero aprender desarrollo web desde cero"}]
-        st.session_state.logo_visible = False
-        st.rerun()
-    if st.button("⚔️ Activar Modo Guerra"):
-        st.session_state.modo_guerra = True
-        st.session_state.messages = [{"role": "assistant", "content": "MODO GUERRA ACTIVADO. No hay excusas. Solo acción."}]
-        st.session_state.logo_visible = False
-        st.rerun()
-
-    st.markdown("---")
-
-    # Perfil del usuario
-    st.markdown(f"**{st.session_state.current_user}**")
-    st.markdown(f"<span style='color: #888; font-size: 0.9em;'>{st.session_state.user_email}</span>", unsafe_allow_html=True)
-
-# --- FASE 2: Chat activo (logo ya no visible) ---
-if not st.session_state.logo_visible:
-    # Mostrar "GRIND" arriba a la izquierda
-    st.markdown("""
-    <div style="display: flex; align-items: center; gap: 10px; margin: 20px 0 0 20px;">
-        <div style="font-size: 24px; font-weight: 600; color: #0078d4;">GRIND</div>
-        <div style="color: #888; font-size: 14px;">IA Entrenadora</div>
+        color: #555;
+        margin-top: 10px;
+        font-weight: 400;
+      ">
+        Tu mentora de evolución
+      </p>
     </div>
-    """, unsafe_allow_html=True)
-
-    # Mostrar mensajes
-    for message in st.session_state.messages:
-        if message["role"] == "human":
-            with st.container():
-                st.markdown(f"""
-                <div class="user-message">
-                    <div>{message["content"]}</div>
-                </div>
-                """, unsafe_allow_html=True)
-        else:
-            with st.container():
-                st.markdown(f"""
-                <div class="assistant-message">
-                    <div>{message["content"]}</div>
-                </div>
-                """, unsafe_allow_html=True)
-
-    # Input del usuario
-    if prompt := st.chat_input("Escribe un mensaje...", key="chat_input_main"):
-        # Ocultar logo y expandir chat
-        st.session_state.logo_visible = False
-        st.session_state.messages.append({"role": "human", "content": prompt})
-        # ... lógica de IA aquí ...
-
-# --- CONTROL: Ocultar logo al primer mensaje ---
-if st.session_state.logo_visible and st.session_state.messages:
-    st.session_state.logo_visible = False
-    st.rerun()
+    """,
+    unsafe_allow_html=True
+)
 
 # --- ESTADO DE SESIÓN ---
 if "logged_in" not in st.session_state:
@@ -362,7 +299,33 @@ with st.sidebar:
                 "content": "MODO GUERRA DESACTIVADO. La disciplina sigue. La evolución continúa."
             })
             st.rerun()
- 
+
+# --- TÍTULO PRINCIPAL ---
+st.markdown("""
+<h1 style='
+    text-align: center;
+    color: white;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 700;
+    font-size: 2.8rem;
+    letter-spacing: -1px;
+    margin: 0;
+    padding: 20px 0 10px 0;
+'>
+    GRIND
+</h1>
+<p style='
+    text-align: center;
+    color: #999;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 1.1rem;
+    font-weight: 400;
+    margin: 0;
+    padding-bottom: 20px;
+'>
+    Tu mentora de evolución
+</p>
+""", unsafe_allow_html=True)
 
 # --- APIs: Secrets ---
 try:
