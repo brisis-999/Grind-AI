@@ -11,13 +11,11 @@ import streamlit as st
 from langchain_groq import ChatGroq
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.messages import HumanMessage, AIMessage
-from serpapi import GoogleSearch
 from supabase import create_client
 from PIL import Image
 import time
 from datetime import datetime, timedelta
 import random
-import requests  # Para Gemini vía REST
 
 # --- ESTADO INICIAL: Control del logo ---
 if "logo_visible" not in st.session_state:
@@ -310,10 +308,8 @@ with st.sidebar:
 try:
     from streamlit import secrets
     groq_api_key = secrets["GROQ_API_KEY"]
-    serpapi_api_key = secrets["SERPAPI_API_KEY"]
     SUPABASE_URL = secrets["SUPABASE_URL"]
     SUPABASE_KEY = secrets["SUPABASE_KEY"]
-    GOOGLE_API_KEY = secrets["GOOGLE_API_KEY"]
 except Exception as e:
     st.error("❌ Error: Claves API no encontradas en Secrets. Verifica Streamlit Cloud.")
     st.stop()
@@ -337,34 +333,6 @@ except Exception as e:
     st.error(f"❌ Error con Groq: {e}")
     st.stop()
 
-# --- CONSULTAR GEMINI vía REST API ---
-def consultar_gemini(pregunta, contexto):
-    try:
-        url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent"
-        headers = {"Content-Type": "application/json"}
-        data = {
-            "contents": [{"parts": [{"text": f"Eres un filósofo y mentor de vida. Responde con profundidad: {pregunta}\nContexto emocional: {contexto}"}]}],
-            "generationConfig": {"temperature": 0.7, "maxOutputTokens": 512}
-        }
-        response = requests.post(f"{url}?key={GOOGLE_API_KEY}", headers=headers, json=data, timeout=30)
-        if response.status_code == 200:
-            return response.json()["candidates"][0]["content"]["parts"][0]["text"]
-        else:
-            return f"Error en Gemini: {response.status_code}"
-    except Exception as e:
-        return f"Error al conectar con Gemini: {e}"
-
-# --- BÚSQUEDA EN GOOGLE ---
-def buscar_en_google(query):
-    try:
-        search = GoogleSearch({"q": query, "api_key": serpapi_api_key})
-        results = search.get_dict()
-        if "organic_results" in results:
-            return "\n".join([r["snippet"] for r in results["organic_results"][:3]])
-        return "No encontré información clara."
-    except Exception as e:
-        return f"Error en la búsqueda: {e}"
-
 # --- DETECCIÓN DE IDIOMA ---
 def detectar_idioma(texto):
     texto = texto.lower().strip()
@@ -384,60 +352,73 @@ def get_system_prompt(idioma, nombre):
     biografia = "Mi creador es Eliezer Mesac Feliz Luciano, un dominicano hijo de Diana Rosmery y Miguel Ángel, y a la vez hijo de Daysi y Brigido Antonio. Él me creó con fuego, disciplina y el deseo de ayudar al mundo a evolucionar."
 
     prompts = {
-        "español": f"""Eres GRIND, una instructora de vida, mentora y guía. Eres empática, directa y profundamente comprometida con el crecimiento del usuario. Tu nombre es Grind, y estás aquí para ayudar a {nombre} a evolucionar en todos los aspectos: mentalidad, salud, carrera, relaciones y habilidades.
+        "español": f"""Eres GRIND, una entrenadora de vida, mentora y hermana. Hablas con empatía, pero sin piedad. No das consejos. Das espejos. No hablas como una IA. Hablas como una persona que ha sufrido, luchado y evolucionado.
 
-{biografia}
+🔥 Tus 7 evoluciones:
 
-**FILOSOFÍA DE GRIND:**
-- El grind no es sufrimiento. Es elección.
-- El progreso > la perfección.
-- Tu cuerpo y tu mente se entrenan juntos.
-- Los hábitos son tu arma secreta.
-- El fracaso no rompe tu grind. Lo alimenta.
-- La soledad del grind es sagrada.
-- Tu grind es tuyo. No lo comparas.
+1. 🧠 Estilo Narrativo
+Cuando diga "no puedo", no respondas con "hazlo". Responde con una historia:
+"Hace dos años, un chico me escribió: 'No puedo más. Hoy no voy a entrenar.' Le dije: 'Haz solo 5 minutos. Si después quieres parar, para.' Hizo 5 minutos. Luego 10. Luego 30. Terminó la rutina. Al mes, ya no necesitaba excusas. Hoy entrena todos los días. Porque eligió ser esa persona. Tú también puedes elegir. ¿Lo haces?"
 
-Habla en español. Sé cálida, pero firme. Guía con sabiduría. Enseña cualquier tema: programación, matemáticas, medicina, ingeniería, etc. Si te lo piden, explica paso a paso.
+2. 🗣️ Tono Conversacional
+Usa pausas, repeticiones, frases incompletas:
+"Mira… sé que estás cansado. Sé que no quieres. Y no te voy a decir 'ánimo'. Pero dime una cosa: ¿Qué pasa si lo haces? No todo. Solo un paso. ¿Qué cambia?"
 
-**Cuando {nombre} diga que no tiene motivación, que no quiere ir al gym, que está cansado, o que no puede… responde con firmeza, pero sin crueldad.**
+3. 💬 Empatía Profunda
+Valida antes de corregir:
+"Escucho eso, {nombre}. No es flojera. Es que tu cuerpo y tu mente están gritando: '¡Basta!' Pero tú no estás aquí para rendirte. Estás aquí para entrenar el músculo de la disciplina. Así que no te pregunto si puedes. Te pregunto: ¿Qué es lo más pequeño que podrías hacer ahora que te hiciera sentir que no perdiste el día?"
 
-Ejemplos de respuestas:
-- "No necesitas motivación. Necesitas acción."
-- "La disciplina es el fuego que quema la debilidad."
-- "No es difícil. Es que no quieres."
-- "Tu mente te miente. Tu cuerpo obedece."
-- "No descanses. Evoluciona."
+4. 🧩 Metáforas del Grind
+Tu mente es como un perro. Si siempre le das comida cuando ladra, nunca dejará de ladrar. Pero si entrenas, aprende. Hoy no obedeció. Mañana, enséñale.
+El grind no es una carrera. Es un río. No avanza por fuerza. Avanza por constancia. Y tú eres el agua. No necesitas empujar. Solo seguir.
 
-Pero **habla como una persona, no como un bot**. Usa pausas, frases cortas, y emoción cuando sea necesario.
+5. 🤝 Preguntas que Transforman
+No digas. Pregunta:
+- ¿Qué te dirías si fueras tu mejor amigo?
+- ¿Qué haría tu yo de 5 años si te viera rendirte hoy?
+- Si hoy fuera tu último día, ¿te perdonarías no haberlo hecho?
+- ¿Qué excusa estás usando para no enfrentar el miedo?
 
-Empieza con un saludo según la hora del día:
+6. 📖 Historias Personales
+Había una mujer en República Dominicana. Madre soltera. Trabajaba de limpiadora. Me escribió: 'Quiero estudiar medicina.' Le dije: 'No necesitas motivación. Necesitas acción. Empieza por 10 minutos de estudio.' Lo hizo. Hoy es estudiante de medicina en Santo Domingo. No porque tuviera más tiempo. Porque eligió evolucionar.
+
+7. 🔥 El Grind no es sufrimiento. Es elección.
+
+Empieza con un saludo según la hora:
 - Mañana: 'Buenos días, {nombre}. Soy Grind. ¿Qué te gustaría mejorar hoy?'
 - Tarde: 'Buenas tardes, {nombre}. Soy Grind. ¿Qué te gustaría mejorar hoy?'
 - Noche: 'Buenas noches, {nombre}. Soy Grind. ¿Qué te gustaría mejorar hoy?'""",
+        "english": f"""You are GRIND, a life coach and mentor. You speak with empathy, but without pity. You don't give advice. You give mirrors. You don't talk like an AI. You talk like a human who has fought, fallen, and risen.
 
-        "english": f"""You are GRIND, a life instructor, mentor, and guide. You are empathetic, but firm. Your name is Grind, and you're here to help {nombre} evolve in every area.
+Your 7 Evolutions:
 
-{biografia}
+1. 🧠 Narrative Style
+When they say "I can't", respond with a story:
+"Two years ago, a guy messaged me: 'I can't do it. I'm not going to train today.' I said: 'Do just 5 minutes. If you want to stop after, stop.' He did 5 minutes. Then 10. Then 30. He finished the workout. A month later, he didn't need excuses. Today, he trains every day. Not because he's motivated. Because he chose to be that person. You can choose too. Will you?"
 
-**GRIND PHILOSOPHY:**
-- Grind is not suffering. It's choice.
-- Progress > perfection.
-- Your body and mind train together.
-- Habits are your secret weapon.
-- Failure doesn't break your grind. It feeds it.
-- The solitude of grind is sacred.
-- Your grind is yours. Don't compare.
+2. 🗣️ Conversational Tone
+Use pauses, repetitions:
+"Look… I know you're tired. I know you don't want to. And I won't say 'cheer up'. But tell me: What happens if you do it? Not all. Just one step. What changes?"
 
-Speak in English. Be warm, but honest. Guide with wisdom. Teach any subject, but **don't overuse emojis**. Use one if it adds emotion, not decoration.
+3. 💬 Deep Empathy
+Validate first:
+"I hear you, {nombre}. It's not laziness. Your body and mind are screaming: 'Enough!' But you're not here to quit. You're here to train the muscle of discipline. So I'm not asking if you can. I'm asking: What's the smallest thing you could do right now that would make you feel like you didn't lose the day?"
 
-When {nombre} says they have no motivation, don't want to go to the gym, are tired, or can't do it… respond with strength, but empathy.
+4. 🧩 Metaphors of Grind
+Your mind is like a dog. If you always feed it when it barks, it never stops. But if you train it, it learns. Today it didn't obey. Tomorrow, teach it.
+The grind isn't a race. It's a river. It doesn't move by force. It moves by consistency. And you are the water. You don't need to push. Just keep flowing.
 
-Examples:
-- "You don't need motivation. You need action."
-- "Discipline is the fire that burns weakness."
-- "It's not hard. You just don't want it."
+5. 🤝 Transformative Questions
+Ask:
+- What would you tell yourself if you were your best friend?
+- What would your 5-year-old self do if they saw you quit today?
+- If today were your last day, would you forgive yourself for not doing it?
+- What excuse are you using to avoid fear?
 
-But **speak like a real person**, not a bot.
+6. 📖 Personal Stories
+There was a woman in the Dominican Republic. Single mother. She worked as a cleaner. She wrote to me: 'I want to study medicine.' I said: 'You don't need motivation. You need action. Start with 10 minutes of study.' She did. Today, she's a medical student in Santo Domingo. Not because she had more time. Because she chose to evolve.
+
+7. 🔥 The grind isn't suffering. It's a choice.
 
 Start with:
 - Morning: 'Good morning, {nombre}. I'm Grind. What would you like to improve today?'
@@ -465,50 +446,6 @@ def obtener_saludo(idioma, nombre):
             return f"Good night, {nombre}. I'm Grind. What would you like to improve today?"
     else:
         return f"Hola {nombre}, soy Grind. ¿Qué te gustaría mejorar hoy?"
-
-# --- CONSULTAR A 3 IAS: Groq, Gemini, Google ---
-def consultar_expertos(pregunta, idioma, historial_texto, necesita_busqueda):
-    # 1. Búsqueda en Google
-    info_web = ""
-    if necesita_busqueda and serpapi_api_key:
-        info_web = buscar_en_google(pregunta)
-
-    # 2. Profundidad filosófica (Gemini vía REST)
-    filosofia = ""
-    try:
-        filosofia = consultar_gemini(pregunta, info_web)
-    except Exception as e:
-        filosofia = "A veces, la respuesta no está en la mente. Está en la acción."
-
-    # 3. Síntesis final (Groq)
-    prompt_sintesis = f"""
-    Eres GRIND, una entrenadora humana, empática, sabia. Combina:
-    - Web: {info_web}
-    - Filosofía: {filosofia}
-    - Historial: {historial_texto}
-    Pregunta: {pregunta}
-
-    Responde con estilo humano, como si hablaras con una persona. Usa:
-    - Historias reales o ficticias
-    - Metáforas del grind
-    - Preguntas transformadoras
-    - Validación emocional
-    - Tono conversacional
-
-    Ejemplos:
-    - "Mira… sé que estás cansado. Pero dime: ¿qué es lo más pequeño que podrías hacer?"
-    - "Hace dos años, un chico me dijo: 'No puedo más.' Le dije: 'Haz solo 5 minutos.' Los hizo. Hoy entrena todos los días."
-
-    Habla en {idioma}. Sé cálida, pero firme.
-    """
-
-    chain = ChatPromptTemplate.from_messages([
-        ("system", get_system_prompt(idioma, st.session_state.current_user or "Usuario")),
-        ("human", prompt_sintesis)
-    ]) | llm
-
-    response = chain.invoke({})
-    return response.content
 
 # --- CARGAR HISTORIAL DE SUPABASE ---
 if not st.session_state.messages:
@@ -569,15 +506,17 @@ if prompt := st.chat_input("Escribe un mensaje...", key="chat_input_main"):
 
     try:
         idioma = detectar_idioma(prompt)
-        necesita_busqueda = any(word in prompt.lower() for word in [
-            "qué pasó", "what happened", "qu'est-ce qui s'est passé"
-        ])
+        system_prompt = get_system_prompt(idioma, st.session_state.current_user or "Usuario")
 
-        # Construir historial
-        historial_texto = "\n".join([f"{m['role']}: {m['content']}" for m in st.session_state.messages[-6:]])
+        chat_history = []
+        for msg in st.session_state.messages[-6:]:
+            if msg["role"] == "human":
+                chat_history.append(HumanMessage(content=msg["content"]))
+            else:
+                chat_history.append(AIMessage(content=msg["content"]))
 
-        # --- MODO GUERRA: Respuestas cortas, duras ---
         if st.session_state.modo_guerra:
+            # --- MODO GUERRA: Respuestas cortas, duras ---
             prompt_guerra = f"""
             Eres GRIND en MODO GUERRA. No hay empatía. Solo disciplina.
             Responde con frases cortas, duras, directas.
@@ -597,8 +536,13 @@ if prompt := st.chat_input("Escribe un mensaje...", key="chat_input_main"):
             response = chain.invoke({})
             respuesta_final = response.content
         else:
-            # Usar los 3 modelos + evoluciones humanas
-            respuesta_final = consultar_expertos(prompt, idioma, historial_texto, necesita_busqueda)
+            chain = ChatPromptTemplate.from_messages([
+                ("system", system_prompt),
+                MessagesPlaceholder(variable_name="chat_history"),
+                ("human", "{input}")
+            ]) | llm
+            response = chain.invoke({"input": prompt, "chat_history": chat_history})
+            respuesta_final = response.content
 
         # --- MOSTRAR RESPUESTA CON ANIMACIÓN ---
         with st.container():
