@@ -6,7 +6,7 @@ try:
 except (ImportError, KeyError):
     pass
 
-# app.py - GRIND 141.0: Estética depurada, alma de Qwen
+# app.py - GRIND 200: Estética Qwen perfecta
 import streamlit as st
 from langchain_groq import ChatGroq
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
@@ -15,15 +15,30 @@ from serpapi import GoogleSearch
 from supabase import create_client
 from PIL import Image
 import time
-from datetime import datetime, timedelta
+from datetime import datetime
 import random
 
-# --- FONDO GRIS OSCURO #121212 + ESTILO PROFESIONAL ---
+# --- ESTADO DE SESIÓN: Inicializar todo ---
+if "logo_visible" not in st.session_state:
+    st.session_state.logo_visible = True
+if "messages" not in st.session_state:
+    st.session_state.messages = []
+if "logged_in" not in st.session_state:
+    st.session_state.logged_in = True
+if "current_user" not in st.session_state:
+    st.session_state.current_user = "Eliezer Feliz Luciano"
+if "user_email" not in st.session_state:
+    st.session_state.user_email = "eliezer@grind.ai"
+if "modo_guerra" not in st.session_state:
+    st.session_state.modo_guerra = False
+
+# --- CSS: Estilo Qwen perfecto ---
 st.markdown("""
 <style>
-    .stApp {
-        background-color: #121212;
+    body {
         color: white;
+        background-color: #0a1428;
+        font-family: "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
     }
     .main .block-container {
         max-width: 1200px;
@@ -36,12 +51,29 @@ st.markdown("""
         width: 260px !important;
         min-width: 260px !important;
     }
+    .stButton>button {
+        border-radius: 8px;
+        background-color: #202123;
+        color: white;
+        border: 1px solid #444;
+        width: 100%;
+        text-align: left;
+        padding: 10px 15px;
+        margin-bottom: 8px;
+        font-size: 14px;
+        transition: all 0.2s;
+    }
+    .stButton>button:hover {
+        background-color: #2A2B32;
+        border-color: #0078d4;
+        color: #0078d4;
+    }
     [data-testid="stChatInput"] textarea {
         border-radius: 16px !important;
-        background-color: #40414F !important;
-        color: white !important;
-        border: 1px solid #565761 !important;
-        padding: 20px 50px 20px 20px !important;
+        background-color: #e6f0ff !important;
+        color: #0a1428 !important;
+        border: 1px solid #b0c4de !important;
+        padding: 16px 20px !important;
         font-size: 16px !important;
         height: 60px !important;
         resize: none;
@@ -51,7 +83,7 @@ st.markdown("""
         right: 15px;
         top: 50%;
         transform: translateY(-50%);
-        background-color: #E63946 !important;
+        background-color: #0078d4 !important;
         border: none;
         border-radius: 50%;
         width: 40px;
@@ -63,8 +95,7 @@ st.markdown("""
         transition: all 0.2s ease;
     }
     [data-testid="stChatInput"] button:hover {
-        background-color: #FF4D6D !important;
-        transform: translateY(-50%) scale(1.05);
+        background-color: #005a9e !important;
     }
     [data-testid="stChatInput"] button::before {
         content: "➤";
@@ -72,13 +103,10 @@ st.markdown("""
         font-size: 18px;
         font-weight: bold;
     }
-    [data-testid="stChatMessageContent"] {
-        max-width: 85%;
-    }
     .user-message {
         display: flex;
         justify-content: flex-end;
-        margin-bottom: 10px;
+        margin: 12px 0;
     }
     .user-message > div {
         background: linear-gradient(90deg, #1E90FF, #00BFFF);
@@ -92,13 +120,12 @@ st.markdown("""
     .assistant-message {
         display: flex;
         justify-content: flex-start;
-        margin-bottom: 10px;
+        margin: 12px 0;
     }
     .assistant-message > div {
         background-color: transparent;
         color: white;
         padding: 0;
-        border-radius: 0;
         max-width: 80%;
         text-align: left;
         font-size: 16px;
@@ -110,13 +137,6 @@ st.markdown("""
         padding-bottom: 8px;
         margin-bottom: 16px;
     }
-    .assistant-message strong {
-        color: #fff;
-    }
-    .assistant-message ul, .assistant-message ol {
-        margin-left: 20px;
-        margin-bottom: 8px;
-    }
     .disclaimer {
         font-size: 12px;
         color: #888;
@@ -126,36 +146,17 @@ st.markdown("""
         border-top: 1px solid #333;
         width: 100%;
     }
-    @keyframes pulse {
-        0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(230, 57, 70, 0.7); }
-        50% { transform: scale(1.03); box-shadow: 0 0 20px rgba(230, 57, 70, 0); }
-        100% { transform: scale(1); box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); }
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
     }
-    .logo-animated {
-        animation: pulse 2s infinite;
-        display: inline-block;
+    .chat-container {
+        animation: fadeIn 0.4s ease-out;
     }
 </style>
 """, unsafe_allow_html=True)
 
-# --- ESTADO DE SESIÓN: Inicializar TODO ---
-if "logo_visible" not in st.session_state:
-    st.session_state.logo_visible = True
-
-if "messages" not in st.session_state:
-    st.session_state.messages = []
-
-if "logged_in" not in st.session_state:
-    st.session_state.logged_in = True  # Simulado
-if "current_user" not in st.session_state:
-    st.session_state.current_user = "Eliezer"
-if "user_email" not in st.session_state:
-    st.session_state.user_email = "eliezer@grind.ai"
-if "modo_guerra" not in st.session_state:
-    st.session_state.modo_guerra = False
-# ... otras variables que uses
-
-# --- FASE 1: Mostrar logo si está visible y no hay mensajes ---
+# --- LOGO ANIMADO: Solo al inicio ---
 if st.session_state.logo_visible:
     st.markdown("""
     <style>
@@ -189,37 +190,71 @@ if st.session_state.logo_visible:
     <p class="tagline">Tu mentora de evolución</p>
     """, unsafe_allow_html=True)
 
+# --- SIDEBAR ---
+with st.sidebar:
+    if st.button("➕ + Nuevo Chat", key="new_chat"):
+        st.session_state.messages = []
+        st.session_state.logo_visible = True
+        st.rerun()
+
+    st.markdown("---")
+
+    # Opciones del botón "+" (como en Qwen)
+    st.markdown("### 🧠 Opciones rápidas")
+    if st.button("🎯 Desarrollo web"):
+        st.session_state.messages = [{"role": "human", "content": "Quiero aprender desarrollo web desde cero"}]
+        st.session_state.logo_visible = False
+        st.rerun()
+    if st.button("⚔️ Activar Modo Guerra"):
+        st.session_state.modo_guerra = True
+        st.session_state.messages = [{"role": "assistant", "content": "MODO GUERRA ACTIVADO. No hay excusas. Solo acción."}]
+        st.session_state.logo_visible = False
+        st.rerun()
+
+    st.markdown("---")
+
+    # Perfil del usuario
+    st.markdown(f"**{st.session_state.current_user}**")
+    st.markdown(f"<span style='color: #888; font-size: 0.9em;'>{st.session_state.user_email}</span>", unsafe_allow_html=True)
+
 # --- FASE 2: Chat activo (logo ya no visible) ---
-else:
+if not st.session_state.logo_visible:
+    # Mostrar "GRIND" arriba a la izquierda
+    st.markdown("""
+    <div style="display: flex; align-items: center; gap: 10px; margin: 20px 0 0 20px;">
+        <div style="font-size: 24px; font-weight: 600; color: #0078d4;">GRIND</div>
+        <div style="color: #888; font-size: 14px;">IA Entrenadora</div>
+    </div>
+    """, unsafe_allow_html=True)
+
     # Mostrar mensajes
     for message in st.session_state.messages:
         if message["role"] == "human":
             with st.container():
                 st.markdown(f"""
-                <div style="display: flex; justify-content: flex-end; margin: 8px 0;">
-                    <div style="background: linear-gradient(90deg, #1E90FF, #00BFFF); color: white; padding: 12px 16px; border-radius: 18px 18px 0 18px; max-width: 80%;">
-                        {message["content"]}
-                    </div>
+                <div class="user-message">
+                    <div>{message["content"]}</div>
                 </div>
                 """, unsafe_allow_html=True)
         else:
             with st.container():
                 st.markdown(f"""
-                <div style="display: flex; justify-content: flex-start; margin: 8px 0;">
-                    <div style="color: white; padding: 0; max-width: 80%; line-height: 1.6;">
-                        {message["content"]}
-                    </div>
+                <div class="assistant-message">
+                    <div>{message["content"]}</div>
                 </div>
                 """, unsafe_allow_html=True)
 
     # Input del usuario
     if prompt := st.chat_input("Escribe un mensaje...", key="chat_input_main"):
+        # Ocultar logo y expandir chat
+        st.session_state.logo_visible = False
         st.session_state.messages.append({"role": "human", "content": prompt})
-        # ... lógica de IA aquí
+        # ... lógica de IA aquí ...
 
-# --- CONTROL: Ocultar logo si hay al menos un mensaje ---
-if st.session_state.logo_visible and len(st.session_state.messages) > 0:
+# --- CONTROL: Ocultar logo al primer mensaje ---
+if st.session_state.logo_visible and st.session_state.messages:
     st.session_state.logo_visible = False
+    st.rerun()
 
 # --- ESTADO DE SESIÓN ---
 if "logged_in" not in st.session_state:
