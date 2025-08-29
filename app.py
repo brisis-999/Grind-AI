@@ -18,6 +18,10 @@ import time
 from datetime import datetime, timedelta
 import random
 
+# --- ESTADO INICIAL: Control del logo ---
+if "logo_visible" not in st.session_state:
+    st.session_state.logo_visible = True
+
 # --- CSS ESTILO CHATGPT + SIN FONDO EN ASISTENTE ---
 st.markdown("""
 <style>
@@ -162,19 +166,10 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# --- ESTADO: Mostrar logo al inicio ---
-if "logo_visible" not in st.session_state:
-    st.session_state.logo_visible = True
-
-# --- LOGO ANIMADO: Solo si está visible ---
+# --- LOGO ANIMADO: GRIND (único, centrado, sin duplicados) ---
 if st.session_state.logo_visible:
     st.markdown("""
     <style>
-    @keyframes pulse {
-        0% { opacity: 0.8; transform: scale(1); }
-        50% { opacity: 1; transform: scale(1.03); }
-        100% { opacity: 0.8; transform: scale(1); }
-    }
     .logo-container {
         text-align: center;
         margin: 60px 0 10px 0;
@@ -204,18 +199,6 @@ if st.session_state.logo_visible:
         <p class="tagline">Tu mentora de evolución</p>
     </div>
     """, unsafe_allow_html=True)
-
-    # --- INPUT DEL USUARIO ---
-if prompt := st.chat_input("Escribe un mensaje...", key="chat_input_main"):
-    # ✅ Ocultar logo al primer mensaje
-    if st.session_state.logo_visible:
-        st.session_state.logo_visible = False
-        st.rerun()  # ← Fuerza recarga para que el logo desaparezca
-
-    # ✅ Agregar mensaje del usuario
-    st.session_state.messages.append({"role": "human", "content": prompt})
-
-    # ... resto de la lógica de IA ...
 
 # --- ESTADO DE SESIÓN ---
 if "logged_in" not in st.session_state:
@@ -323,33 +306,6 @@ with st.sidebar:
                 "content": "MODO GUERRA DESACTIVADO. La disciplina sigue. La evolución continúa."
             })
             st.rerun()
-
-# --- TÍTULO PRINCIPAL ---
-st.markdown("""
-<h1 style='
-    text-align: center;
-    color: white;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-weight: 700;
-    font-size: 2.8rem;
-    letter-spacing: -1px;
-    margin: 0;
-    padding: 20px 0 10px 0;
-'>
-    GRIND
-</h1>
-<p style='
-    text-align: center;
-    color: #999;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 1.1rem;
-    font-weight: 400;
-    margin: 0;
-    padding-bottom: 20px;
-'>
-    Tu mentora de evolución
-</p>
-""", unsafe_allow_html=True)
 
 # --- APIs: Secrets ---
 try:
@@ -503,7 +459,6 @@ if not st.session_state.messages:
                 .order("timestamp") \
                 .execute()
             
-            # ✅ CORREGIDO: Accede a .data
             if hasattr(response, 'data') and response.data:
                 for msg in response.data:
                     st.session_state.messages.append({
@@ -537,7 +492,7 @@ for message in st.session_state.messages:
             """, unsafe_allow_html=True)
 
 # --- INPUT DEL USUARIO ---
-if prompt := st.chat_input("Escribe un mensaje..."):
+if prompt := st.chat_input("Escribe un mensaje...", key="chat_input_main"):
     st.session_state.messages.append({"role": "human", "content": prompt})
     with st.container():
         st.markdown(f"""
