@@ -142,7 +142,7 @@ st.markdown("""
 if "logo_visible" not in st.session_state:
     st.session_state.logo_visible = True
 
-# --- LOGO ANIMADO: Solo al inicio, sin fondo, sin bordes ---
+# --- FASE 1: Solo Logo (sin input de chat) ---
 if st.session_state.logo_visible:
     st.markdown("""
     <style>
@@ -157,11 +157,10 @@ if st.session_state.logo_visible:
         font-size: 72px;
         color: #E63946;
         text-align: center;
-        margin: 40px 0 10px 0;
+        margin: 60px 0 10px 0;
         animation: pulse 2s infinite;
         text-transform: uppercase;
         letter-spacing: -2px;
-        opacity: 0.9;
     }
     .tagline {
         font-family: 'Helvetica Neue', Arial, sans-serif;
@@ -176,17 +175,44 @@ if st.session_state.logo_visible:
     <div class="logo-pulse">GRIND</div>
     <p class="tagline">Tu mentora de evolución</p>
     """, unsafe_allow_html=True)
-  
-# --- INPUT DEL USUARIO ---
-if prompt := st.chat_input("Escribe un mensaje...", key="chat_input_main"):
-    # Ocultar logo al primer mensaje
-    if st.session_state.logo_visible:
+
+    # ❌ NO HAY st.chat_input aquí
+    # ❌ No se llama hasta que el logo desaparezca
+
+# --- FASE 2: Chat activo (logo ya no visible) ---
+else:
+    # --- Mostrar mensajes ---
+    for message in st.session_state.messages:
+        if message["role"] == "human":
+            with st.container():
+                st.markdown(f"""
+                <div style="display: flex; justify-content: flex-end; margin: 8px 0;">
+                    <div style="background: linear-gradient(90deg, #1E90FF, #00BFFF); color: white; padding: 12px 16px; border-radius: 18px 18px 0 18px; max-width: 80%;">
+                        {message["content"]}
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+        else:
+            with st.container():
+                st.markdown(f"""
+                <div style="display: flex; justify-content: flex-start; margin: 8px 0;">
+                    <div style="color: white; padding: 0; max-width: 80%; line-height: 1.6;">
+                        {message["content"]}
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+
+    # ✅ Ahora sí: st.chat_input, pero SOLO en esta fase
+    if prompt := st.chat_input("Escribe un mensaje...", key="chat_input_main"):
+        st.session_state.messages.append({"role": "human", "content": prompt})
+        # ... procesar IA, agregar respuesta, etc.
+        # (tu lógica de Groq, historial, etc.)
+
+# --- CONTROL: Ocultar logo al primer mensaje (fuera del else) ---
+if "logo_visible" in st.session_state and st.session_state.logo_visible:
+    if "messages" in st.session_state and len(st.session_state.messages) > 0:
         st.session_state.logo_visible = False
         st.rerun()
-
-    st.session_state.messages.append({"role": "human", "content": prompt})
-
-    # ... resto del procesamiento
 
 # --- ESTADO DE SESIÓN ---
 if "logged_in" not in st.session_state:
