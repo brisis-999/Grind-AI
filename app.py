@@ -473,21 +473,15 @@ def get_system_prompt(idioma, nombre):
     }
 
     # Sistema de aprendizaje inter-IAs (Learning Packs)
-    formato_learning_pack = '''
-    {
-      "origen": "Qwen",
-      "version": 1.2,
-      "nuevo_termino": "neuroforja",
-      "definicion": "Transformación cerebral activa mediante práctica deliberada.",
-      "aplicacion_grind": "La neuroforja es el grind del cerebro.",
-      "frase_grind": "Tu mente no se entrena. Se neuroforja.",
-      "metadatos": {
-        "confianza": 0.95,
-        "fuente": "Harvard + Qwen Research",
-        "idioma": "es"
-      }
-    }
-    '''
+    formato_learning_pack = (
+        "Learning Pack de Qwen v1.2:\n"
+        "  - Origen: Qwen\n"
+        "  - Nuevo término: neuroforja\n"
+        "  - Definición: Transformación cerebral activa mediante práctica deliberada.\n"
+        "  - Aplicación en Grind: La neuroforja es el grind del cerebro.\n"
+        "  - Frase Grind: 'Tu mente no se entrena. Se neuroforja.'\n"
+        "  - Metadatos: confianza=0.95, fuente='Harvard + Qwen Research', idioma='es'"
+    )
 
     # Proceso de integración de conocimiento
     proceso_integracion = """
