@@ -162,36 +162,38 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# --- LOGO PROFESIONAL ANIMADO ---
-st.markdown(
-    """
-    <div style="text-align: center; margin-bottom: 20px;">
-      <h1 style="
-        font-family: 'Helvetica Neue', Arial, sans-serif;
-        font-weight: 900;
-        font-size: 64px;
-        color: #000000;
-        letter-spacing: -1px;
-        text-transform: uppercase;
-        border-bottom: 3px solid #E63946;
-        padding-bottom: 15px;
-        display: inline-block;
-      " class="logo-animated">
-        GRIND
-      </h1>
-      <p style="
-        font-family: 'Helvetica Neue', Arial, sans-serif;
-        font-size: 18px;
-        color: #555;
-        margin-top: 10px;
-        font-weight: 400;
-      ">
-        Tu mentora de evolución
-      </p>
-    </div>
-    """,
-    unsafe_allow_html=True
-)
+# --- LOGO ANIMADO: GRIND en rojo vino, sin fondo, sin bordes ---
+st.markdown("""
+<style>
+@keyframes pulse {
+    0% { opacity: 0.8; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.03); }
+    100% { opacity: 0.8; transform: scale(1); }
+}
+.logo-animated {
+    font-family: 'Courier New', monospace;
+    font-weight: 900;
+    font-size: 72px;
+    color: #E63946;
+    text-align: center;
+    margin: 40px 0 10px 0;
+    animation: pulse 2s infinite;
+    text-transform: uppercase;
+    letter-spacing: -2px;
+}
+.tagline {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 18px;
+    color: #BBBBBB;
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 30px;
+}
+</style>
+
+<div class="logo-animated">GRIND</div>
+<p class="tagline">Tu mentora de evolución</p>
+""", unsafe_allow_html=True)
 
 # --- ESTADO DE SESIÓN ---
 if "logged_in" not in st.session_state:
