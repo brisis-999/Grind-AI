@@ -138,37 +138,54 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# --- LOGO Y TÍTULO ÚNICO (NO DUPLICADO) ---
-st.markdown("""
-<div style="text-align: center; margin: 40px 0 20px 0;">
-    <h1 style="
+# --- ESTADO: Mostrar logo al inicio ---
+if "logo_visible" not in st.session_state:
+    st.session_state.logo_visible = True
+
+# --- LOGO ANIMADO: Solo al inicio, sin fondo, sin bordes ---
+if st.session_state.logo_visible:
+    st.markdown("""
+    <style>
+    @keyframes pulse {
+        0% { opacity: 0.8; transform: scale(1); }
+        50% { opacity: 1; transform: scale(1.03); }
+        100% { opacity: 0.8; transform: scale(1); }
+    }
+    .logo-pulse {
         font-family: 'Courier New', monospace;
         font-weight: 900;
         font-size: 72px;
-        color: #000;
-        background: white;
-        padding: 15px 35px;
-        border-radius: 10px;
-        border: 3px solid #E63946;
-        display: inline-block;
+        color: #E63946;
+        text-align: center;
+        margin: 40px 0 10px 0;
         animation: pulse 2s infinite;
         text-transform: uppercase;
         letter-spacing: -2px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    " class="logo-animated">
-        GRIND
-    </h1>
-    <p style="
+        opacity: 0.9;
+    }
+    .tagline {
         font-family: 'Helvetica Neue', Arial, sans-serif;
         font-size: 18px;
         color: #BBBBBB;
-        font-weight: 400;
-        margin-top: 10px;
-    ">
-        Tu mentora de evolución
-    </p>
-</div>
-""", unsafe_allow_html=True)
+        text-align: center;
+        margin-top: 0;
+        margin-bottom: 30px;
+    }
+    </style>
+
+    <div class="logo-pulse">GRIND</div>
+    <p class="tagline">Tu mentora de evolución</p>
+    """, unsafe_allow_html=True)
+  
+    # --- INPUT DEL USUARIO ---
+if prompt := st.chat_input("Escribe un mensaje..."):
+    # ✅ Ocultar logo al primer mensaje del usuario
+    if st.session_state.logo_visible:
+        st.session_state.logo_visible = False
+        st.rerun()  # ← Para que se borre inmediatamente
+
+    # ✅ Agregar mensaje del usuario
+    st.session_state.messages.append({"role": "human", "content": prompt})
 
 # --- ESTADO DE SESIÓN ---
 if "logged_in" not in st.session_state:
