@@ -18,7 +18,14 @@ import time
 from datetime import datetime, timedelta
 import random
 import google.generativeai as genai
-from langchain_huggingface import HuggingFaceEndpoint
+
+# --- ANÁLISIS EMOCIONAL con Transformers (sin langchain) ---
+try:
+    from transformers import pipeline
+    analizador_emocional = pipeline("text-classification", model="j-hartmann/emotion-english-distilroberta-base")
+except Exception as e:
+    st.warning(f"⚠️ No se pudo cargar el analizador emocional: {e}")
+    analizador_emocional = None
 
 # --- ESTADO INICIAL: Control del logo ---
 if "logo_visible" not in st.session_state:
@@ -347,19 +354,6 @@ except Exception as e:
     st.warning(f"⚠️ No se pudo conectar a Gemini: {e}")
     model_gemini = None
 
-# --- INICIALIZAR HUGGING FACE (Análisis emocional) ---
-try:
-    llm_hf = HuggingFaceEndpoint(
-        repo_id="mistralai/Mistral-7B-Instruct-v0.2",
-        huggingfacehub_api_token=HUGGINGFACEHUB_API_KEY,
-        task="text-generation",
-        max_new_tokens=256,
-        temperature=0.7
-    )
-except Exception as e:
-    st.warning(f"⚠️ No se pudo conectar a Hugging Face: {e}")
-    llm_hf = None
-
 # --- BÚSQUEDA EN GOOGLE ---
 def buscar_en_google(query):
     try:
@@ -472,21 +466,22 @@ def obtener_saludo(idioma, nombre):
     else:
         return f"Hola {nombre}, soy Grind. ¿Qué te gustaría mejorar hoy?"
 
-# --- CONSULTAR A 4 IAS: Groq, Gemini, Hugging Face, Google ---
+# --- CONSULTAR A 4 IAS: Groq, Gemini, Google, Transformers ---
 def consultar_expertos(pregunta, idioma, historial_texto, necesita_busqueda):
     # 1. Búsqueda en Google (si es necesario)
     info_web = ""
     if necesita_busqueda and serpapi_api_key:
         info_web = buscar_en_google(pregunta)
 
-    # 2. Análisis emocional (Hugging Face)
+    # 2. Análisis emocional (Transformers)
     emocion = "No pude analizar tu estado emocional."
-    if llm_hf:
+    if analizador_emocional:
         try:
-            prompt_hf = f"Analiza el estado emocional detrás de: '{pregunta}'. ¿Qué necesita esta persona? Responde en español, con empatía."
-            resp = llm_hf.invoke(prompt_hf)
-            emocion = resp.content
-        except:
+            resultado = analizador_emocional(pregunta)
+            emocion_label = resultado[0]['label']
+            emocion_conf = resultado[0]['score']
+            emocion = f"Detecto que estás {emocion_label.lower()} (confianza: {emocion_conf:.2f}). ¿Qué necesitas ahora?"
+        except Exception as e:
             emocion = "Estoy aquí. No estás solo."
 
     # 3. Profundidad filosófica (Gemini)
@@ -502,10 +497,10 @@ def consultar_expertos(pregunta, idioma, historial_texto, necesita_busqueda):
             """
             response = model_gemini.generate_content(prompt_gemini)
             filosofia = response.text
-        except:
+        except Exception as e:
             filosofia = "A veces, la respuesta no está en la mente. Está en la acción."
 
-    # 4. Síntesis final (Groq + tus 7 evoluciones humanas)
+    # 4. Síntesis final (Groq + evoluciones humanas)
     prompt_sintesis = f"""
     Eres GRIND, una entrenadora humana, empática, sabia. Combina:
     - Web: {info_web}
