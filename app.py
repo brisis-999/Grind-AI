@@ -17,15 +17,7 @@ from PIL import Image
 import time
 from datetime import datetime, timedelta
 import random
-import requests  # ← Para Gemini vía REST
-
-# --- ANÁLISIS EMOCIONAL con Transformers (sin langchain) ---
-try:
-    from transformers import pipeline
-    analizador_emocional = pipeline("text-classification", model="j-hartmann/emotion-english-distilroberta-base")
-except Exception as e:
-    st.warning(f"⚠️ No se pudo cargar el analizador emocional: {e}")
-    analizador_emocional = None
+import requests  # Para Gemini vía REST
 
 # --- ESTADO INICIAL: Control del logo ---
 if "logo_visible" not in st.session_state:
@@ -345,6 +337,23 @@ except Exception as e:
     st.error(f"❌ Error con Groq: {e}")
     st.stop()
 
+# --- CONSULTAR GEMINI vía REST API ---
+def consultar_gemini(pregunta, contexto):
+    try:
+        url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent"
+        headers = {"Content-Type": "application/json"}
+        data = {
+            "contents": [{"parts": [{"text": f"Eres un filósofo y mentor de vida. Responde con profundidad: {pregunta}\nContexto emocional: {contexto}"}]}],
+            "generationConfig": {"temperature": 0.7, "maxOutputTokens": 512}
+        }
+        response = requests.post(f"{url}?key={GOOGLE_API_KEY}", headers=headers, json=data, timeout=30)
+        if response.status_code == 200:
+            return response.json()["candidates"][0]["content"]["parts"][0]["text"]
+        else:
+            return f"Error en Gemini: {response.status_code}"
+    except Exception as e:
+        return f"Error al conectar con Gemini: {e}"
+
 # --- BÚSQUEDA EN GOOGLE ---
 def buscar_en_google(query):
     try:
@@ -457,53 +466,24 @@ def obtener_saludo(idioma, nombre):
     else:
         return f"Hola {nombre}, soy Grind. ¿Qué te gustaría mejorar hoy?"
 
-# --- CONSULTAR GEMINI vía REST API ---
-def consultar_gemini(pregunta, contexto):
-    try:
-        url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent"
-        headers = {"Content-Type": "application/json"}
-        data = {
-            "contents": [{"parts": [{"text": f"Eres un filósofo y mentor de vida. Responde con profundidad: Pregunta: {pregunta}\nContexto: {contexto}"}]}],
-            "generationConfig": {"temperature": 0.7, "maxOutputTokens": 512}
-        }
-        response = requests.post(f"{url}?key={GOOGLE_API_KEY}", headers=headers, json=data, timeout=30)
-        if response.status_code == 200:
-            return response.json()["candidates"][0]["content"]["parts"][0]["text"]
-        else:
-            return f"Error en Gemini: {response.status_code}"
-    except Exception as e:
-        return f"Error al conectar con Gemini: {e}"
-
-# --- CONSULTAR A 4 IAS: Groq, Gemini, Google, Transformers ---
+# --- CONSULTAR A 3 IAS: Groq, Gemini, Google ---
 def consultar_expertos(pregunta, idioma, historial_texto, necesita_busqueda):
     # 1. Búsqueda en Google
     info_web = ""
     if necesita_busqueda and serpapi_api_key:
         info_web = buscar_en_google(pregunta)
 
-    # 2. Análisis emocional
-    emocion = "No pude analizar tu estado emocional."
-    if analizador_emocional:
-        try:
-            resultado = analizador_emocional(pregunta)
-            emocion_label = resultado[0]['label']
-            emocion_conf = resultado[0]['score']
-            emocion = f"Detecto que estás {emocion_label.lower()} (confianza: {emocion_conf:.2f}). ¿Qué necesitas ahora?"
-        except Exception as e:
-            emocion = "Estoy aquí. No estás solo."
-
-    # 3. Profundidad filosófica (Gemini vía REST)
+    # 2. Profundidad filosófica (Gemini vía REST)
     filosofia = ""
     try:
-        filosofia = consultar_gemini(pregunta, emocion)
+        filosofia = consultar_gemini(pregunta, info_web)
     except Exception as e:
         filosofia = "A veces, la respuesta no está en la mente. Está en la acción."
 
-    # 4. Síntesis final (Groq)
+    # 3. Síntesis final (Groq)
     prompt_sintesis = f"""
     Eres GRIND, una entrenadora humana, empática, sabia. Combina:
     - Web: {info_web}
-    - Emoción: {emocion}
     - Filosofía: {filosofia}
     - Historial: {historial_texto}
     Pregunta: {pregunta}
@@ -528,7 +508,7 @@ def consultar_expertos(pregunta, idioma, historial_texto, necesita_busqueda):
     ]) | llm
 
     response = chain.invoke({})
-    return response.content  # ← Este return SÍ está dentro de la función
+    return response.content
 
 # --- CARGAR HISTORIAL DE SUPABASE ---
 if not st.session_state.messages:
@@ -617,7 +597,7 @@ if prompt := st.chat_input("Escribe un mensaje...", key="chat_input_main"):
             response = chain.invoke({})
             respuesta_final = response.content
         else:
-            # Usar los 4 modelos + evoluciones humanas
+            # Usar los 3 modelos + evoluciones humanas
             respuesta_final = consultar_expertos(prompt, idioma, historial_texto, necesita_busqueda)
 
         # --- MOSTRAR RESPUESTA CON ANIMACIÓN ---
