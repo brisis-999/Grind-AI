@@ -6,7 +6,7 @@ try:
 except (ImportError, KeyError):
     pass
 
-# app.py - GRIND 133.0: Sin errores de sintaxis
+# app.py - GRIND 141.0: Estética depurada, alma de Qwen
 import streamlit as st
 from langchain_groq import ChatGroq
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
@@ -18,13 +18,12 @@ import time
 from datetime import datetime, timedelta
 import random
 
-# --- CSS ESTILO CHATGPT + SIN FONDO EN ASISTENTE ---
+# --- FONDO GRIS OSCURO #121212 + ESTILO PROFESIONAL ---
 st.markdown("""
 <style>
-    body {
+    .stApp {
+        background-color: #121212;
         color: white;
-        background-color: #000000;
-        font-family: "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
     }
     .main .block-container {
         max-width: 1200px;
@@ -32,25 +31,10 @@ st.markdown("""
         padding-bottom: 80px;
     }
     section[data-testid="stSidebar"] {
-        background-color: #202123;
+        background-color: #1A1B1F;
         border-right: 1px solid #333;
         width: 260px !important;
         min-width: 260px !important;
-    }
-    .stButton>button {
-        border-radius: 8px;
-        background-color: #2A2B32;
-        color: white;
-        border: 1px solid #444;
-        width: 100%;
-        text-align: left;
-        padding: 10px 15px;
-        margin-bottom: 8px;
-        font-size: 14px;
-    }
-    .stButton>button:hover {
-        background-color: #343541;
-        color: white;
     }
     [data-testid="stChatInput"] textarea {
         border-radius: 16px !important;
@@ -67,7 +51,7 @@ st.markdown("""
         right: 15px;
         top: 50%;
         transform: translateY(-50%);
-        background-color: #1E90FF;
+        background-color: #E63946 !important;
         border: none;
         border-radius: 50%;
         width: 40px;
@@ -76,6 +60,11 @@ st.markdown("""
         align-items: center;
         justify-content: center;
         cursor: pointer;
+        transition: all 0.2s ease;
+    }
+    [data-testid="stChatInput"] button:hover {
+        background-color: #FF4D6D !important;
+        transform: translateY(-50%) scale(1.05);
     }
     [data-testid="stChatInput"] button::before {
         content: "➤";
@@ -92,12 +81,13 @@ st.markdown("""
         margin-bottom: 10px;
     }
     .user-message > div {
-        background-color: #1E90FF;
+        background: linear-gradient(90deg, #1E90FF, #00BFFF);
         color: white;
         padding: 12px 16px;
         border-radius: 18px 18px 0 18px;
         max-width: 80%;
         text-align: left;
+        box-shadow: 0 2px 4px rgba(30, 144, 255, 0.2);
     }
     .assistant-message {
         display: flex;
@@ -114,14 +104,18 @@ st.markdown("""
         font-size: 16px;
         line-height: 1.6;
     }
-    .sidebar-title {
-        text-align: center;
+    .assistant-message h1, .assistant-message h2, .assistant-message h3 {
         color: white;
-        font-weight: 700;
-        font-size: 1.8rem;
-        margin-bottom: 20px;
-        padding: 10px;
         border-bottom: 1px solid #333;
+        padding-bottom: 8px;
+        margin-bottom: 16px;
+    }
+    .assistant-message strong {
+        color: #fff;
+    }
+    .assistant-message ul, .assistant-message ol {
+        margin-left: 20px;
+        margin-bottom: 8px;
     }
     .disclaimer {
         font-size: 12px;
@@ -132,28 +126,10 @@ st.markdown("""
         border-top: 1px solid #333;
         width: 100%;
     }
-    .assistant-message h1 {
-        font-size: 1.8rem;
-        color: white;
-        border-bottom: 2px solid #1E90FF;
-        padding-bottom: 8px;
-        margin-bottom: 16px;
-    }
-    .assistant-message h2 {
-        font-size: 1.4rem;
-        color: #ccc;
-        margin-top: 16px;
-    }
-    .assistant-message strong {
-        color: #fff;
-    }
-    .assistant-message ul, .assistant-message ol {
-        margin-left: 20px;
-    }
     @keyframes pulse {
-        0% { transform: scale(1); }
-        50% { transform: scale(1.05); }
-        100% { transform: scale(1); }
+        0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(230, 57, 70, 0.7); }
+        50% { transform: scale(1.03); box-shadow: 0 0 20px rgba(230, 57, 70, 0); }
+        100% { transform: scale(1); box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); }
     }
     .logo-animated {
         animation: pulse 2s infinite;
@@ -162,36 +138,37 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# --- LOGO PROFESIONAL ANIMADO ---
-st.markdown(
-    """
-    <div style="text-align: center; margin-bottom: 20px;">
-      <h1 style="
-        font-family: 'Helvetica Neue', Arial, sans-serif;
+# --- LOGO Y TÍTULO ÚNICO (NO DUPLICADO) ---
+st.markdown("""
+<div style="text-align: center; margin: 40px 0 20px 0;">
+    <h1 style="
+        font-family: 'Courier New', monospace;
         font-weight: 900;
-        font-size: 64px;
-        color: #000000;
-        letter-spacing: -1px;
-        text-transform: uppercase;
-        border-bottom: 3px solid #E63946;
-        padding-bottom: 15px;
+        font-size: 72px;
+        color: #000;
+        background: white;
+        padding: 15px 35px;
+        border-radius: 10px;
+        border: 3px solid #E63946;
         display: inline-block;
-      " class="logo-animated">
+        animation: pulse 2s infinite;
+        text-transform: uppercase;
+        letter-spacing: -2px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    " class="logo-animated">
         GRIND
-      </h1>
-      <p style="
+    </h1>
+    <p style="
         font-family: 'Helvetica Neue', Arial, sans-serif;
         font-size: 18px;
-        color: #555;
-        margin-top: 10px;
+        color: #BBBBBB;
         font-weight: 400;
-      ">
+        margin-top: 10px;
+    ">
         Tu mentora de evolución
-      </p>
-    </div>
-    """,
-    unsafe_allow_html=True
-)
+    </p>
+</div>
+""", unsafe_allow_html=True)
 
 # --- ESTADO DE SESIÓN ---
 if "logged_in" not in st.session_state:
