@@ -1,0 +1,20 @@
+# .gitignore
+
+# Streamlit secrets
+.streamlit/secrets.toml
+
+# Archivos temporales
+__pycache__/
+*.pyc
+.DS_Store
+
+# Entorno virtual
+venv/
+env/
+.env
+
+# Logs
+*.log
+
+# Archivos del sistema
+Thumbs.db
