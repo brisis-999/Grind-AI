@@ -162,7 +162,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# --- LOGO ANIMADO: GRIND en rojo vino, sin fondo, sin bordes ---
+# --- LOGO ANIMADO: GRIND centrado, rojo vino, sin duplicados ---
 st.markdown("""
 <style>
 @keyframes pulse {
@@ -170,13 +170,16 @@ st.markdown("""
     50% { opacity: 1; transform: scale(1.03); }
     100% { opacity: 0.8; transform: scale(1); }
 }
+.logo-container {
+    text-align: center;
+    margin: 60px 0 20px 0;
+}
 .logo-animated {
     font-family: 'Courier New', monospace;
     font-weight: 900;
     font-size: 72px;
     color: #E63946;
-    text-align: center;
-    margin: 40px 0 10px 0;
+    display: inline-block;
     animation: pulse 2s infinite;
     text-transform: uppercase;
     letter-spacing: -2px;
@@ -186,13 +189,15 @@ st.markdown("""
     font-size: 18px;
     color: #BBBBBB;
     text-align: center;
-    margin-top: 0;
-    margin-bottom: 30px;
+    margin-top: 8px;
+    display: block;
 }
 </style>
 
-<div class="logo-animated">GRIND</div>
-<p class="tagline">Tu mentora de evolución</p>
+<div class="logo-container">
+    <div class="logo-animated">GRIND</div>
+    <p class="tagline">Tu mentora de evolución</p>
+</div>
 """, unsafe_allow_html=True)
 
 # --- ESTADO DE SESIÓN ---
