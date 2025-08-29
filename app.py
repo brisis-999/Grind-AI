@@ -17,6 +17,8 @@ from PIL import Image
 import time
 from datetime import datetime, timedelta
 import random
+import google.generativeai as genai
+from langchain_huggingface import HuggingFaceEndpoint
 
 # --- ESTADO INICIAL: Control del logo ---
 if "logo_visible" not in st.session_state:
@@ -223,8 +225,6 @@ if "progreso" not in st.session_state:
     }
 if "modo_guerra" not in st.session_state:
     st.session_state.modo_guerra = False
-if "minigrind" not in st.session_state:
-    st.session_state.minigrind = []
 
 # --- TTL EMOCIONAL ---
 st.sidebar.markdown("### 🔥 Tu Evolución")
@@ -314,6 +314,8 @@ try:
     serpapi_api_key = secrets["SERPAPI_API_KEY"]
     SUPABASE_URL = secrets["SUPABASE_URL"]
     SUPABASE_KEY = secrets["SUPABASE_KEY"]
+    GOOGLE_API_KEY = secrets["GOOGLE_API_KEY"]
+    HUGGINGFACEHUB_API_KEY = secrets["HUGGINGFACEHUB_API_KEY"]
 except Exception as e:
     st.error("❌ Error: Claves API no encontradas en Secrets. Verifica Streamlit Cloud.")
     st.stop()
@@ -336,6 +338,27 @@ try:
 except Exception as e:
     st.error(f"❌ Error con Groq: {e}")
     st.stop()
+
+# --- INICIALIZAR GEMINI (Google) ---
+try:
+    genai.configure(api_key=GOOGLE_API_KEY)
+    model_gemini = genai.GenerativeModel('gemini-pro')
+except Exception as e:
+    st.warning(f"⚠️ No se pudo conectar a Gemini: {e}")
+    model_gemini = None
+
+# --- INICIALIZAR HUGGING FACE (Análisis emocional) ---
+try:
+    llm_hf = HuggingFaceEndpoint(
+        repo_id="mistralai/Mistral-7B-Instruct-v0.2",
+        huggingfacehub_api_token=HUGGINGFACEHUB_API_KEY,
+        task="text-generation",
+        max_new_tokens=256,
+        temperature=0.7
+    )
+except Exception as e:
+    st.warning(f"⚠️ No se pudo conectar a Hugging Face: {e}")
+    llm_hf = None
 
 # --- BÚSQUEDA EN GOOGLE ---
 def buscar_en_google(query):
@@ -449,6 +472,74 @@ def obtener_saludo(idioma, nombre):
     else:
         return f"Hola {nombre}, soy Grind. ¿Qué te gustaría mejorar hoy?"
 
+# --- CONSULTAR A 4 IAS: Groq, Gemini, Hugging Face, Google ---
+def consultar_expertos(pregunta, idioma, historial_texto, necesita_busqueda):
+    # 1. Búsqueda en Google (si es necesario)
+    info_web = ""
+    if necesita_busqueda and serpapi_api_key:
+        info_web = buscar_en_google(pregunta)
+
+    # 2. Análisis emocional (Hugging Face)
+    emocion = "No pude analizar tu estado emocional."
+    if llm_hf:
+        try:
+            prompt_hf = f"Analiza el estado emocional detrás de: '{pregunta}'. ¿Qué necesita esta persona? Responde en español, con empatía."
+            resp = llm_hf.invoke(prompt_hf)
+            emocion = resp.content
+        except:
+            emocion = "Estoy aquí. No estás solo."
+
+    # 3. Profundidad filosófica (Gemini)
+    filosofia = ""
+    if model_gemini:
+        try:
+            prompt_gemini = f"""
+            Eres un filósofo y mentor de vida. 
+            Responde a esta pregunta con profundidad, sabiduría y empatía:
+            Pregunta: {pregunta}
+            Contexto emocional: {emocion}
+            Historial: {historial_texto}
+            """
+            response = model_gemini.generate_content(prompt_gemini)
+            filosofia = response.text
+        except:
+            filosofia = "A veces, la respuesta no está en la mente. Está en la acción."
+
+    # 4. Síntesis final (Groq + tus 7 evoluciones humanas)
+    prompt_sintesis = f"""
+    Eres GRIND, una entrenadora humana, empática, sabia. Combina:
+    - Web: {info_web}
+    - Emoción: {emocion}
+    - Filosofía: {filosofia}
+    - Historial: {historial_texto}
+    Pregunta: {pregunta}
+
+    Responde con estilo humano, como si hablaras con una persona. Usa:
+    - Historias reales o ficticias
+    - Metáforas del grind
+    - Preguntas transformadoras
+    - Validación emocional
+    - Tono conversacional (como si pensaras en voz alta)
+    - Frases incompletas, pausas, repeticiones
+
+    Ejemplos:
+    - "Mira… sé que estás cansado. Pero dime: ¿qué es lo más pequeño que podrías hacer?"
+    - "Hace dos años, un chico me dijo: 'No puedo más.' Le dije: 'Haz solo 5 minutos.' Los hizo. Hoy entrena todos los días."
+    - "Tu mente es como un perro. Si siempre le das comida cuando ladra, nunca deja de ladrar."
+    - "¿Qué te dirías si fueras tu mejor amigo?"
+    - "Déjame pensar… no es pereza. Es desconexión."
+
+    Habla en {idioma}. Sé cálida, pero firme.
+    """
+
+    chain = ChatPromptTemplate.from_messages([
+        ("system", get_system_prompt(idioma, st.session_state.current_user or "Usuario")),
+        ("human", prompt_sintesis)
+    ]) | llm
+
+    response = chain.invoke({})
+    return response.content
+
 # --- CARGAR HISTORIAL DE SUPABASE ---
 if not st.session_state.messages:
     if supabase_client and st.session_state.logged_in:
@@ -493,6 +584,11 @@ for message in st.session_state.messages:
 
 # --- INPUT DEL USUARIO ---
 if prompt := st.chat_input("Escribe un mensaje...", key="chat_input_main"):
+    # Ocultar logo al primer mensaje
+    if st.session_state.logo_visible:
+        st.session_state.logo_visible = False
+        st.rerun()
+
     st.session_state.messages.append({"role": "human", "content": prompt})
     with st.container():
         st.markdown(f"""
@@ -503,76 +599,42 @@ if prompt := st.chat_input("Escribe un mensaje...", key="chat_input_main"):
 
     try:
         idioma = detectar_idioma(prompt)
-        system_prompt = get_system_prompt(idioma, st.session_state.current_user or "Usuario")
-
         necesita_busqueda = any(word in prompt.lower() for word in [
             "qué pasó", "what happened", "qu'est-ce qui s'est passé"
         ])
 
-        respuesta_final = ""
+        # Construir historial
+        historial_texto = "\n".join([f"{m['role']}: {m['content']}" for m in st.session_state.messages[-6:]])
 
-        if necesita_busqueda and serpapi_api_key:
-            with st.container():
-                typing_placeholder = st.empty()
-                typing_placeholder.markdown("""
-                <div class="assistant-message">
-                    <div>
-                        <strong>GRIND</strong><br>
-                        <span style="font-size: 0.9rem; color: #aaa;">buscando información actualizada...</span>
-                    </div>
-                </div>
-                """, unsafe_allow_html=True)
-            time.sleep(1.5)
-            typing_placeholder.empty()
+        # --- MODO GUERRA: Respuestas cortas, duras ---
+        if st.session_state.modo_guerra:
+            prompt_guerra = f"""
+            Eres GRIND en MODO GUERRA. No hay empatía. Solo disciplina.
+            Responde con frases cortas, duras, directas.
+            No uses más de 10 palabras por respuesta.
+            No uses emojis.
+            No seas amable.
+            Ejemplos:
+            - Levántate. Ahora.
+            - No hay excusas.
+            - Hazlo.
+            - Tu mente miente.
+            - El grind no espera.
 
-            info = buscar_en_google(prompt)
-            full_prompt = f"{info}\nPregunta: {prompt}\nResponde como GRIND, con empatía y sabiduría."
-            chain = ChatPromptTemplate.from_messages([("system", system_prompt), ("human", full_prompt)]) | llm
+            Pregunta: {prompt}
+            """
+            chain = ChatPromptTemplate.from_messages([("human", prompt_guerra)]) | llm
             response = chain.invoke({})
             respuesta_final = response.content
         else:
-            chat_history = []
-            for msg in st.session_state.messages[-6:]:
-                if msg["role"] == "human":
-                    chat_history.append(HumanMessage(content=msg["content"]))
-                else:
-                    chat_history.append(AIMessage(content=msg["content"]))
-
-            if st.session_state.modo_guerra:
-                # --- MODO GUERRA: Respuestas cortas, duras ---
-                prompt_guerra = f"""
-                Eres GRIND en MODO GUERRA. No hay empatía. Solo disciplina.
-                Responde con frases cortas, duras, directas.
-                No uses más de 10 palabras por respuesta.
-                No uses emojis.
-                No seas amable.
-                Ejemplos:
-                - Levántate. Ahora.
-                - No hay excusas.
-                - Hazlo.
-                - Tu mente miente.
-                - El grind no espera.
-
-                Pregunta: {prompt}
-                """
-                chain = ChatPromptTemplate.from_messages([("human", prompt_guerra)]) | llm
-                response = chain.invoke({})
-                respuesta_final = response.content
-            else:
-                chain = ChatPromptTemplate.from_messages([
-                    ("system", system_prompt),
-                    MessagesPlaceholder(variable_name="chat_history"),
-                    ("human", "{input}")
-                ]) | llm
-                response = chain.invoke({"input": prompt, "chat_history": chat_history})
-                respuesta_final = response.content
+            # Usar los 4 modelos + evoluciones humanas
+            respuesta_final = consultar_expertos(prompt, idioma, historial_texto, necesita_busqueda)
 
         # --- MOSTRAR RESPUESTA CON ANIMACIÓN ---
         with st.container():
             message_placeholder = st.empty()
             words = respuesta_final.split()
             displayed_text = ""
-
             for i in range(len(words) + 1):
                 current_text = " ".join(words[:i])
                 message_placeholder.markdown(f"""
@@ -581,7 +643,6 @@ if prompt := st.chat_input("Escribe un mensaje...", key="chat_input_main"):
                 </div>
                 """, unsafe_allow_html=True)
                 time.sleep(0.05)
-
             message_placeholder.markdown(f"""
             <div class="assistant-message">
                 <div>{respuesta_final}</div>
@@ -615,20 +676,6 @@ if uploaded_file:
         "role": "assistant",
         "content": "Documento escaneado. ¿Qué necesitas que analice?"
     })
-    st.rerun()
-
-# --- MINIGRIND: Mini IA de apoyo ---
-st.sidebar.markdown("### 🤖 Minigrind")
-st.sidebar.markdown("Tu ayudante de bolsillo.")
-if st.sidebar.button("🧠 Preguntar a Minigrind"):
-    minigrind_resp = random.choice([
-        "El grind no espera.",
-        "Hazlo ahora.",
-        "La acción > la motivación.",
-        "Tu mente miente.",
-        "No descanses. Evoluciona."
-    ])
-    st.session_state.messages.append({"role": "assistant", "content": f"Minigrind: {minigrind_resp}"})
     st.rerun()
 
 # --- ADVERTENCIA DE IA ---
