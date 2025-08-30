@@ -83,17 +83,34 @@ if st.session_state.logo_visible:
     st.markdown("""
     <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
                 background-color: #343541; display: flex; flex-direction: column; 
-                justify-content: center; align-items: center; z-index: 1000; 
-                transition: opacity 0.8s ease;">
+                justify-content: center; align-items: center; z-index: 1000;">
         <div style="font-size: 60px; font-weight: 700; color: white;">GRIND</div>
         <p style="margin-top: 10px; font-size: 18px; color: #10A37F; font-style: italic;">
             Tu entrenador de élite
         </p>
     </div>
     """, unsafe_allow_html=True)
-    time.sleep(2)
-    st.session_state.logo_visible = False
-    st.rerun()
+
+    # Botón oculto para avanzar después de 2 segundos
+    if st.button("Cargar Chat", key="btn_cargar", help="Este botón se activa automáticamente"):
+        st.session_state.logo_visible = False
+
+    # Inyecta JavaScript para hacer clic automáticamente después de 2 segundos
+    st.markdown("""
+    <script>
+    setTimeout(function() {
+        const buttons = window.parent.document.querySelectorAll('button');
+        buttons.forEach(button => {
+            if (button.innerText.includes('Cargar Chat')) {
+                button.click();
+            }
+        });
+    }, 2000);
+    </script>
+    """, unsafe_allow_html=True)
+
+    # Detiene la ejecución aquí hasta que se cierre el logo
+    st.stop()
 
 # --- SIDEBAR ---
 with st.sidebar:
