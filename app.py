@@ -9,13 +9,13 @@ try:
 except (ImportError, KeyError):
     pass
 
-# --- CARGAR MÓDULO UTILS DE FORMA SEGURA ---
-import sys
+import streamlit as st
+import time
 import os
+import json
 
-# Asegurarse de que el directorio actual esté en el path
-sys.path.insert(0, os.path.dirname(__file__))
-
+# --- CARGAR MÓDULO UTILS DE FORMA SEGURA ---
+# Si utils no se puede importar, definimos funciones fallback
 try:
     from utils.helpers import detectar_idioma, cargar_json, manejar_error
     print("✅ Módulo 'utils.helpers' cargado correctamente")
@@ -24,19 +24,26 @@ except ImportError as e:
 
     # Definir funciones fallback
     def detectar_idioma(texto: str) -> str:
+        texto = texto.lower()
+        if any(p in texto for p in ["hola", "gracias", "necesito"]):
+            return "español"
+        elif any(p in texto for p in ["hello", "thanks", "need"]):
+            return "english"
         return "español"
 
     def cargar_json(ruta: str) -> dict:
-        print(f"[WARNING] No se pudo cargar {ruta}")
-        return {}
+        try:
+            with open(ruta, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        except Exception as e:
+            print(f"[ERROR] No se pudo cargar {ruta}: {e}")
+            return {}
 
     def manejar_error(mensaje: str, error=None):
         print(f"[ERROR] {mensaje}")
         return "Lo siento, no pude procesar tu solicitud."
 
 # --- CONFIGURACIÓN DE PÁGINA ---
-import streamlit as st
-
 st.set_page_config(
     page_title="GRIND CORE",
     page_icon="🔥",
@@ -51,11 +58,13 @@ def aplicar_estilo():
             css = f.read()
             st.markdown(f"<style>{css}</style>", unsafe_allow_html=True)
     except Exception as e:
+        # Estilo fallback si no se carga el CSS
         st.markdown(
             """
             <style>
-            body { background-color: #343541; color: #ECECF1; }
+            body { background-color: #343541; color: #ECECF1; font-family: 'Satoshi', sans-serif; }
             .stChatMessage { max-width: 800px; margin: 0 auto; }
+            .input-container { padding: 16px 20px; }
             </style>
             """,
             unsafe_allow_html=True
@@ -64,12 +73,71 @@ def aplicar_estilo():
 aplicar_estilo()
 
 # --- ESTADO DE SESIÓN ---
-if "logo_visible" not in st.session_state:
-    st.session_state.logo_visible = True
+if "welcome_done" not in st.session_state:
+    st.session_state.welcome_done = False
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-# --- CARGAR DATOS (con manejo de errores) ---
+# --- PANTALLA DE BIENVENIDA AUTOMÁTICA ---
+if not st.session_state.welcome_done:
+    st.markdown("""
+    <div id="welcome-screen" style="
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background-color: #343541;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        text-align: center;
+        color: white;
+        font-family: 'Satoshi', sans-serif;
+    ">
+        <div style="
+            font-size: 60px;
+            font-weight: 700;
+            color: white;
+            animation: pulse 2s infinite;
+        ">GRIND</div>
+        <p style="
+            margin-top: 20px;
+            font-size: 18px;
+            color: #10A37F;
+            font-style: italic;
+        ">Bienvenid@ a GRIND, tu entrenadora de élite</p>
+    </div>
+
+    <style>
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+    }
+    </style>
+
+    <script>
+    setTimeout(() => {
+        const welcome = document.getElementById('welcome-screen');
+        if (welcome) {
+            welcome.style.transition = 'opacity 0.5s';
+            welcome.style.opacity = '0';
+            setTimeout(() => { welcome.style.display = 'none'; }, 500);
+        }
+        // Forzar actualización
+        const elements = window.parent.document.querySelectorAll('input, button');
+        if (elements[0]) elements[0].dispatchEvent(new Event('focus'));
+    }, 2000);
+    </script>
+    """, unsafe_allow_html=True)
+
+    # Marcar que la bienvenida se mostró
+    time.sleep(2)
+    st.session_state.welcome_done = True
+    st.rerun()
+
+# --- CARGAR DATOS ---
 try:
     terapeuta = cargar_json("modelo_mental/terapeuta/terapeuta.json")
     findahelpline = cargar_json("fuentes/findahelpline.json")
@@ -77,40 +145,6 @@ except Exception as e:
     manejar_error("Error al cargar datos externos", e)
     terapeuta = {}
     findahelpline = {"sitio": "https://findahelpline.com"}
-
-# --- MOSTRAR LOGO ANIMADO (Inicio) ---
-if st.session_state.logo_visible:
-    st.markdown("""
-    <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-                background-color: #343541; display: flex; flex-direction: column; 
-                justify-content: center; align-items: center; z-index: 1000;">
-        <div style="font-size: 60px; font-weight: 700; color: white;">GRIND</div>
-        <p style="margin-top: 10px; font-size: 18px; color: #10A37F; font-style: italic;">
-            Tu entrenador de élite
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
-
-    # Botón oculto para avanzar después de 2 segundos
-    if st.button("Cargar Chat", key="btn_cargar", help="Este botón se activa automáticamente"):
-        st.session_state.logo_visible = False
-
-    # Inyecta JavaScript para hacer clic automáticamente después de 2 segundos
-    st.markdown("""
-    <script>
-    setTimeout(function() {
-        const buttons = window.parent.document.querySelectorAll('button');
-        buttons.forEach(button => {
-            if (button.innerText.includes('Cargar Chat')) {
-                button.click();
-            }
-        });
-    }, 2000);
-    </script>
-    """, unsafe_allow_html=True)
-
-    # Detiene la ejecución aquí hasta que se cierre el logo
-    st.stop()
 
 # --- SIDEBAR ---
 with st.sidebar:
@@ -134,7 +168,7 @@ if st.session_state.messages:
 def modo_crisis():
     mensajes_crisis = [
         "suicidarme", "kill myself", "no quiero vivir", "me quiero morir",
-        "no puedo más", "estoy roto", "end it all", "quiero morir", "kill me"
+        "no puedo más", "estoy roto", "end it all", "quiero morir"
     ]
     if any(p in ultimo.lower() for p in mensajes_crisis):
         msg_base = "🌟 Escucho tu dolor. No estás solo. Tu vida importa."
@@ -156,8 +190,6 @@ for message in st.session_state.messages:
         st.markdown(message["content"])
 
 # --- INPUT DEL USUARIO ---
-import time
-
 if prompt := st.chat_input("Escribe tu verdad..."):
     st.session_state.messages.append({"role": "human", "content": prompt})
     with st.chat_message("user"):
