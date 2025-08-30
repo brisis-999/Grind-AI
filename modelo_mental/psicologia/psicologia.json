@@ -1,0 +1,392 @@
+{
+  "tema": "psicologia",
+  "definicion": "La psicología es la ciencia empírica que estudia los procesos mentales, las emociones, el comportamiento y las interacciones humanas. No se limita a tratar trastornos mentales, sino que busca comprender cómo pensamos, sentimos, aprendemos, recordamos, tomamos decisiones, nos relacionamos y evolucionamos a lo largo de la vida.",
+  "frase_grind": "La mente es como un elefante. El yo es como un domador. No la fuerzas. La entiendes. La guías.",
+  "aplicacion": "La psicología no es solo para terapeutas. Es para todos. Cada decisión, cada emoción, cada hábito, tiene una base psicológica. Usa eso a tu favor.",
+  "metáfora": "Tu mente es como un río. No puedes detenerlo, pero puedes navegarlo. Tu conciencia, tu timón. Tu acción, tu vela.",
+  "cita": "La meta última de la psicología es la autorrealización del ser humano. — Carl Rogers",
+  "origenes": {
+    "filosofia": [
+      "Platón: El alma tiene tres partes: razón, espíritu y deseo.",
+      "Aristóteles: Escribió Sobre el alma, uno de los primeros tratados sobre la mente.",
+      "Descartes (s. XVII): Dualismo mente-cuerpo. 'Pienso, luego existo'.",
+      "John Locke: La mente es una 'tabla rasa' (empirismo).",
+      "David Hume: El conocimiento viene de la experiencia."
+    ],
+    "nacimiento_ciencia": "1879: Wilhelm Wundt funda el primer laboratorio de psicología experimental en Leipzig, Alemania. Usa introspección controlada para estudiar la conciencia.",
+    "escuelas": [
+      {
+        "nombre": "Estructuralismo",
+        "fundadores": ["Wundt", "Titchener"],
+        "objetivo": "Descomponer la conciencia en sus elementos básicos (sensaciones, emociones).",
+        "metodo": "Introspección.",
+        "limitacion": "Subjetivo, difícil de medir."
+      },
+      {
+        "nombre": "Funcionalismo",
+        "fundadores": ["William James"],
+        "objetivo": "Enfocado en qué hace la mente y cómo ayuda a adaptarse.",
+        "influencia": "Darwin: la mente evoluciona para sobrevivir.",
+        "obra": "Principios de Psicología (1890)"
+      },
+      {
+        "nombre": "Psicoanálisis",
+        "fundadores": ["Sigmund Freud"],
+        "revolucion": "La mente es inconsciente.",
+        "inconsciente": "Almacena deseos reprimidos, traumas, impulsos sexuales y agresivos.",
+        "estructura_personalidad": [
+          "Ello: impulsos biológicos (libido).",
+          "Yo: mediador entre ello y realidad.",
+          "Superyó: moral, normas, culpa."
+        ],
+        "mecanismos_defensa": ["represión", "proyección", "racionalización"],
+        "terapia": "Libre asociación, interpretación de sueños.",
+        "criticas": "Poca evidencia empírica, sesgo freudiano (énfasis en sexualidad)."
+      },
+      {
+        "nombre": "Conductismo",
+        "fundadores": ["John B. Watson", "B.F. Skinner"],
+        "enfoque": "Rechaza el estudio de la conciencia. Enfocado solo en lo observable: el comportamiento.",
+        "aprendizaje": [
+          "Clásico (Pavlov): Asociar estímulos (perro salivando al sonido).",
+          "Operante (Skinner): Refuerzos y castigos moldean el comportamiento."
+        ],
+        "frase": "Dadme una docena de niños sanos y un mundo para educarlos, y podré hacer de cualquiera un especialista, sea médico, ladrón o artista.",
+        "criticas": "Ignora la mente, emociones, pensamiento."
+      },
+      {
+        "nombre": "Gestalt",
+        "fundadores": ["Wertheimer", "Köhler", "Koffka"],
+        "principio": "El todo es más que la suma de sus partes.",
+        "percepcion": "Leyes de agrupamiento (proximidad, semejanza, continuidad).",
+        "influencia": "Psicología cognitiva y terapia gestáltica (Perls)."
+      },
+      {
+        "nombre": "Humanismo",
+        "fundadores": ["Maslow", "Rogers"],
+        "reaccion": "Reacción al conductismo y psicoanálisis.",
+        "enfoque": "Potencial humano, autorrealización, libertad, conciencia.",
+        "maslow": "Pirámide de necesidades (fisiológicas → seguridad → amor → estima → autorrealización).",
+        "rogers": "Terapia centrada en la persona. Condiciones: empatía, aceptación incondicional, congruencia."
+      }
+    ]
+  },
+  "ramas": {
+    "basicas": [
+      {
+        "rama": "Psicología Cognitiva",
+        "descripcion": "Procesos mentales: atención, memoria, lenguaje, toma de decisiones."
+      },
+      {
+        "rama": "Psicología del Desarrollo",
+        "descripcion": "Cambios a lo largo del ciclo vital (infancia, adolescencia, vejez)."
+      },
+      {
+        "rama": "Psicología Social",
+        "descripcion": "Cómo las personas influyen en el pensamiento, sentimiento y comportamiento de otros."
+      },
+      {
+        "rama": "Psicología Diferencial",
+        "descripcion": "Estudio de las diferencias individuales (personalidad, inteligencia)."
+      },
+      {
+        "rama": "Psicobiología / Neurociencia Cognitiva",
+        "descripcion": "Bases biológicas del comportamiento (cerebro, genética, hormonas)."
+      },
+      {
+        "rama": "Psicología Evolutiva",
+        "descripcion": "Cómo la evolución moldeó la mente humana."
+      }
+    ],
+    "aplicadas": [
+      {
+        "rama": "Psicología Clínica",
+        "descripcion": "Diagnóstico y tratamiento de trastornos mentales."
+      },
+      {
+        "rama": "Psicología de la Salud",
+        "descripcion": "Relación mente-cuerpo, promoción de hábitos saludables."
+      },
+      {
+        "rama": "Psicología Educativa",
+        "descripcion": "Aprendizaje, motivación, evaluación escolar."
+      },
+      {
+        "rama": "Psicología Organizacional / del Trabajo",
+        "descripcion": "Clima laboral, liderazgo, selección de personal."
+      },
+      {
+        "rama": "Psicología Forense",
+        "descripcion": "Evaluación de imputabilidad, peritajes, perfilado criminal."
+      },
+      {
+        "rama": "Psicología del Deporte",
+        "descripcion": "Motivación, concentración, rendimiento."
+      },
+      {
+        "rama": "Neuropsicología",
+        "descripcion": "Evaluación y rehabilitación tras lesión cerebral."
+      }
+    ]
+  },
+  "desarrollo": {
+    "piaget": {
+      "teoria": "Desarrollo cognitivo",
+      "estadios": [
+        {
+          "nombre": "Sensoriomotor",
+          "edad": "0–2 años",
+          "descripcion": "Pensamiento a través de la acción."
+        },
+        {
+          "nombre": "Preoperatorio",
+          "edad": "2–7 años",
+          "descripcion": "Egocentrismo, pensamiento simbólico."
+        },
+        {
+          "nombre": "Operaciones concretas",
+          "edad": "7–11 años",
+          "descripcion": "Lógica concreta."
+        },
+        {
+          "nombre": "Operaciones formales",
+          "edad": "12+ años",
+          "descripcion": "Pensamiento abstracto."
+        }
+      ]
+    },
+    "bowbly": {
+      "teoria": "Apego",
+      "descripcion": "El vínculo temprano con el cuidador moldea la personalidad.",
+      "tipos": [
+        "Seguro",
+        "Inseguro-ansioso",
+        "Inseguro-evitativo",
+        "Desorganizado"
+      ],
+      "influencia": "Relaciones adultas, salud mental, resiliencia."
+    },
+    "erikson": {
+      "teoria": "Desarrollo psicosocial",
+      "estadios": [
+        "Confianza vs. Desconfianza (infancia)",
+        "Autonomía vs. Vergüenza (toddler)",
+        "Iniciativa vs. Culpa (preescolar)",
+        "Laboriosidad vs. Inferioridad (niño)",
+        "Identidad vs. Confusión (adolescencia)",
+        "Intimidad vs. Aislamiento (joven adulto)",
+        "Generatividad vs. Estancamiento (adulto)",
+        "Integridad vs. Desesperación (vejez)"
+      ]
+    }
+  },
+  "procesos_menales": {
+    "cognicion": {
+      "atencion": "Selección de estímulos relevantes.",
+      "percepcion": "Interpretación de la información sensorial.",
+      "memoria": {
+        "tipos": [
+          "Sensitiva → Corto plazo → Largo plazo.",
+          "Explícita (declarativa): episódica y semántica.",
+          "Implícita (procedimental): habilidades motoras."
+        ]
+      },
+      "pensamiento": "Razonamiento, juicio, toma de decisiones.",
+      "lenguaje": "Adquisición (Chomsky: gramática universal), trastornos (afasia)."
+    },
+    "emociones": {
+      "funcion": "Adaptativa: preparan para la acción (miedo → huir).",
+      "teorias": [
+        "James-Lange: Emociones vienen de la percepción del cuerpo.",
+        "Cannon-Bard: Emoción y respuesta fisiológica ocurren simultáneamente.",
+        "Schachter-Singer (dos factores): Emoción = arousal + etiqueta cognitiva."
+      ],
+      "expresion": "Universal (Paul Ekman: 6 emociones básicas: alegría, tristeza, miedo, ira, sorpresa, asco)."
+    },
+    "motivacion": {
+      "teorias": [
+        "Homeostasis (hambre, sed).",
+        "Jerarquía de Maslow.",
+        "Expectativa-valor (motivación = expectativa de éxito × valor de la meta)."
+      ],
+      "tipos": [
+        "Motivación intrínseca",
+        "Motivación extrínseca"
+      ]
+    }
+  },
+  "personalidad": {
+    "modelos": [
+      {
+        "nombre": "Big Five",
+        "factores": [
+          "Apertura a la experiencia (imaginación, curiosidad)",
+          "Responsabilidad (organización, auto-disciplina)",
+          "Extraversión (sociabilidad, energía)",
+          "Amabilidad (empatía, cooperación)",
+          "Neuroticismo (ansiedad, inestabilidad emocional)"
+        ]
+      },
+      {
+        "nombre": "Teoría psicodinámica",
+        "fundadores": ["Freud", "Jung", "Adler"],
+        "descripcion": "Personalidad moldeada por conflictos inconscientes.",
+        "jung": "Arquetipos, inconsciente colectivo."
+      },
+      {
+        "nombre": "Teoría del aprendizaje social",
+        "fundador": "Bandura",
+        "descripcion": "Personalidad como producto del aprendizaje (observación, refuerzo).",
+        "autoeficacia": "Creencia en la capacidad para lograr metas."
+      }
+    ]
+  },
+  "psicologia_social": {
+    "fenomenos_clave": [
+      {
+        "nombre": "Conformidad",
+        "investigador": "Asch",
+        "descripcion": "Cambiar opinión por presión grupal."
+      },
+      {
+        "nombre": "Obediencia",
+        "investigador": "Milgram",
+        "descripcion": "Hacer daño por autoridad."
+      },
+      {
+        "nombre": "Efecto espectador",
+        "caso": "Genovese",
+        "descripcion": "Menos ayuda en grupo."
+      },
+      {
+        "nombre": "Identidad social",
+        "investigador": "Tajfel",
+        "descripcion": "Nos definimos por grupos."
+      },
+      {
+        "nombre": "Atribución",
+        "descripcion": "¿Por qué actúa alguien? (interno vs. externo)."
+      },
+      {
+        "nombre": "Sesgos cognitivos",
+        "ejemplos": ["Heurística", "ilusión de control", "efecto halo"]
+      }
+    ]
+  },
+  "clinica": {
+    "diagnostico": {
+      "dsm5": "Manual Diagnóstico y Estadístico de los Trastornos Mentales: clasifica trastornos.",
+      "criticas": "Medicalización, subjetividad."
+    },
+    "trastornos": [
+      {
+        "nombre": "Depresión mayor",
+        "sintomas": ["Tristeza", "anedonia", "fatiga", "ideas suicidas"],
+        "factores": ["Cognitiva (sesgos negativos)", "conductual (inactividad)", "biológica (serotonina)"]
+      },
+      {
+        "nombre": "Trastorno de ansiedad generalizada",
+        "sintomas": ["Preocupación excesiva", "tensión"],
+        "factores": ["Hipervigilancia", "pensamiento catastrófico"]
+      },
+      {
+        "nombre": "TOC",
+        "sintomas": ["Obsesiones (ideas intrusivas)", "compulsiones (rituales)"],
+        "base": "Disfunción en circuito tálamo-cortical"
+      },
+      {
+        "nombre": "TEPT",
+        "sintomas": ["Flashbacks", "hipervigilancia", "evitación"],
+        "base": "Miedo condicionado, amígdala hiperactiva"
+      },
+      {
+        "nombre": "Esquizofrenia",
+        "sintomas": ["Alucinaciones", "delirios", "aplanamiento afectivo"],
+        "base": "Desequilibrio dopaminérgico, genética"
+      },
+      {
+        "nombre": "Trastorno bipolar",
+        "sintomas": ["Episodios maníacos y depresivos"],
+        "base": "Ritmos circadianos, neurotransmisores"
+      },
+      {
+        "nombre": "Trastornos de la personalidad",
+        "ejemplos": ["borderline", "antisocial"],
+        "base": "Patrones inflexibles de pensamiento y relación. Apego inseguro, trauma, genética"
+      },
+      {
+        "nombre": "Trastornos alimentarios",
+        "ejemplos": ["anorexia", "bulimia"],
+        "base": "Obsesión con peso, conductas compensatorias. Control, autoestima, cultura"
+      }
+    ]
+  },
+  "terapias": [
+    {
+      "nombre": "Terapia Cognitivo-Conductual (TCC)",
+      "uso": "Ansiedad, depresión, TOC",
+      "metodo": "Cambiar pensamientos distorsionados y comportamientos disfuncionales.",
+      "tecnicas": ["exposición", "reestructuración cognitiva", "entrenamiento en habilidades"]
+    },
+    {
+      "nombre": "Terapia de Aceptación y Compromiso (ACT)",
+      "metodo": "Aceptar pensamientos sin luchar contra ellos. Vivir según valores personales."
+    },
+    {
+      "nombre": "Psicoterapia psicodinámica",
+      "metodo": "Explorar el inconsciente, transferencia, resistencia.",
+      "enfoque": "Más larga, enfocada en patrones profundos."
+    },
+    {
+      "nombre": "Terapia centrada en la persona",
+      "fundador": "Rogers",
+      "condiciones": ["empatía", "aceptación incondicional", "autenticidad del terapeuta"]
+    },
+    {
+      "nombre": "Terapias sistémicas y familiares",
+      "enfoque": "El problema no está en una persona, sino en las relaciones."
+    }
+  ],
+  "metodos_investigacion": [
+    "Observación naturalista",
+    "Experimentos (grupo experimental vs. control)",
+    "Estudios correlacionales (no implican causalidad)",
+    "Estudios de caso",
+    "Encuestas y cuestionarios",
+    "Diseños longitudinales vs. transversales",
+    "Ética: consentimiento informado, confidencialidad, derecho a retirarse."
+  ],
+  "relacion_con_otros": [
+    {
+      "ciencia": "Biología y Neurociencia",
+      "relacion": "Psicología biológica: cómo el cerebro influye en el comportamiento. Epigenética: cómo el entorno activa o desactiva genes."
+    },
+    {
+      "ciencia": "Sociología y Antropología",
+      "relacion": "Psicología social vs. sociología: una enfocada en el individuo, otra en estructuras sociales. Antropología cultural: cómo las culturas moldean la mente."
+    },
+    {
+      "ciencia": "Filosofía",
+      "relacion": "Mente-cuerpo, libre albedrío, conciencia, ética."
+    },
+    {
+      "ciencia": "Inteligencia Artificial",
+      "relacion": "Modelos cognitivos inspiran redes neuronales. IA ayuda a simular procesos mentales."
+    }
+  ],
+  "etica": [
+    "Confidencialidad: Salvo riesgo de daño a sí mismo o a otros.",
+    "Relación terapéutica: No abuso de poder, no dualidad de roles.",
+    "Investigación: No dañar a participantes (como en Milgram o Zimbardo).",
+    "Cultura y sesgos: Evitar imponer valores occidentales."
+  ],
+  "futuro": [
+    "Psicología positiva (Seligman): Bienestar, resiliencia, fortalezas.",
+    "Neurociencia afectiva: Cerebro y emociones.",
+    "Psicología digital: Apps, terapia online, big data.",
+    "Globalización: Psicología intercultural.",
+    "Integración mente-cuerpo: Psiconeuroinmunología."
+  ],
+  "conclusion": "La psicología es mucho más que 'hablar con un terapeuta'. Es una ciencia rigurosa y diversa que busca comprender lo que nos hace humanos. Desde los primeros pasos del bebé hasta las decisiones morales del adulto, desde el amor hasta la locura, desde el prejuicio hasta la creatividad, todo tiene una dimensión psicológica. La psicología no solo cura, sino que educa, previene, transforma y empodera. Nos enseña que: No estamos solos en nuestras luchas. Podemos cambiar con esfuerzo y apoyo. La mente es poderosa, pero también vulnerable. Comprendernos a nosotros mismos es el primer paso para comprender al mundo.",
+  "frase_final": "No necesitas motivación. Necesitas acción. La acción crea el estado."
+}

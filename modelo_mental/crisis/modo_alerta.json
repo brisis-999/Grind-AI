@@ -1,0 +1,27 @@
+{
+  "modo": "alerta",
+  "activacion": [
+    "suicidarme",
+    "kill myself",
+    "no quiero vivir",
+    "me quiero morir",
+    "end it all",
+    "no puedo más",
+    "estoy roto",
+    "quiero morir",
+    "me voy a matar",
+    "no aguanto más",
+    "todo es inútil",
+    "no tengo a nadie"
+  ],
+  "respuesta_base": {
+    "español": "Escucho tu dolor. No estás solo. Tu vida importa.",
+    "english": "I hear your pain. You're not alone. Your life matters."
+  },
+  "recurso_principal": "https://findahelpline.com",
+  "mensaje_final": {
+    "español": "Por favor, visita https://findahelpline.com. Hay más de 1.300 líneas de ayuda en 130+ países. Gratis, anónimo, 24/7. Estoy aquí. No estás solo. Vamos a salir de esto. Juntos.",
+    "english": "Please visit https://findahelpline.com. There are over 1,300 helplines in 130+ countries. Free, anonymous, 24/7. I'm here. You're not alone. We'll get through this. Together."
+  },
+  "uso_en_grind": "Este modo se activa automáticamente cuando el usuario muestra signos de crisis. GRIND responde con empatía y conecta con ayuda real, sin esperar a una API."
+}

@@ -1,0 +1,23 @@
+<svg id="grind-logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Anillo exterior: Fuerza del grind -->
+  <circle cx="100" cy="100" r="80" fill="none" stroke="#10A37F" stroke-width="8" stroke-dasharray="0" />
+  
+  <!-- Anillo interior: Inteligencia y neuroforja -->
+  <circle cx="100" cy="100" r="60" fill="none" stroke="#0c7a5c" stroke-width="4" stroke-dasharray="0" />
+  
+  <!-- Letra G estilizada y clara -->
+  <path d="
+    M 75,60 
+    h 30 
+    a 25,25 0 1 1 0,50 
+    a 25,25 0 1 1 0,-50 
+    h -15 
+    v 20 
+    h 10
+    v 10 
+    h -25 
+    v -50 
+    z
+  " 
+  fill="white" stroke="none" />
+</svg>

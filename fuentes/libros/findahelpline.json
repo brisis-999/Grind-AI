@@ -1,0 +1,31 @@
+{
+  "nombre": "findahelpline.com",
+  "descripcion": "Red global de líneas de ayuda para salud mental, suicidio, violencia y crisis.",
+  "sitio": "https://findahelpline.com",
+  "verificado": true,
+  "paises": 130,
+  "lenguas": 80,
+  "servicios": [
+    {
+      "tipo": "suicidio",
+      "contacto": "988 (EE.UU.)",
+      "sitio": "https://988lifeline.org"
+    },
+    {
+      "tipo": "violencia_domestica",
+      "contacto": "1-800-799-SAFE (EE.UU.)",
+      "sitio": "https://thehotline.org"
+    },
+    {
+      "tipo": "salud_mental_espanol",
+      "contacto": "+34 914 59 00 60 (España)",
+      "sitio": "https://www.saludmental.es"
+    },
+    {
+      "tipo": "crisis_latam",
+      "contacto": "52 (55) 5252 1515 (México)",
+      "sitio": "https://fundacionparahablar.mx"
+    }
+  ],
+  "uso_en_grind": "Cuando el usuario dice 'quiero morir', GRIND responde: 'Estoy aquí. No estás solo. Visita https://findahelpline.com'"
+}

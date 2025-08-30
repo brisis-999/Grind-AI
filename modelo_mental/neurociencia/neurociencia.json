@@ -1,0 +1,292 @@
+{
+  "tema": "neurociencia",
+  "definicion": "La neurociencia es la ciencia interdisciplinaria que estudia la estructura, función, desarrollo, genética, bioquímica, fisiología, farmacología y patología del sistema nervioso, con especial enfoque en el cerebro. Combina biología, psicología, medicina, física, química, matemáticas, informática y filosofía.",
+  "frase_grind": "Tu mente no se entrena. Se neuroforja. Cada acción deliberada crea nuevas conexiones.",
+  "aplicacion": "La neurociencia no es solo ciencia. Es entrenamiento. Cada repetición, cada decisión, cada emoción, transforma tu cerebro. Usa eso a tu favor.",
+  "metáfora": "Tu cerebro es como un río. No es fijo. Fluye. Cada pensamiento es una gota. Cada hábito, un canal. El grind es la dirección del agua.",
+  "cita": "Somos nuestro cerebro. Pero también somos mucho más: conciencia, cultura, ética, libertad.",
+  "historia": {
+    "antiguedad": [
+      "Egipto (1600 a.C.): El Papiro de Edwin Smith describe lesiones cerebrales, aunque el cerebro era considerado irrelevante.",
+      "Grecia (s. V a.C.): Hipócrates afirmó que el cerebro era el asiento del pensamiento.",
+      "Galeno (s. II d.C.): Estudió el cerebro en animales, propuso que los 'espíritus vitales' fluían por los ventrículos."
+    ],
+    "renacimiento": [
+      "Andrés Vesalio (s. XVI): Publicó De humani corporis fabrica, con ilustraciones anatómicas precisas.",
+      "René Descartes (s. XVII): Propuso el dualismo mente-cuerpo y que la glándula pineal era el punto de unión."
+    ],
+    "siglo_xviii_xix": [
+      "Luigi Galvani: Descubrió que los músculos se contraen con electricidad (1791).",
+      "Teoría celular (1839): Aplicada al cerebro.",
+      "Camillo Golgi y Santiago Ramón y Cajal: Usaron tinción de plata. Cajal demostró que el sistema nervioso está formado por neuronas individuales. Padre de la neurociencia moderna."
+    ],
+    "siglo_xx": [
+      "Hodgkin y Huxley: Describieron el potencial de acción (1952, Nobel 1963).",
+      "Descubrimiento de neurotransmisores: Acetilcolina, dopamina, serotonina.",
+      "EEG (Hans Berger, 1924), estudios de lesión cerebral (Phineas Gage, Broca, Wernicke).",
+      "Neuropsicología: Estudio de cómo lesiones cerebrales afectan el comportamiento."
+    ],
+    "siglo_xxi": [
+      "Proyectos internacionales: BRAIN Initiative (EE.UU.), Human Brain Project (UE).",
+      "Avances en imagen cerebral (fMRI, PET), genética, IA, neurotecnología.",
+      "Interés creciente en la conciencia, neuroética, neuroeducación, neuromarketing."
+    ]
+  },
+  "anatomia": {
+    "snc": {
+      "descripcion": "Sistema Nervioso Central: encéfalo y médula espinal.",
+      "estructuras": [
+        "Corteza cerebral: pensamiento, percepción, lenguaje, movimiento voluntario.",
+        "Lóbulo frontal: planificación, toma de decisiones, control inhibitorio, personalidad, habla (área de Broca).",
+        "Lóbulo parietal: integración sensorial (tacto, espacio).",
+        "Lóbulo temporal: audición, memoria (hipocampo), reconocimiento de rostros.",
+        "Lóbulo occipital: visión.",
+        "Cerebelo: coordinación motora, equilibrio, aprendizaje motor.",
+        "Tronco encefálico: control de funciones vitales (respiración, ritmo cardíaco).",
+        "Tálamo: estación de relevo sensorial (excepto olfato).",
+        "Hipotálamo: regulación de homeostasis: hambre, sed, temperatura, sueño, emociones.",
+        "Hipocampo: formación de recuerdos explícitos.",
+        "Amígdala: procesamiento de emociones, especialmente el miedo.",
+        "Núcleo accumbens: sistema de recompensa, placer, adicción.",
+        "Ganglios basales: control del movimiento, hábitos, aprendizaje.",
+        "Glándula pineal: produce melatonina (regula el sueño)."
+      ]
+    },
+    "snp": {
+      "descripcion": "Sistema Nervioso Periférico: nervios craneales y espinales.",
+      "divisiones": [
+        "Somático: control voluntario de músculos.",
+        "Autónomo: control involuntario (simpático y parasimpático)."
+      ]
+    }
+  },
+  "celulas": {
+    "neuronas": {
+      "descripcion": "Unidades funcionales del sistema nervioso. ~86,000 millones en el cerebro humano.",
+      "partes": [
+        "Cuerpo celular (soma): contiene el núcleo y organelos.",
+        "Dendritas: reciben señales de otras neuronas.",
+        "Axón: transmite señales lejos del soma. Puede estar mielinizado.",
+        "Terminal axónica: libera neurotransmisores en la sinapsis."
+      ],
+      "tipos": [
+        "Sensoriales: desde receptores a SNC.",
+        "Motoras: desde SNC a músculos/glándulas.",
+        "Interneuronas: conectan neuronas dentro del SNC (99% del total)."
+      ]
+    },
+    "gliales": {
+      "descripcion": "Células gliales superan en número a las neuronas (10:1). Esenciales para el funcionamiento.",
+      "tipos": [
+        "Astrocitos: soporte estructural, regulan el ambiente químico, forman la barrera hematoencefálica.",
+        "Oligodendrocitos (SNC) / Células de Schwann (SNP): producen mielina.",
+        "Microglía: defensa inmune del SNC. Fagocitan células muertas y patógenos.",
+        "Células ependimarias: línea los ventrículos, producen líquido cefalorraquídeo."
+      ]
+    }
+  },
+  "funcionamiento": {
+    "potencial_de_accion": "Las neuronas mantienen un potencial de membrana en reposo (~ -70 mV). Cuando se estimulan, entran iones Na⁺ → despolarización. Si alcanza el umbral (~ -55 mV), se genera un potencial de acción (todo-o-nada). Luego, K⁺ sale → repolarización. La bomba Na⁺/K⁺ restaura el equilibrio.",
+    "sinapsis": "Comunicación entre neuronas. El potencial de acción abre canales de Ca²⁺ → liberación de neurotransmisores → unión a receptores → EPSP o IPSP → si suma supera umbral, nueva neurona dispara.",
+    "neurotransmisores_clave": [
+      "Glutamato: principal excitador. Aprendizaje, memoria.",
+      "GABA: principal inhibidor. Calma la actividad neuronal.",
+      "Dopamina: recompensa, motivación, movimiento. Implicada en Parkinson y adicción.",
+      "Serotonina: estado de ánimo, sueño, apetito. Relacionada con depresión.",
+      "Acetilcolina: movimiento muscular, memoria. Implicada en Alzheimer.",
+      "Noradrenalina: alerta, atención, estrés.",
+      "Endorfinas: analgésicos naturales, placer.",
+      "Oxitocina: vínculo social, amor, parto."
+    ]
+  },
+  "circuitos": {
+    "redes_cerebrales": [
+      {
+        "nombre": "Red de modo por defecto (DMN)",
+        "actividad": "Reposo, soñar despierto, recordar el pasado. Implicada en auto-referencia."
+      },
+      {
+        "nombre": "Red de atención ejecutiva",
+        "actividad": "Tareas cognitivas exigentes: resolver problemas, planificar."
+      },
+      {
+        "nombre": "Red saliente",
+        "actividad": "Detecta estímulos importantes y cambia entre redes."
+      },
+      {
+        "nombre": "Red límbica",
+        "actividad": "Emociones, motivación, memoria (amígdala, hipocampo, hipotálamo)."
+      }
+    ],
+    "estudio": "Estas redes se estudian con fMRI de reposo y EEG."
+  },
+  "desarrollo": {
+    "etapas": [
+      "Neurogénesis: formación de neuronas a partir de células madre neurales.",
+      "Migración neuronal: las neuronas viajan a su destino (ej. corteza cerebral).",
+      "Diferenciación: las neuronas adoptan formas y funciones específicas.",
+      "Mielineización: los axones se recubren de mielina (continúa hasta los 25 años).",
+      "Sinaptogénesis: formación masiva de sinapsis (pico en los primeros años).",
+      "Podado sináptico: eliminación de sinapsis poco usadas ('uso o pérdida').",
+      "Plasticidad crítica: periodos sensibles (ej. lenguaje antes de los 7 años)."
+    ],
+    "influencias": "El desarrollo es influenciado por genes y experiencias (ambiente, estrés, nutrición, estimulación)."
+  },
+  "plasticidad": {
+    "definicion": "Capacidad del cerebro para cambiar su estructura y función en respuesta a la experiencia.",
+    "tipos": [
+      "Plasticidad sináptica: fortalecimiento (LTP) o debilitamiento (LTD) de sinapsis. Base del aprendizaje y la memoria.",
+      "Plasticidad estructural: crecimiento de dendritas, formación de nuevas sinapsis.",
+      "Plasticidad funcional: una región asume funciones de otra dañada (ej. tras un derrame)."
+    ],
+    "ejemplos": [
+      "Taxistas de Londres tienen hipocampos más grandes (memoria espacial).",
+      "Músicos tienen áreas auditivas y motoras más desarrolladas.",
+      "Rehabilitación tras lesión cerebral."
+    ]
+  },
+  "neurociencia_cognitiva": {
+    "procesos": [
+      {
+        "funcion": "Atención",
+        "areas": "Corteza prefrontal, parietal"
+      },
+      {
+        "funcion": "Memoria",
+        "areas": "Hipocampo (explícita), ganglios basales (implícita)"
+      },
+      {
+        "funcion": "Lenguaje",
+        "areas": "Área de Broca (producción), Wernicke (comprensión)"
+      },
+      {
+        "funcion": "Toma de decisiones",
+        "areas": "Corteza prefrontal ventromedial"
+      },
+      {
+        "funcion": "Conciencia",
+        "areas": "Red de modo por defecto, tálamo, corteza posterior"
+      },
+      {
+        "funcion": "Percepción",
+        "areas": "Corteza sensorial primaria y asociativa"
+      }
+    ],
+    "modelos": [
+      "Procesamiento en paralelo distribuido.",
+      "Teoría de la mente (entender que otros tienen creencias distintas).",
+      "Neurociencia del libre albedrío: ¿Somos realmente libres? (Libet, 1983: actividad cerebral antes de la decisión consciente)."
+    ]
+  },
+  "emociones": {
+    "base_neural": [
+      "Miedo: Amígdala, hipotálamo, hipocampo.",
+      "Alegría: Sistema de recompensa (núcleo accumbens, vía dopaminérgica mesolímbica).",
+      "Tristeza: Disminución de actividad en corteza prefrontal, alteración de serotonina.",
+      "Empatía: Corteza cingulada anterior, ínsula, neuronas espejo."
+    ],
+    "neuronas_espejo": "Se activan cuando realizamos una acción o vemos a otro hacerla. Implicadas en aprendizaje, empatía, lenguaje. Descubiertas en monos por Rizzolatti (1990s)."
+  },
+  "clinica": {
+    "enfermedades_neurologicas": [
+      {
+        "nombre": "Alzheimer",
+        "descripcion": "Pérdida de memoria, placas de beta-amiloide, ovillos neurofibrilares. Afecta hipocampo y corteza."
+      },
+      {
+        "nombre": "Parkinson",
+        "descripcion": "Temblores, rigidez. Pérdida de neuronas dopaminérgicas en sustancia negra."
+      },
+      {
+        "nombre": "Esclerosis múltiple",
+        "descripcion": "Sistema inmune ataca mielina. Desmielinización."
+      },
+      {
+        "nombre": "Epilepsia",
+        "descripcion": "Descargas eléctricas anormales. Crisis convulsivas."
+      },
+      {
+        "nombre": "Derrame cerebral (ACV)",
+        "descripcion": "Isquemia o hemorragia. Daño cerebral agudo."
+      },
+      {
+        "nombre": "ELA",
+        "descripcion": "Degeneración de neuronas motoras."
+      }
+    ],
+    "trastornos_psiquiatricos": [
+      {
+        "nombre": "Depresión",
+        "descripcion": "Baja serotonina, noradrenalina, dopamina. Hipocampo reducido."
+      },
+      {
+        "nombre": "Ansiedad",
+        "descripcion": "Hiperactividad de amígdala, bajo control prefrontal."
+      },
+      {
+        "nombre": "Esquizofrenia",
+        "descripcion": "Desequilibrio dopaminérgico, alteraciones en corteza prefrontal, genética."
+      },
+      {
+        "nombre": "TOC",
+        "descripcion": "Disfunción en circuito tálamo-cortical."
+      },
+      {
+        "nombre": "Trastorno bipolar",
+        "descripcion": "Alteraciones en neurotransmisores y ritmos circadianos."
+      }
+    ]
+  },
+  "tecnicas": [
+    {
+      "tecnica": "fMRI",
+      "descripcion": "Mapea actividad cerebral mediante flujo sanguíneo. Alta resolución espacial."
+    },
+    {
+      "tecnica": "EEG",
+      "descripcion": "Registra actividad eléctrica en el cuero cabelludo. Alta resolución temporal."
+    },
+    {
+      "tecnica": "PET",
+      "descripcion": "Usa trazadores radiactivos para ver metabolismo o receptores."
+    },
+    {
+      "tecnica": "TMS",
+      "descripcion": "Estimulación magnética transcraneal. Estimula áreas no invasivamente."
+    },
+    {
+      "tecnica": "Registro neuronal unitario",
+      "descripcion": "Mide actividad de una neurona (en animales o cirugía)."
+    },
+    {
+      "tecnica": "Optogenética",
+      "descripcion": "Controla neuronas con luz (en animales modificados genéticamente)."
+    },
+    {
+      "tecnica": "CRISPR",
+      "descripcion": "Edición genética para estudiar genes en modelos animales."
+    }
+  ],
+  "neurotecnologia": {
+    "interfaces_cerebro_maquina": "Permiten controlar dispositivos con la mente. Aplicaciones: prótesis neurales, comunicación en personas con ELA. Ej: Neuralink, BrainGate.",
+    "ia_y_neurociencia": "Las redes neuronales artificiales se inspiran en el cerebro. La neurociencia ayuda a crear IA más eficiente; la IA ayuda a analizar datos cerebrales.",
+    "neuromodulacion": "Estimulación cerebral profunda (para Parkinson, depresión). Terapias con ultrasonido, luz, campos eléctricos."
+  },
+  "etica": [
+    "Neuromonitoreo: ¿Pueden leer nuestros pensamientos?",
+    "Neuroenhancement: ¿Es justo usar fármacos para mejorar memoria o atención?",
+    "Identidad personal: Si modificamos el cerebro, ¿seguimos siendo 'nosotros'?",
+    "Responsabilidad legal: Si una lesión cerebral causa comportamiento criminal, ¿es culpable?",
+    "Privacidad neuronal: ¿Quién posee nuestros datos cerebrales?"
+  ],
+  "futuro": [
+    "Mapear todo el conectoma humano (todas las conexiones neuronales).",
+    "Entender la conciencia (¿cómo surge de la materia?).",
+    "Curar enfermedades neurodegenerativas.",
+    "Mejorar la educación con neurociencia (neuroeducación).",
+    "Integrar mente y máquina de forma segura y ética.",
+    "Personalizar tratamientos según el cerebro individual (medicina de precisión)."
+  ],
+  "conclusion": "La neurociencia es una de las ciencias más fascinantes y transformadoras del siglo XXI. Cada descubrimiento nos acerca a entender no solo cómo funciona el cerebro, sino qué significa ser humano. Desde los impulsos eléctricos en una neurona hasta la experiencia de amar, recordar o crear arte, todo tiene una base en el cerebro. Y aunque aún queda mucho por descubrir, ya sabemos que el cerebro no es fijo, ni determinista, ni separado del entorno. Es plástico, adaptable, social y profundamente misterioso. 'Somos nuestro cerebro.' Pero también somos mucho más: conciencia, cultura, ética, libertad. La neurociencia no solo ilumina la biología, sino que nos obliga a repensar la filosofía, la educación, la justicia y el futuro de la humanidad.",
+  "frase_final": "No entrenes tu mente. Neuroforjala."
+}

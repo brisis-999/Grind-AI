@@ -1,0 +1,494 @@
+{
+  "tema": "historia_y_cultura",
+  "definicion": "La historia y cultura del mundo es un tapiz inmenso, complejo y hermoso, tejido por miles de pueblos, lenguas, religiones, guerras, inventos y sueños. Desde los primeros pasos del Homo sapiens en África hasta las megaciudades del siglo XXI, la humanidad ha buscado sentido, poder, conocimiento y conexión.",
+  "frase_grind": "Aquel que no conoce la historia está condenado a repetirla. El que la domina, elige su evolución.",
+  "aplicacion": "La historia no es pasado. Es presente. Tus decisiones están moldeadas por lo que vino antes. Conócete. Conoce tu mundo. Elige tu camino.",
+  "metáfora": "La historia es como un río. No puedes detenerlo, pero puedes navegarlo. Tu cultura es tu barco. Tu conciencia, tu timón.",
+  "cita": "El que domina su historia, domina su identidad. El que domina su identidad, domina su destino.",
+  "origenes": {
+    "universo": {
+      "big_bang": "Hace 13.800 millones de años: el universo comienza como un punto infinitamente denso y caliente. Se expande, se enfría, y forman partículas, átomos, estrellas y galaxias.",
+      "formacion_tierra": "Hace 4.500 millones de años: la Tierra se forma por la acumulación de polvo y gas en el sistema solar. Condiciones iniciales: volcanes, impactos de meteoritos, atmósfera sin oxígeno.",
+      "origen_vida": "Hace 3.800 millones de años: primeras formas de vida (bacterias y arqueas en los océanos). Fotosíntesis aparece hace ~3.000 millones de años → oxígeno en la atmósfera."
+    },
+    "evolucion_humana": {
+      "primeros_hominidos": "Hace 6-7 millones de años: Sahelanthropus tchadensis, uno de los primeros ancestros bipedos. Separación entre linaje humano y chimpancé.",
+      "genero_homo": "Hace 2.5 millones de años: Homo habilis (primer uso de herramientas), Homo erectus (primero en salir de África, usó fuego).",
+      "homo_sapiens": "Hace 300,000 años: aparece en África (Etiopía, Marruecos). Características: cerebro grande, lenguaje simbólico, arte, tecnología compleja.",
+      "migracion": "Hace 70,000 años: Homo sapiens se expande por Eurasia, desplazando o mezclándose con neandertales y denisovanos.",
+      "revolucion_cognitiva": "Hace 50,000 años: arte rupestre (Cueva de Altamira), joyas, rituales funerarios, desarrollo del lenguaje complejo."
+    },
+    "revolucion_neolitica": {
+      "descripcion": "Hace ~10,000 años: fin del nomadismo → agricultura y ganadería.",
+      "primeras_aldeas": [
+        "Jericó (actual Cisjordania)",
+        "Çatalhöyük (Turquía)"
+      ],
+      "domesticacion": {
+        "plantas": ["trigo", "maíz"],
+        "animales": ["ovejas", "vacas"]
+      }
+    },
+    "primeras_civilizaciones": [
+      {
+        "nombre": "Mesopotamia",
+        "pueblos": ["Sumerios", "Babilonios", "Asirios"],
+        "ubicacion": "Actual Irak",
+        "logros": ["Primeras ciudades", "escritura cuneiforme", "Código de Hammurabi"]
+      },
+      {
+        "nombre": "Antiguo Egipto",
+        "ubicacion": "Valle del Nilo",
+        "logros": ["Pirámides", "jeroglíficos", "faraones", "religión politeísta"]
+      },
+      {
+        "nombre": "Valle del Indo",
+        "ubicacion": "Actual Pakistán/India",
+        "logros": ["Ciudades planificadas (Mohenjo-Daro)", "sistema de drenaje"]
+      },
+      {
+        "nombre": "China Shang/Zhou",
+        "ubicacion": "Río Amarillo",
+        "logros": ["Bronce", "escritura", "filosofía más tarde"]
+      },
+      {
+        "nombre": "Mesoamérica",
+        "pueblos": ["Olmecas"],
+        "ubicacion": "México",
+        "logros": ["Primeros juegos de pelota", "esculturas colosales"]
+      },
+      {
+        "nombre": "Andina",
+        "pueblos": ["Caral"],
+        "ubicacion": "Perú",
+        "logros": ["Centros ceremoniales", "agricultura en terrazas"]
+      }
+    ]
+  },
+  "historia_por_continente": {
+    "america": {
+      "norte": [
+        {
+          "pais": "Estados Unidos",
+          "independencia": "1776 (Guerra de Independencia vs. Reino Unido)",
+          "constitucion": "1787 (primera democracia moderna)",
+          "guerras_clave": [
+            "Guerra Civil (1861–1865): Norte vs. Sur, esclavitud",
+            "Primera y Segunda Guerra Mundial: potencia global",
+            "Guerra de Vietnam (1955–1975), Guerra Fría"
+          ],
+          "siglo_xx": [
+            "Movimiento por los derechos civiles (MLK)",
+            "feminismo",
+            "tecnológico (Silicon Valley)"
+          ],
+          "cultura": "Mezcla de europea, africana, latina. Hollywood, jazz, rock, hip hop",
+          "lenguas": ["Inglés (oficial de facto)", "español creciente"],
+          "religion": "Protestante mayoritario, diversidad religiosa",
+          "actualidad": "Polarización política, debates sobre raza, inmigración, salud"
+        },
+        {
+          "pais": "Canadá",
+          "colonizacion": "Francia y Reino Unido",
+          "confederacion": "1867",
+          "independencia": "Gradual: Estatuto de Westminster (1931), Constitución patriada (1982)",
+          "guerras": "Primera y Segunda Guerra Mundial, sin intervenciones masivas",
+          "cultura": "Bilingüe: Inglés y francés (especialmente Quebec)",
+          "identidad": "Multiculturalismo oficial, sistema de salud público",
+          "relaciones_indigenas": "Reconciliación tras colonización y escuelas residenciales",
+          "siglo_xxi": "Enfoque en sostenibilidad, inmigración, derechos LGBTQ+"
+        },
+        {
+          "pais": "México",
+          "civilizaciones_prehispanicas": ["Olmecas", "mayas", "aztecas (Imperio Mexica, Tenochtitlán)"],
+          "conquista": "1519–1521: Hernán Cortés derrota a Moctezuma",
+          "virreinato": "Nueva España (1535–1821)",
+          "independencia": "1810–1821: Miguel Hidalgo, José María Morelos",
+          "reforma_y_revolucion": "1857–1917: Benito Juárez, Emiliano Zapata, Pancho Villa",
+          "siglo_xx": "PRI dominó 70 años. Movimiento del 68, NAFTA (1994)",
+          "cultura": "Mezcla indígena y española. Día de Muertos, mariachi, mole, tequila",
+          "actualidad": "Narcotráfico, desigualdad, migración a EE.UU."
+        }
+      ],
+      "central": [
+        {
+          "pais": "Guatemala",
+          "mayas": "Tikal, Calakmul. Esplendor 250–900 d.C.",
+          "conquista": "1524: Pedro de Alvarado",
+          "independencia": "1821: del Imperio español",
+          "guerra_civil": "1960–1996: 200,000 muertos, mayoría indígenas",
+          "cultura": "22 grupos mayas, español, textiles, fiestas patronales",
+          "actualidad": "Pobreza, corrupción, migración"
+        }
+      ],
+      "sur": [
+        {
+          "pais": "Colombia",
+          "conquista": "1538",
+          "independencia": "1819 (Simón Bolívar)",
+          "conflicto_armado": "FARC, 1964–2016",
+          "musica": "vallenato, cumbia",
+          "gastronomia": "sancocho, arepa"
+        },
+        {
+          "pais": "Venezuela",
+          "recurso": "Petróleo",
+          "dictaduras": ["Pérez Jiménez", "Hugo Chávez (1999–2013)"],
+          "crisis": "Humanitaria (2010s)",
+          "musica": "joropo",
+          "fiesta": "San Juan"
+        },
+        {
+          "pais": "Perú",
+          "imperio": "Inca (Cuzco, Machu Picchu)",
+          "conquista": "1533",
+          "guerra": "Con Chile (1879–1884)",
+          "fujimori": "1990s",
+          "gastronomia": "cebiche, causa",
+          "festivales": "Inti Raymi"
+        },
+        {
+          "pais": "Brasil",
+          "colonizacion": "Portugal (1500)",
+          "esclavitud": "Africana",
+          "imperio": "1822–1889",
+          "dictadura": "Militar (1964–1985)",
+          "cultura": "Carnaval, samba, fútbol, portugués, sincretismo religioso"
+        },
+        {
+          "pais": "Argentina",
+          "inmigracion": "Europea (italianos, españoles)",
+          "dictadura": "1976–1983",
+          "crisis": "Económica (2001)",
+          "cultura": "Tango, fútbol, mate, asado"
+        },
+        {
+          "pais": "Chile",
+          "independencia": "1818",
+          "allende": "Socialismo (1970)",
+          "pinochet": "Golpe (1973), dictadura (1973–1990)",
+          "cultura": "Poetas (Neruda), minería del cobre, fiestas patrias (18 de septiembre)"
+        },
+        {
+          "pais": "Ecuador",
+          "imperio": "Parte del Imperio Inca",
+          "independencia": "1822",
+          "recursos": "Galápagos, petróleo",
+          "movimientos": "Indígenas",
+          "gastronomia": "Panecillos, llapingachos",
+          "lenguas": "Quichua"
+        },
+        {
+          "pais": "Bolivia",
+          "presidente_indigena": "Evo Morales (2006)",
+          "nacionalizacion": "Del gas",
+          "lenguas": ["Aymara", "Quechua"],
+          "fiestas": "Carnaval de Oruro"
+        },
+        {
+          "pais": "Paraguay",
+          "guerra": "Triple Alianza (1864–1870): perdió 70% de población",
+          "lenguas": ["Español", "guaraní"]
+        },
+        {
+          "pais": "Uruguay",
+          "caracteristica": "País más secular de América",
+          "derechos": "Sociales avanzados",
+          "cultura": "Mate, tango, candombe"
+        },
+        {
+          "pais": "Surinam",
+          "colonizacion": "Holandesa",
+          "multicultural": ["Indios", "afrodescendientes", "javaneses"],
+          "lenguas": ["Holandés", "criollo sranán tongo"]
+        },
+        {
+          "pais": "Guyana",
+          "colonizacion": "Británica",
+          "lengua": "Inglés",
+          "religion": ["Hindú", "cristiana", "musulmana"]
+        },
+        {
+          "pais": "Francia Guiana",
+          "estatus": "Departamento de Francia",
+          "base_espacial": "Kourou",
+          "lenguas": ["Francés", "criollo"]
+        }
+      ],
+      "caribe": [
+        {
+          "pais": "Cuba",
+          "revolucion": "1959, Fidel Castro",
+          "bloqueo": "EE.UU.",
+          "sistema": "Socialista",
+          "cultura": "Son, salsa, cigarros, coches antiguos"
+        },
+        {
+          "pais": "República Dominicana",
+          "colonizacion": "Española",
+          "haiti": "Comparte isla",
+          "dictadura": "Trujillo (1930–1961)",
+          "cultura": "Merengue, bachata, béisbol"
+        },
+        {
+          "pais": "Haití",
+          "republica_negra": "Primera (1804), tras revolución de esclavos",
+          "problemas": ["Pobreza", "terremotos (2010)"],
+          "cultura": "Vudú, créole, arte naïf"
+        },
+        {
+          "pais": "Jamaica",
+          "esclavitud": "Británica",
+          "independencia": "1962",
+          "cultura": "Bob Marley, reggae, rastafarismo"
+        },
+        {
+          "pais": "Puerto Rico",
+          "estatus": "Territorio de EE.UU. desde 1898",
+          "gobierno": "Estado libre asociado",
+          "cultura": "Salsa, reggaetón, cocina criolla"
+        },
+        {
+          "pais": "Trinidad y Tobago",
+          "influencia": "India (gobierno de Basdeo Panday)",
+          "cultura": "Carnaval, petróleo, calipso, steelpan"
+        },
+        {
+          "pais": "Bahamas, Barbados, etc.",
+          "colonizacion": "Ex-colonias británicas",
+          "economia": "Turismo",
+          "barbados": "Dejó la monarquía (2021)"
+        }
+      ]
+    },
+    "europa": {
+      "antiguedad": [
+        "Grecia: Atenas (democracia), Esparta, filosofía, Olimpia",
+        "Roma: República (509 a.C.), Imperio (27 a.C.), caída en 476 d.C."
+      ],
+      "edad_media": "Feudalismo, Iglesia católica, Cruzadas, peste negra (500–1400)",
+      "renacimiento": "Italia: Da Vinci, Miguel Ángel. Humanismo (1400–1600)",
+      "edad_moderna": "Revolución Científica, Ilustración, Revolución Francesa (1789) (1600–1800)",
+      "edad_contemporanea": "Revolución Industrial, nacionalismos, dos Guerras Mundiales, UE (1800–hoy)",
+      "paises_clave": [
+        {
+          "pais": "Reino Unido",
+          "imperio": "Británico",
+          "revolucion": "Industrial",
+          "wwii": "Participación clave",
+          "brexit": "2020",
+          "cultura": "Shakespeare, rock, monarquía, pubs"
+        },
+        {
+          "pais": "Francia",
+          "revolucion": "1789",
+          "napoleon": "Imperio",
+          "colonias": "Muchas",
+          "laicismo": "Principio clave",
+          "cultura": "Gastronomía, arte, filosofía"
+        },
+        {
+          "pais": "Alemania",
+          "imperio": "Zarista",
+          "nazismo": "1933–1945",
+          "holocausto": "Genocidio",
+          "division": "1949–1990",
+          "reunificacion": "1990",
+          "cultura": "Filosofía (Kant, Hegel), música (Beethoven), ingeniería"
+        },
+        {
+          "pais": "Italia",
+          "roma": "Imperio",
+          "renacimiento": "Cuna",
+          "fascismo": "Mussolini",
+          "ue": "Miembro fundador",
+          "cultura": "Opera, arte, comida (pasta, pizza)"
+        },
+        {
+          "pais": "España",
+          "imperio": "Colonia mundial",
+          "inquisicion": "Religiosa",
+          "guerra_civil": "1936–1939",
+          "franco": "Dictadura (1939–1975)",
+          "democracia": "Desde 1975",
+          "cultura": "Flamenco, siesta, fiestas (San Fermín)"
+        },
+        {
+          "pais": "Rusia",
+          "zarismo": "Hasta 1917",
+          "revolucion": "Bolchevique (1917)",
+          "urss": "1922–1991",
+          "putin": "Líder actual",
+          "cultura": "Tolstói, Dostoievski, ballet, ortodoxia"
+        },
+        {
+          "pais": "Polonia, Ucrania, etc.",
+          "historia": "Bajo imperios, II Guerra Mundial, comunismo (1945–1989), independencia"
+        }
+      ]
+    },
+    "asia": {
+      "civilizaciones_antiguas": [
+        "China: Dinastías (Shang, Zhou, Qin, Han), Confucio, Gran Muralla",
+        "India: Vedas, imperios (Maurya, Gupta), budismo, hinduismo",
+        "Japón: Shinto, samuráis, imperio, bombas atómicas (1945), milagro económico",
+        "Corea: Dividida (1945), guerra (1950–1953), desarrollo de Corea del Sur"
+      ],
+      "siglo_xx": [
+        "Descolonización (India, Indonesia, Vietnam)",
+        "Guerras: Vietnam, Afganistán, Corea",
+        "Milagros económicos: Japón, 'Tigres asiáticos' (Corea del Sur, Taiwán, Singapur, Hong Kong)"
+      ],
+      "paises_destacados": [
+        {
+          "pais": "China",
+          "mao": "1949",
+          "gran_salto": "Adelante",
+          "revolucion_cultural": "1966–1976",
+          "deng_xiaoping": "Reformas económicas",
+          "cultura": "Confucianismo, mandarín, arte, cocina"
+        },
+        {
+          "pais": "India",
+          "imperio": "Británico",
+          "independencia": "1947",
+          "gandhi": "Líder de independencia",
+          "nehru": "Primer ministro",
+          "crecimiento": "Tecnológico",
+          "religion": "Hinduismo",
+          "lengua": "Sánscrito",
+          "cultura": "Bollywood, castas"
+        },
+        {
+          "pais": "Japón",
+          "aislamiento": "Siglos",
+          "apertura": "1853",
+          "ii_guerra": "Derrota, bombas atómicas",
+          "pacificismo": "Post-guerra",
+          "envejecimiento": "Desafío actual",
+          "cultura": "Anime, haiku, sushi, shinto"
+        },
+        {
+          "pais": "Arabia Saudita",
+          "fundacion": "1932",
+          "petroleo": "Base económica",
+          "wahabismo": "Ideología religiosa",
+          "vision_2030": "Plan de diversificación",
+          "religion": "Islam",
+          "cultura": "Mezquitas, tradiciones beduinas"
+        },
+        {
+          "pais": "Israel/Palestina",
+          "conflicto": "Desde 1948, ocupaciones, acuerdos de paz fallidos",
+          "religiones": ["Judaísmo", "islam", "cristianismo"]
+        }
+      ]
+    },
+    "africa": {
+      "antes_colonizacion": [
+        "Imperios: Ghana, Malí (Mansa Musa), Songhai",
+        "Etiopía: cristiana desde siglo IV",
+        "Zimbabwe: grandes murallas de piedra"
+      ],
+      "colonizacion": "Conferencia de Berlín (1884): Europa se reparte África. Francia, Reino Unido, Bélgica (Congo, genocidio bajo Leopoldo II)",
+      "descolonizacion": "1950–1980: Ghana (1957, primer país libre), Argelia (1962), Angola, Mozambique",
+      "desafios": ["Dictaduras", "corrupción", "guerras civiles (Ruanda, 1994)", "pobreza", "salud"],
+      "paises": [
+        {
+          "pais": "Sudáfrica",
+          "apartheid": "1948–1994",
+          "mandela": "Líder de reconciliación",
+          "reconciliacion": "Post-apartheid",
+          "idiomas": 11,
+          "cultura": "Arte, vino"
+        },
+        {
+          "pais": "Egipto",
+          "antiguo": "Pirámides, faraones",
+          "isla": "Islam",
+          "nasser": "Líder moderno",
+          "primavera_arabe": "2011",
+          "cultura": "Árabe, Nilo"
+        },
+        {
+          "pais": "Nigeria",
+          "poblacion": "Mayor de África",
+          "recurso": "Petróleo",
+          "boko_haram": "Grupo extremista",
+          "etnias": ["Yoruba", "hausa", "igbo"],
+          "musica": "Afrobeats"
+        },
+        {
+          "pais": "Kenia, Tanzania",
+          "independencia": "Pacífica",
+          "turismo": "Safaris",
+          "lengua": "Swahili"
+        }
+      ]
+    },
+    "oceanía": {
+      "australia": {
+        "aborigenes": "60,000 años de historia",
+        "colonizacion": "Británica (1788)",
+        "independencia": "Gradual",
+        "multiculturalismo": "Actual",
+        "desafios": ["Sequías", "incendios (2019–2020)"]
+      },
+      "nueva_zelanda": {
+        "māori": "Pueblos originarios",
+        "tratado": "Waitangi (1840)",
+        "sociedad": "Bicultural",
+        "liderazgo": "Jacinda Ardern, igualdad de género"
+      },
+      "islas_pacifico": {
+        "paises": ["Fiyi", "Samoa", "Tonga", "Papúa Nueva Guinea"],
+        "cultura": "Culturas oceánicas, navegación ancestral",
+        "amenazas": "Cambio climático"
+      }
+    },
+    "antartida": {
+      "estatus": "Continente gobernado por el Tratado Antártico (1959)",
+      "uso": "Exclusivo para ciencia y paz",
+      "estaciones": "50+ (EE.UU., Rusia, Argentina, Chile, etc.)",
+      "poblacion": "No permanente, solo científicos",
+      "recursos": "Ricos, pero prohibida su explotación",
+      "simbolo": "Cooperación internacional"
+    }
+  },
+  "linea_de_tiempo_global": [
+    {
+      "epoca": "Prehistoria",
+      "eventos": "Evolución humana, fuego, arte rupestre"
+    },
+    {
+      "epoca": "Antigüedad (3000 a.C. – 500 d.C.)",
+      "eventos": "Mesopotamia, Egipto, Grecia, Roma"
+    },
+    {
+      "epoca": "Edad Media (500–1400)",
+      "eventos": "Feudalismo, Islam, imperios africanos"
+    },
+    {
+      "epoca": "Renacimiento (1400–1600)",
+      "eventos": "Arte, ciencia, descubrimientos"
+    },
+    {
+      "epoca": "Edad Moderna (1600–1800)",
+      "eventos": "Revolución Científica, Ilustración, independencias"
+    },
+    {
+      "epoca": "Siglo XIX",
+      "eventos": "Revolución Industrial, colonialismo"
+    },
+    {
+      "epoca": "Siglo XX",
+      "eventos": "Guerras Mundiales, Holocausto, Guerra Fría, descolonización, derechos civiles"
+    },
+    {
+      "epoca": "Siglo XXI",
+      "eventos": "Globalización, internet, cambio climático, pandemias, inteligencia artificial"
+    }
+  ],
+  "conclusion": "La historia y cultura del mundo es un tapiz inmenso, complejo y hermoso, tejido por miles de pueblos, lenguas, religiones, guerras, inventos y sueños. Desde los primeros pasos del Homo sapiens en África hasta las megaciudades del siglo XXI, la humanidad ha buscado sentido, poder, conocimiento y conexión. Cada país, cada tradición, cada conflicto y cada logro nos enseña algo sobre quién somos y hacia dónde vamos. 'Aquel que no conoce la historia está condenado a repetirla.' – George Santayana",
+  "frase_final": "No estudies la historia para memorizar. Estúdiala para evolucionar."
+}

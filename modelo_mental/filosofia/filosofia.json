@@ -1,0 +1,196 @@
+{
+  "tema": "filosofia",
+  "definicion": "La palabra 'filosofía' proviene del griego 'philo' (amor) y 'sophia' (sabiduría): 'amor a la sabiduría'. No es un conjunto de ideas, sino una actividad racional y crítica que busca comprender los fundamentos de la existencia, el conocimiento, la moral, la mente, la realidad, la belleza, la política y el sentido de la vida.",
+  "frase_grind": "Una vida sin examen no merece ser vivida. El grind no es sufrimiento. Es elección.",
+  "aplicacion": "Filosofar es entrenar tu mente para cuestionar todo. No aceptes ideas por autoridad. Elige con conciencia. Actúa con virtud.",
+  "metáfora": "La filosofía es como el fuego frío: no quema, pero transforma todo lo que toca. Tu mente, tu identidad, tu vida.",
+  "cita": "El que domina su mente, domina su destino. El que domina su destino, domina su evolución.",
+  "funciones": [
+    "Cuestionar lo evidente: analiza profundamente conceptos como 'el tiempo', 'la justicia', 'la libertad'.",
+    "Buscar fundamentos: no se conforma con 'cómo funciona', sino con 'por qué es así'.",
+    "Desarrollar el pensamiento crítico: enseña a distinguir entre argumentos válidos e inválidos.",
+    "Formar personas reflexivas y autónomas: ayuda a tomar decisiones éticas y coherentes.",
+    "Influir en otras disciplinas: origen de la ciencia, política, derecho, psicología."
+  ],
+  "ramas": [
+    {
+      "nombre": "Metafísica",
+      "descripcion": "Estudia la naturaleza última de la realidad.",
+      "preguntas_clave": [
+        "¿Qué es lo real?",
+        "¿Existe Dios?",
+        "¿Qué es el tiempo y el espacio?",
+        "¿Somos libres o determinados?"
+      ],
+      "ejemplo": "Platón creía en un mundo de 'formas ideales' más real que el mundo físico."
+    },
+    {
+      "nombre": "Epistemología",
+      "descripcion": "Estudia la naturaleza, límites y validez del conocimiento.",
+      "preguntas_clave": [
+        "¿Qué es saber?",
+        "¿Cómo adquirimos conocimiento?",
+        "¿Puedo confiar en mis sentidos?",
+        "¿Qué diferencia a la creencia de la verdad?"
+      ],
+      "ejemplo": "Descartes dijo 'Pienso, luego existo', como punto de partida seguro del conocimiento."
+    },
+    {
+      "nombre": "Ética",
+      "descripcion": "Estudia lo que es correcto e incorrecto, bueno y malo.",
+      "preguntas_clave": [
+        "¿Qué debo hacer?",
+        "¿Qué es vivir bien?",
+        "¿Es la moral universal o relativa?"
+      ],
+      "corrientes": [
+        "Utilitarismo (Bentham, Mill): Haz lo que maximice la felicidad.",
+        "Deontología (Kant): Haz lo que es tu deber, sin importar consecuencias.",
+        "Ética de la virtud (Aristóteles): Sé una persona buena, no solo hagas lo correcto."
+      ]
+    },
+    {
+      "nombre": "Filosofía política",
+      "descripcion": "Analiza el poder, la justicia, el Estado, los derechos y la libertad.",
+      "preguntas_clave": [
+        "¿Por qué obedecemos al gobierno?",
+        "¿Qué es un Estado justo?",
+        "¿Cuál es el mejor sistema político?"
+      ],
+      "pensadores": [
+        "Platón: Gobernado por filósofos.",
+        "Hobbes: Necesitamos un 'Leviatán' para evitar el caos.",
+        "Rousseau: El contrato social.",
+        "John Rawls: Justicia como equidad."
+      ]
+    },
+    {
+      "nombre": "Filosofía del lenguaje",
+      "descripcion": "Estudia cómo el lenguaje influye en el pensamiento y la realidad.",
+      "preguntas_clave": [
+        "¿Las palabras representan cosas o crean realidades?",
+        "¿Puede el lenguaje engañarnos?"
+      ],
+      "ejemplo": "Wittgenstein decía que 'los límites de mi lenguaje son los límites de mi mundo'."
+    },
+    {
+      "nombre": "Filosofía de la mente",
+      "descripcion": "Explora la conciencia, el yo, la relación entre mente y cuerpo.",
+      "preguntas_clave": [
+        "¿Qué es la conciencia?",
+        "¿El cerebro produce la mente?",
+        "¿Tienen las máquinas conciencia?"
+      ],
+      "dualismo_vs_materialismo": "Dualismo (Descartes) vs. Materialismo (Dennett)."
+    },
+    {
+      "nombre": "Filosofía de la ciencia",
+      "descripcion": "Analiza los métodos, supuestos y límites de la ciencia.",
+      "preguntas_clave": [
+        "¿Qué hace que una teoría sea científica?",
+        "¿La ciencia descubre la verdad o construye modelos útiles?"
+      ],
+      "ejemplo": "Karl Popper: Una teoría es científica si es falsable."
+    },
+    {
+      "nombre": "Estética",
+      "descripcion": "Estudia la belleza, el arte y el juicio estético.",
+      "preguntas_clave": [
+        "¿Qué es el arte?",
+        "¿La belleza es subjetiva o objetiva?",
+        "¿Para qué sirve el arte?"
+      ],
+      "ejemplo": "Kant: El juicio estético es desinteresado."
+    }
+  ],
+  "historia": [
+    {
+      "epoca": "Filosofía Antigua",
+      "periodo": "Siglos VI a.C. – V d.C.",
+      "filosofos": [
+        "Presocráticos: Buscaban el principio de todo (agua, fuego, átomos). Ej: Tales, Heráclito, Parménides.",
+        "Sócrates: Método mayéutico (preguntar para descubrir). Centrado en la ética.",
+        "Platón: Discípulo de Sócrates. Mundo de las Ideas, filósofo-rey.",
+        "Aristóteles: Maestro de Alejandro. Lógica, ética, metafísica, ciencia. Fundó el Liceo.",
+        "Helenismo: Epicuro (placer como ausencia de dolor), Estoicos (virtud y aceptación del destino), Escépticos (duda radical)."
+      ]
+    },
+    {
+      "epoca": "Filosofía Medieval",
+      "periodo": "Siglos V – XV",
+      "filosofos": [
+        "Agustín de Hipona: Fe y razón, pecado original.",
+        "Tomás de Aquino: Armonizó a Aristóteles con el cristianismo (escolástica).",
+        "Filósofos musulmanes: Avicena, Averroes – preservaron y desarrollaron el pensamiento griego."
+      ]
+    },
+    {
+      "epoca": "Filosofía Moderna",
+      "periodo": "Siglos XVII – XVIII",
+      "filosofos": [
+        "René Descartes: Padre de la filosofía moderna. 'Pienso, luego existo'. Dualismo mente-cuerpo.",
+        "John Locke: Empirismo. La mente es una 'tabla rasa'. Derechos naturales.",
+        "David Hume: Escéptico. El conocimiento viene de la experiencia, pero no podemos probar causas.",
+        "Immanuel Kant: Síntesis entre racionalismo y empirismo. '¿Qué puedo saber? ¿Qué debo hacer? ¿Qué me está permitido esperar?'"
+      ]
+    },
+    {
+      "epoca": "Filosofía Contemporánea",
+      "periodo": "Siglo XIX – XXI",
+      "filosofos": [
+        "Hegel: Dialéctica (tesis-antítesis-síntesis), espíritu absoluto.",
+        "Marx: Materialismo histórico. Crítica al capitalismo. 'Los filósofos solo han interpretado el mundo; de lo que se trata es de transformarlo.'",
+        "Nietzsche: 'Dios ha muerto'. Voluntad de poder. Más allá del bien y del mal.",
+        "Kierkegaard: Padre del existencialismo. La fe como salto, angustia existencial.",
+        "Husserl y Heidegger: Fenomenología. Volver a las 'cosas mismas'. Ser y tiempo.",
+        "Sartre y Camus: Existencialismo ateo. El hombre está condenado a ser libre. La vida es absurda, pero debemos rebelarnos.",
+        "Wittgenstein: Filosofía del lenguaje. 'Los límites del lenguaje son los límites del mundo'.",
+        "Foucault, Derrida, Deleuze: Filosofía posmoderna. Crítica al poder, a la razón occidental."
+      ]
+    }
+  ],
+  "influencia_personal": [
+    "Forma la manera de pensar: enseña a cuestionar, no aceptar ideas por autoridad.",
+    "Influye en la toma de decisiones: ofrece marcos éticos para elegir qué es correcto.",
+    "Transforma la identidad personal: quien filosofa profundamente cambia su visión del mundo.",
+    "Libera de dogmas: rompe con ideas prejuiciosas, religiosas o culturales impuestas."
+  ],
+  "influencia_social": [
+    "En la política: democracias modernas nacen de ideas filosóficas (Locke, Rousseau).",
+    "En la ciencia: nació de la filosofía natural (Galileo, Newton).",
+    "En el derecho: conceptos como justicia y responsabilidad tienen raíces filosóficas.",
+    "En la educación: enseña a pensar, no a memorizar.",
+    "En la tecnología: debates sobre conciencia, IA, ética."
+  ],
+  "problemas_actuales": [
+    "¿Qué es la conciencia? ¿Es solo un producto del cerebro? ¿Puede replicarse en una máquina?",
+    "¿Tenemos libre albedrío? Si todo está determinado, ¿somos realmente libres?",
+    "¿Qué significa vivir una vida buena? En una era de consumo y vacío existencial.",
+    "¿Qué es la identidad personal? ¿Sigo siendo yo si cambio mi cuerpo o mente?",
+    "¿Cómo vivir en un mundo plural? ¿Existe una moral universal?",
+    "¿Qué responsabilidad tenemos con el futuro? Cambio climático, IA, bioética."
+  ],
+  "estilo_de_vida": [
+    "Para estoicos (Séneca, Epicteto, Marco Aurelio): vivir con virtud, aceptar lo que no puedes cambiar.",
+    "Para epicúreos: buscar el placer como ausencia de dolor y paz interior.",
+    "Para cínicos (Diógenes): vida simple, rechazo de convenciones sociales.",
+    "Hoy: terapia filosófica ayuda a resolver crisis existenciales sin medicamentos."
+  ],
+  "importancia_hoy": [
+    "En un mundo de información, necesitamos discernimiento.",
+    "Contra la superficialidad: invita a la profundidad.",
+    "Para construir sociedades más justas.",
+    "Para enfrentar el sufrimiento humano.",
+    "Para cultivar la libertad interior."
+  ],
+  "recomendaciones_lectura": [
+    "Apología de Sócrates - Platón: Introducción clásica.",
+    "Crítica de la razón pura - Kant: Difícil, pero fundamental.",
+    "El ser y la nada - Sartre: Existencialismo.",
+    "Así habló Zaratustra - Nietzsche: Poético y profundo.",
+    "Meditaciones - Marco Aurelio: Estoicismo práctico.",
+    "Ética a Nicómaco - Aristóteles: Ética de la virtud.",
+    "Filosofía mínima - Fernando Savater: Accesible y claro."
+  ],
+  "conclusion": "La filosofía no es un lujo intelectual, sino una necesidad humana. Desde que el ser humano se preguntó '¿por qué?', nació la filosofía. Es la raíz de toda ciencia, de toda ética, de toda política. Nos ayuda a vivir mejor, a pensar mejor, a ser mejores. No busca respuestas definitivas, sino preguntas más profundas. No cierra puertas, sino que las abre. No dogmatiza, sino que invita al diálogo. 'Filosofar es prepararse a morir' — decía Platón. No en sentido literal, sino como liberación del miedo, del apego, de la ignorancia. La filosofía, al final, es el arte de vivir con sentido, con libertad y con sabiduría."
+}

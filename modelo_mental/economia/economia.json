@@ -1,0 +1,343 @@
+{
+  "tema": "economia",
+  "definicion": "La economía es la ciencia social que estudia cómo los individuos, empresas, gobiernos y sociedades asignan recursos escasos para satisfacer necesidades ilimitadas. Su objetivo es entender cómo se producen, distribuyen y consumen bienes y servicios.",
+  "origenes": "Del griego 'oikos' (casa) y 'nomos' (ley). Aristóteles ya reflexionaba sobre la gestión de recursos. Nace como ciencia moderna con Adam Smith en 1776 ('La riqueza de las naciones'), con el concepto de la 'mano invisible'.",
+  "ramas": {
+    "microeconomia": "Estudia consumidores, empresas y mercados. Analiza oferta, demanda, precios, elasticidad y eficiencia del mercado.",
+    "macroeconomia": "Examina el PIB, inflación, desempleo, política fiscal y monetaria. Variables clave: tasa de interés, balanza de pagos.",
+    "economia_politica": "Analiza cómo el poder y las instituciones afectan la economía.",
+    "economia_del_comportamiento": "Combina psicología y economía para entender decisiones irracionales.",
+    "economia_internacional": "Estudia comercio, inversión extranjera y relaciones entre países.",
+    "economia_del_desarrollo": "Se enfoca en cómo los países pobres pueden crecer y reducir la pobreza."
+  },
+  "principios_basicos": [
+    "Escasez: Los recursos son limitados, pero los deseos son ilimitados.",
+    "Costo de oportunidad: Lo que dejas de ganar al elegir una opción sobre otra.",
+    "Incentivos: Las personas responden a precios, impuestos, subsidios.",
+    "Comercio: Permite especialización y mejora el bienestar.",
+    "Mercados: Mecanismos eficientes (aunque no perfectos) para asignar recursos.",
+    "Intervención estatal: El gobierno corrige fallas de mercado (monopolios, externalidades, desigualdad)."
+  ],
+  "sistemas_economicos": [
+    {
+      "tipo": "Capitalismo",
+      "descripcion": "Propiedad privada, mercado libre, competencia.",
+      "ejemplos": ["EE.UU.", "Reino Unido", "Japón"]
+    },
+    {
+      "tipo": "Socialismo",
+      "descripcion": "Propiedad estatal de medios de producción, planificación central.",
+      "ejemplos": ["Cuba", "Venezuela (mixto)"]
+    },
+    {
+      "tipo": "Economía mixta",
+      "descripcion": "Combina mercado y Estado (lo más común hoy).",
+      "ejemplos": ["Alemania", "Canadá", "Suecia"]
+    },
+    {
+      "tipo": "Comunismo",
+      "descripcion": "Propiedad colectiva, abolición de clases (teórico).",
+      "ejemplos": ["URSS (histórico)", "Corea del Norte (parcial)"]
+    }
+  ],
+  "variables_clave": [
+    "PIB: Valor total de bienes y servicios producidos en un país.",
+    "Inflación: Aumento sostenido del nivel general de precios.",
+    "Desempleo: Porcentaje de la fuerza laboral que busca trabajo sin encontrarlo.",
+    "Tasa de interés: Costo del dinero; fijada por bancos centrales.",
+    "Balanza comercial: Diferencia entre exportaciones e importaciones.",
+    "Déficit fiscal: Cuando el gobierno gasta más de lo que recauda.",
+    "Deuda pública: Acumulación de déficits a lo largo del tiempo."
+  ],
+  "globalizacion": "La economía global está interconectada: cadenas de valor internacionales, flujos de capital, comercio internacional, crisis que se transmiten (ej. 2008).",
+  "paises": [
+    {
+      "nombre": "Estados Unidos",
+      "pib": 26.9,
+      "tipo": "Capitalismo de mercado con fuerte intervención estatal",
+      "sector": "Servicios (80%), tecnología, finanzas, salud",
+      "moneda": "Dólar estadounidense (USD)",
+      "banco_central": "Reserva Federal (FED)",
+      "caracteristicas": [
+        "Líder en innovación (Silicon Valley, biotecnología).",
+        "Dólar como moneda de reserva global.",
+        "Alta productividad, pero creciente desigualdad.",
+        "Déficit fiscal y deuda pública elevados (~120% del PIB)."
+      ],
+      "desafios": [
+        "Inflación persistente",
+        "Polarización política",
+        "Endeudamiento",
+        "Competencia con China"
+      ]
+    },
+    {
+      "nombre": "China",
+      "pib": 17.9,
+      "tipo": "Capitalismo de Estado / Socialismo de mercado",
+      "sector": "Manufactura, exportaciones, infraestructura, tecnología",
+      "moneda": "Yuan (CNY)",
+      "banco_central": "Banco Popular de China",
+      "caracteristicas": [
+        "Fábrica del mundo: líder en producción industrial.",
+        "Inversión masiva en infraestructura (Nueva Ruta de la Seda).",
+        "Crecimiento sostenido por décadas, ahora desaceleración.",
+        "Control estatal fuerte sobre empresas clave."
+      ],
+      "desafios": [
+        "Envejecimiento poblacional",
+        "Burbuja inmobiliaria",
+        "Tensión con EE.UU.",
+        "Deuda local"
+      ]
+    },
+    {
+      "nombre": "Japón",
+      "pib": 4.2,
+      "tipo": "Capitalismo mixto con fuerte sector público",
+      "sector": "Tecnología, automotriz, electrónica, servicios",
+      "moneda": "Yen (JPY)",
+      "banco_central": "Banco de Japón (BOJ)",
+      "caracteristicas": [
+        "Innovación tecnológica (Toyota, Sony).",
+        "Exportador neto.",
+        "Alta deuda pública (~260% del PIB), pero financiada internamente."
+      ],
+      "desafios": [
+        "Población en declive",
+        "Estancamiento económico prolongado",
+        "Baja inflación"
+      ]
+    },
+    {
+      "nombre": "Alemania",
+      "pib": 4.1,
+      "tipo": "Capitalismo social de mercado (Rhinano)",
+      "sector": "Industria manufacturera (automóviles, maquinaria), exportaciones",
+      "moneda": "Euro (€)",
+      "banco_central": "Banco Central Europeo (BCE)",
+      "caracteristicas": [
+        "Motor económico de la UE.",
+        "Modelo de codeterminación (trabajadores en juntas directivas).",
+        "Alto nivel de exportaciones (vehículos, equipos médicos)."
+      ],
+      "desafios": [
+        "Transición energética",
+        "Dependencia del gas ruso",
+        "Envejecimiento"
+      ]
+    },
+    {
+      "nombre": "India",
+      "pib": 3.7,
+      "tipo": "Mercado mixto con reformas recientes",
+      "sector": "Servicios (TI), agricultura, manufactura emergente",
+      "moneda": "Rupia india (INR)",
+      "banco_central": "Banco de la Reserva de la India",
+      "caracteristicas": [
+        "Población joven y creciente (futuro mercado masivo).",
+        "Líder en servicios de tecnología (Bangalore).",
+        "Programas de digitalización (UPI, Aadhaar)."
+      ],
+      "desafios": [
+        "Pobreza",
+        "Desigualdad",
+        "Contaminación",
+        "Infraestructura deficiente"
+      ]
+    },
+    {
+      "nombre": "Reino Unido",
+      "pib": 3.1,
+      "tipo": "Capitalismo de mercado liberal",
+      "sector": "Servicios financieros (Londres), educación, salud",
+      "moneda": "Libra esterlina (£)",
+      "banco_central": "Banco de Inglaterra",
+      "caracteristicas": [
+        "Centro financiero global.",
+        "Salida del Brexit (2020) con impacto en comercio.",
+        "Alta productividad en servicios."
+      ],
+      "desafios": [
+        "Inflación",
+        "Estancamiento económico",
+        "Desigualdad regional"
+      ]
+    },
+    {
+      "nombre": "Francia",
+      "pib": 3.0,
+      "tipo": "Capitalismo mixto con fuerte Estado",
+      "sector": "Servicios, turismo, energía nuclear, agricultura",
+      "moneda": "Euro (€)",
+      "banco_central": "BCE",
+      "caracteristicas": [
+        "Estado interviene mucho (EDF, SNCF).",
+        "Alto gasto público (~56% del PIB).",
+        "Líder en turismo (más visitado del mundo)."
+      ],
+      "desafios": [
+        "Reformas laborales",
+        "Pensiones",
+        "Déficit público"
+      ]
+    },
+    {
+      "nombre": "Italia",
+      "pib": 2.2,
+      "tipo": "Capitalismo mixto con deuda alta",
+      "sector": "Manufactura de lujo, turismo, agricultura",
+      "moneda": "Euro (€)",
+      "banco_central": "BCE",
+      "caracteristicas": [
+        "Made in Italy: moda, diseño, automóviles (Ferrari, Lamborghini).",
+        "División norte-sur: norte industrial, sur más pobre."
+      ],
+      "desafios": [
+        "Alta deuda (~145% del PIB)",
+        "Baja productividad",
+        "Corrupción"
+      ]
+    },
+    {
+      "nombre": "Brasil",
+      "pib": 2.1,
+      "tipo": "Mercado mixto con intervención estatal",
+      "sector": "Agricultura (soja, carne), minería, servicios",
+      "moneda": "Real brasileño (BRL)",
+      "banco_central": "Banco Central de Brasil",
+      "caracteristicas": [
+        "Potencia agrícola y energética (etanol, hidroeléctrica).",
+        "Recursos naturales abundantes.",
+        "Desigualdad extrema."
+      ],
+      "desafios": [
+        "Inflación histórica",
+        "Deforestación",
+        "Inestabilidad política"
+      ]
+    },
+    {
+      "nombre": "Canadá",
+      "pib": 2.1,
+      "tipo": "Capitalismo con fuerte Estado social",
+      "sector": "Energía (petróleo, gas), minería, servicios",
+      "moneda": "Dólar canadiense (CAD)",
+      "banco_central": "Banco de Canadá",
+      "caracteristicas": [
+        "Recursos naturales abundantes.",
+        "Relación estrecha con EE.UU. (USMCA).",
+        "Sistema de salud público."
+      ],
+      "desafios": [
+        "Dependencia energética",
+        "Cambio climático",
+        "Vivienda cara"
+      ]
+    },
+    {
+      "nombre": "Rusia",
+      "pib": 1.9,
+      "tipo": "Capitalismo de Estado / Rentista",
+      "sector": "Energía (petróleo, gas), armamento",
+      "moneda": "Rublo ruso (RUB)",
+      "banco_central": "Banco de Rusia",
+      "caracteristicas": [
+        "Economía basada en recursos naturales.",
+        "Sanciones occidentales tras invasión a Ucrania (2022).",
+        "Diversificación limitada."
+      ],
+      "desafios": [
+        "Aislamiento económico",
+        "Fuga de cerebros",
+        "Guerra"
+      ]
+    },
+    {
+      "nombre": "Corea del Sur",
+      "pib": 1.8,
+      "tipo": "Capitalismo orientado a exportaciones",
+      "sector": "Tecnología (Samsung, LG), automóviles, semiconductores",
+      "moneda": "Won surcoreano (KRW)",
+      "banco_central": "Banco de Corea",
+      "caracteristicas": [
+        "Tigre asiático: crecimiento rápido desde los 60s.",
+        "Innovación y educación de élite.",
+        "Alta competencia y estrés social."
+      ],
+      "desafios": [
+        "Baja tasa de natalidad",
+        "Envejecimiento",
+        "Dependencia tecnológica"
+      ]
+    },
+    {
+      "nombre": "Arabia Saudita",
+      "pib": 1.1,
+      "tipo": "Monarquía rentista / Economía petrolera",
+      "sector": "Petróleo y gas (~40% del PIB)",
+      "moneda": "Riyal saudí (SAR)",
+      "banco_central": "Banco Monetario de Arabia Saudita",
+      "caracteristicas": [
+        "Miembro clave de la OPEP+.",
+        "Proyecto 'Visión 2030' para diversificar (NEOM, turismo).",
+        "Ingresos estatales dependen del petróleo."
+      ],
+      "desafios": [
+        "Transición energética",
+        "Dependencia del crudo",
+        "Derechos humanos"
+      ]
+    },
+    {
+      "nombre": "México",
+      "pib": 1.8,
+      "tipo": "Mercado mixto, ligada a EE.UU.",
+      "sector": "Manufactura (maquilas), servicios, agricultura",
+      "moneda": "Peso mexicano (MXN)",
+      "banco_central": "Banco de México",
+      "caracteristicas": [
+        "Beneficiario del USMCA.",
+        "Clústeres industriales cerca de la frontera.",
+        "Gran desigualdad y corrupción."
+      ],
+      "desafios": [
+        "Inseguridad",
+        "Informalidad",
+        "Migración"
+      ]
+    },
+    {
+      "nombre": "Indonesia",
+      "pib": 1.4,
+      "tipo": "Mercado mixto en desarrollo",
+      "sector": "Agricultura, minería (níquel), servicios",
+      "moneda": "Rupia indonesia (IDR)",
+      "banco_central": "Banco de Indonesia",
+      "caracteristicas": [
+        "Mayor economía de sudeste asiático.",
+        "Población joven y creciente.",
+        "Exportador de commodities."
+      ],
+      "desafios": [
+        "Infraestructura",
+        "Gobernanza",
+        "Desigualdad regional"
+      ]
+    }
+  ],
+  "tendencias_globales": [
+    "Desacoplamiento económico: EE.UU. y China reducen dependencia mutua.",
+    "Transición energética: Inversiones en energías limpias (solar, eólica, hidrógeno).",
+    "Inteligencia artificial y automatización: Cambiando estructuras productivas.",
+    "Geopolítica y seguridad económica: Guerra comercial, control de tecnologías.",
+    "Deuda global récord: Más de $300 billones (pública y privada).",
+    "Inflación persistente: Bancos centrales mantienen tasas altas.",
+    "Emergencia del 'Sur Global': Países como India, Indonesia, Brasil ganan peso."
+  ],
+  "conclusion": "La economía global es un sistema complejo, dinámico e interdependiente. Cada país tiene un modelo único, moldeado por su historia, recursos, cultura y política. Aunque los grandes bloques (EE.UU., China, UE) dominan, economías emergentes están redefiniendo el orden mundial. Entender la economía no solo es importante para políticos o empresarios, sino para cada ciudadano, ya que afecta el empleo, el costo de vida, la educación, la salud y el futuro del planeta.",
+  "frase_grind": "El interés compuesto no es solo financiero. Es de hábitos. 1% mejor cada día = 37x en un año.",
+  "aplicacion": "Aplica la economía a tu vida: tu tiempo es tu capital. Tu acción, tu inversión. Tu evolución, tu retorno.",
+  "metáfora": "Tu vida es una economía. No gastas tu energía en lo que no produce valor. Inviertes en tu identidad.",
+  "cita": "El que domina su mente, domina su economía. El que domina su economía, domina su destino."
+}

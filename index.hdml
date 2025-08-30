@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GRIND CORE</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Satoshi:wght@400;500;700&display=swap" rel="stylesheet">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <!-- Logo y Bienvenida -->
+  <div class="logo-container" id="logo-container">
+    <div class="logo">
+      <svg id="grind-logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <!-- Anillo exterior: Fuerza y constancia -->
+        <circle cx="100" cy="100" r="80" fill="none" stroke="#10A37F" stroke-width="8" stroke-dasharray="0" />
+        <!-- Anillo interior: Inteligencia y evolución -->
+        <circle cx="100" cy="100" r="60" fill="none" stroke="#0c7a5c" stroke-width="4" stroke-dasharray="0" />
+        <!-- Letra G estilizada: GRIND -->
+        <path d="M80,60 h40 a20,20 0 1,1 0,40 h-20 v-10 h10 a10,10 0 1,0 0,-20 h-20 v30" 
+              fill="none" stroke="white" stroke-width="5" stroke-linecap="round" />
+      </svg>
+    </div>
+    <p class="tagline">Tu entrenador de élite. No necesitas motivación. Necesitas acción.</p>
+    <div class="suggestion" id="suggestion">¿Estás cómodo o estás evolucionando?</div>
+  </div>
+
+  <!-- Layout Principal -->
+  <div class="main">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="sidebar-btn new-chat">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 4v16m-8-8h16"/>
+        </svg>
+        Nueva conversación
+      </div>
+      <div class="sidebar-header">Historial</div>
+      <div class="sidebar-btn">Conversación 1</div>
+      <div class="sidebar-btn">Conversación 2</div>
+    </div>
+
+    <!-- Área de Chat -->
+    <div class="chat-container" id="chat-container">
+      <!-- Los mensajes se generarán aquí con JavaScript -->
+    </div>
+
+    <!-- Input -->
+    <div class="input-container">
+      <input type="text" id="user-input" placeholder="Escribe tu verdad..." />
+      <button id="send-btn">➤</button>
+    </div>
+  </div>
+</body>
+</html>

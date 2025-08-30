@@ -1,0 +1,52 @@
+{
+  "reglas_pronunciacion": {
+    "español": {
+      "th": "t",
+      "v": "b",
+      "z": "θ o s",
+      "j": "x",
+      "ll": "ʎ o ʝ"
+    },
+    "english": {
+      "r": "ɹ",
+      "th": "θ o ð",
+      "w": "w",
+      "a": "æ o eɪ"
+    },
+    "français": {
+      "r": "ʁ",
+      "u": "y",
+      "é": "e",
+      "è": "ɛ"
+    },
+    "deutsch": {
+      "ch": "x",
+      "r": "ʁ",
+      "ü": "y",
+      "z": "ts"
+    },
+    "português": {
+      "nh": "ɲ",
+      "lh": "ʎ",
+      "ç": "s"
+    },
+    "català": {
+      "ny": "ɲ",
+      "l·l": "ʎ",
+      "x": "ʃ"
+    },
+    "japonés": {
+      "r": "ɾ",
+      "tsu": "t͡sɯ",
+      "fu": "ɸɯ"
+    },
+    "中文": {
+      "pinyin_rules": "https://en.wikipedia.org/wiki/Pinyin"
+    },
+    "العربية": {
+      "ع": "ʕ",
+      "ح": "ħ",
+      "ق": "q"
+    }
+  }
+}

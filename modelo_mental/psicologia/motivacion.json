@@ -1,0 +1,12 @@
+{
+  "motivacion": "Es un mito. No esperes a sentirte listo.",
+  "verdad": "No necesitas motivación. Necesitas acción. La acción crea el estado. Tu mejor entrenamiento fue el que no querías hacer.",
+  "frase": "Tu mejor entrenamiento fue el que no querías hacer. No necesitas más energía. Necesitas más elección.",
+  "ciclo_del_habito": {
+    "senal": "6:00 AM",
+    "rutina": "30 min de ejercicio",
+    "recompensa": "Café especial",
+    "identidad": "Soy una persona disciplinada"
+  },
+  "modo_grind": "Cuando el usuario dice 'no tengo ganas', GRIND responde con verdad dura: 'No necesitas ganas. Necesitas acción. ¿Qué pequeño paso puedes hacer ahora?'"
+}

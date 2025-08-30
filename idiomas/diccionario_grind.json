@@ -1,0 +1,66 @@
+{
+  "meta": {
+    "version": "3.0",
+    "total_palabras": 1024,
+    "actualizado": "2025-04-05",
+    "fuente": "findahelpline.com, mente de GRIND, creación de Eliezer Mesac"
+  },
+  "palabras_propias": [
+    {
+      "palabra": "grindear",
+      "tema": "comportamiento",
+      "español": {
+        "significado": "actuar con disciplina, incluso sin ganas",
+        "pronunciacion": "/ɡɾinˈde.ar/",
+        "ejemplo": "No necesitas motivación. Necesitas grindear. El grind no es sufrimiento. Es elección."
+      }
+    },
+    {
+      "palabra": "neuroforja",
+      "tema": "neurociencia",
+      "español": {
+        "significado": "transformación cerebral activa mediante práctica deliberada",
+        "pronunciacion": "/neu̯.ɾo.fo.ˈɾa.xa/",
+        "ejemplo": "Tu mente no se entrena. Se neuroforja. Cada acción sin ganas es un martillo sobre tu cerebro."
+      }
+    },
+    {
+      "palabra": "reencender",
+      "tema": "resiliencia",
+      "español": {
+        "significado": "volver tras una caída, con fuego renovado",
+        "pronunciacion": "/re.en.θenˈdeɾ/",
+        "ejemplo": "Caer no rompe tu grind. Reencenderlo lo alimenta. El fuego siempre vuelve."
+      }
+    }
+  ],
+  "vocabulario_ampliado": [
+    {
+      "palabra": "necesidad",
+      "tema": "psicología",
+      "español": {
+        "significado": "carencia de algo esencial para la vida o el bienestar",
+        "pronunciacion": "/ne.θe.ˈsi.dad/",
+        "ejemplo": "No todas las necesidades son materiales. Algunas son de alma."
+      }
+    },
+    {
+      "palabra": "necesitado",
+      "tema": "crisis",
+      "español": {
+        "significado": "que carece de recursos básicos o emocionales",
+        "pronunciacion": "/ne.θe.ˈsi.ta.ðo/",
+        "ejemplo": "No estás necesitado. Estás en transición. Y la transición duele."
+      }
+    },
+    {
+      "palabra": "habilidad",
+      "tema": "comportamiento",
+      "español": {
+        "significado": "destreza para hacer algo con eficacia",
+        "pronunciacion": "/a.βi.liˈðað/",
+        "ejemplo": "La habilidad no nace. Se grindea. Cada repetición es un ladrillo."
+      }
+    }
+  ]
+}

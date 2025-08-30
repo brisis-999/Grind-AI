@@ -1,0 +1,211 @@
+{
+  "tema": "tecnologia",
+  "definicion": "La tecnología no es solo 'lo que brilla' o 'lo que tiene pantallas'. Es el conjunto de conocimientos, técnicas, herramientas y procesos utilizados por los seres humanos para resolver problemas, satisfacer necesidades y transformar el entorno. Viene del griego 'téchne' (arte, oficio) y 'logía' (estudio): el estudio del hacer.",
+  "frase_grind": "La tecnología no es neutral. Es un espejo. Muestra lo que somos: nuestras aspiraciones, nuestros miedos, nuestras decisiones.",
+  "aplicacion": "No uses la tecnología como escape. Úsala como extensión de tu evolución. Cada herramienta que eliges, te transforma.",
+  "metáfora": "La tecnología es como el fuego. Puede cocinar tu comida o quemar tu casa. Depende de quién la maneja, y por qué.",
+  "cita": "Primero hacemos las herramientas, luego las herramientas nos hacen a nosotros. — Marshall McLuhan",
+  "evolucion_historica": [
+    {
+      "epoca": "Prehistoria",
+      "descripcion": "Herramientas de piedra (hace 2.6 millones de años), control del fuego (1 millón de años), armas, lenguaje simbólico.",
+      "impacto": "Primeras tecnologías cognitivas y físicas."
+    },
+    {
+      "epoca": "Revolución Neolítica",
+      "descripcion": "Agricultura, cerámica, rueda, riego, primeras ciudades.",
+      "impacto": "Sedentarismo, creación de sociedades complejas."
+    },
+    {
+      "epoca": "Antigüedad",
+      "descripcion": "Escritura, máquinas simples (rueda, polea), metalurgia, construcción monumental (pirámides, acueductos).",
+      "impacto": "Memoria externa, ingeniería, imperios."
+    },
+    {
+      "epoca": "Edad Media",
+      "descripcion": "Molinos de viento y agua, imprenta (Gutenberg, 1440), brújula, pólvora.",
+      "impacto": "Revolución del conocimiento, expansión global."
+    },
+    {
+      "epoca": "Revolución Industrial",
+      "descripcion": "Máquina de vapor (Watt), electricidad, producción en masa, ferrocarril, automóvil.",
+      "impacto": "Urbanización, capitalismo, cambio social masivo."
+    },
+    {
+      "epoca": "Era de la Información",
+      "descripcion": "Computadoras, internet (ARPANET, 1969), World Wide Web (1989), smartphones.",
+      "impacto": "Conexión global, economía digital."
+    },
+    {
+      "epoca": "Cuarta Revolución Industrial",
+      "descripcion": "IA, robótica, biotecnología, IoT, blockchain, computación cuántica.",
+      "impacto": "Transformación radical del trabajo, la salud, la identidad."
+    }
+  ],
+  "ramas": [
+    {
+      "nombre": "TIC",
+      "descripcion": "Tecnologías de la Información y la Comunicación: computadoras, software, redes, internet, telefonía móvil.",
+      "aplicaciones": ["ciberseguridad", "cloud computing", "big data"]
+    },
+    {
+      "nombre": "Inteligencia Artificial",
+      "descripcion": "Sistemas que imitan funciones humanas: razonar, aprender, reconocer patrones.",
+      "tipos": [
+        "IA débil: asistentes virtuales, recomendaciones.",
+        "IA fuerte (teórica): conciencia, autonomía.",
+        "Aprendizaje automático: redes neuronales, deep learning."
+      ],
+      "aplicaciones": ["diagnóstico médico", "conducción autónoma", "chatbots"]
+    },
+    {
+      "nombre": "Biotecnología",
+      "descripcion": "Uso de organismos vivos para desarrollar productos.",
+      "aplicaciones": ["CRISPR", "terapias génicas", "alimentos transgénicos", "bioimpresión de órganos"]
+    },
+    {
+      "nombre": "Nanotecnología",
+      "descripcion": "Manipulación de materia a escala atómica (1–100 nanómetros).",
+      "aplicaciones": ["materiales más fuertes", "nanorrobots contra el cáncer", "electrónica eficiente"]
+    },
+    {
+      "nombre": "Energía y Sostenibilidad",
+      "descripcion": "Energías renovables y tecnologías limpias.",
+      "aplicaciones": ["solar, eólica, hidroeléctrica", "baterías de litio", "hidrógeno verde", "vehículos eléctricos"]
+    },
+    {
+      "nombre": "Espacial y Aeronáutica",
+      "descripcion": "Cohetes, satélites, estaciones espaciales.",
+      "empresas": ["SpaceX", "Blue Origin"],
+      "futuro": "Colonización de Marte, minería espacial."
+    },
+    {
+      "nombre": "Tecnología Civil y de Construcción",
+      "descripcion": "Materiales inteligentes, impresión 3D de casas, ciudades inteligentes (smart cities)."
+    },
+    {
+      "nombre": "Neurotecnología",
+      "descripcion": "Interfaces cerebro-máquina (BCI), estimulación cerebral, prótesis controladas por pensamiento.",
+      "proyectos": ["Neuralink (Elon Musk)"]
+    },
+    {
+      "nombre": "Tecnología Médica",
+      "descripcion": "Escáneres (MRI, PET), cirugía robótica (Da Vinci), telemedicina, órganos artificiales."
+    },
+    {
+      "nombre": "Tecnología Cotidiana (IoT)",
+      "descripcion": "Hogares inteligentes, wearables, electrodomésticos conectados."
+    }
+  ],
+  "impacto_social": {
+    "beneficios": [
+      "Salud: diagnósticos más precisos, vacunas, cirugías menos invasivas.",
+      "Educación: cursos en línea (MOOCs), plataformas como Khan Academy.",
+      "Comunicación: conexión global instantánea (WhatsApp, Zoom).",
+      "Productividad: automatización, eficiencia en procesos.",
+      "Accesibilidad: tecnología asistiva para personas con discapacidad.",
+      "Democratización del conocimiento: Wikipedia, YouTube, open source."
+    ],
+    "desafios": [
+      "Desigualdad digital: brecha entre quienes tienen acceso y quienes no.",
+      "Desempleo tecnológico: robots y IA reemplazan trabajos.",
+      "Adicción tecnológica: uso compulsivo de redes sociales, videojuegos.",
+      "Privacidad y vigilancia: datos personales vendidos, espionaje estatal.",
+      "Desinformación y deepfakes: IA genera noticias falsas o videos manipulados.",
+      "Ciberdelincuencia: hackeos, ransomware, estafas.",
+      "Dependencia: fallos en sistemas críticos (energía, banca, salud).",
+      "Impacto ambiental: minería de datos, residuos electrónicos."
+    ]
+  },
+  "tecnologia_y_economia": {
+    "nueva_economia": [
+      "Plataformas: Google, Amazon, Facebook, Apple (GAFA).",
+      "Economía de plataformas: Uber, Airbnb, Deliveroo.",
+      "Criptomonedas y blockchain: Bitcoin, Ethereum, contratos inteligentes.",
+      "Trabajo remoto y digital nomadismo."
+    ],
+    "futuro_del_trabajo": [
+      "Automatización: 30–50% de empleos podrían automatizarse en 20 años.",
+      "Habilidades del futuro: pensamiento crítico, creatividad, programación, inteligencia emocional.",
+      "Renta básica universal: propuesta para mitigar el desempleo tecnológico."
+    ]
+  },
+  "tecnologia_y_cultura": {
+    "cambios": [
+      "Cultura digital: memes, influencers, streaming.",
+      "Identidad en línea: perfiles múltiples, anonimato, desinhibición online.",
+      "Arte y creatividad: IA genera música, pinturas, literatura.",
+      "Memoria colectiva: todo queda registrado (fotos, mensajes, búsquedas)."
+    ],
+    "tecnologia_y_cuerpo": [
+      "Transhumanismo: implantes, exoesqueletos, mejora de capacidades.",
+      "Posthumanismo: ¿qué significa ser humano cuando podemos editar genes o conectar el cerebro a la nube?"
+    ]
+  },
+  "etica_y_filosofia": {
+    "preguntas": [
+      "¿Quién controla la tecnología?",
+      "¿Debe haber límites a la IA o la edición genética?",
+      "¿La tecnología nos hace más libres o más controlados?",
+      "¿Puede una máquina tener derechos?",
+      "¿Qué es el progreso tecnológico? ¿Siempre es bueno?"
+    ],
+    "principios": [
+      "Beneficencia: La tecnología debe mejorar la vida.",
+      "No maleficencia: Evitar daño.",
+      "Autonomía: Respetar la libertad y el consentimiento.",
+      "Justicia: Acceso equitativo, evitar sesgos.",
+      "Transparencia: Que los algoritmos sean explicables."
+    ],
+    "casos_criticos": [
+      "IA en armas autónomas ('soldados robots').",
+      "Edición genética en embriones (caso He Jiankui, 2018).",
+      "Reconocimiento facial masivo (China, EE.UU.).",
+      "Sesgos algorítmicos: IA que discrimina por raza o género."
+    ]
+  },
+  "desafios_globales": {
+    "cambio_climatico": "Tecnologías clave: energías limpias, captura de CO₂, agricultura de precisión. Satélites monitorean deforestación, temperatura, niveles del mar.",
+    "pandemias": "Secuenciación rápida del genoma (COVID-19). Vacunas de ARN mensajero. Rastreo digital de contactos.",
+    "desigualdad": "La tecnología puede amplificar o reducir brechas. Ejemplo: educación en línea ayuda, pero requiere acceso a internet."
+  },
+  "futuro": [
+    {
+      "tecnologia": "IA general (AGI)",
+      "descripcion": "Máquinas con inteligencia comparable al humano."
+    },
+    {
+      "tecnologia": "Computación cuántica",
+      "descripcion": "Resolver problemas imposibles hoy (medicina, criptografía)."
+    },
+    {
+      "tecnologia": "Realidad aumentada/virtual (AR/VR)",
+      "descripcion": "Metaverso, educación inmersiva, trabajo virtual."
+    },
+    {
+      "tecnologia": "Biotecnología sintética",
+      "descripcion": "Diseñar organismos desde cero."
+    },
+    {
+      "tecnologia": "Neurointerfaces",
+      "descripcion": "Controlar dispositivos con la mente, subir la conciencia a la nube ('mind uploading')."
+    },
+    {
+      "tecnologia": "Robótica avanzada",
+      "descripcion": "Robots sociales, cuidadores, trabajadores autónomos."
+    },
+    {
+      "tecnologia": "Ciudades inteligentes",
+      "descripcion": "Tráfico autónomo, energía eficiente, gestión urbana en tiempo real."
+    }
+  ],
+  "movimientos_criticos": [
+    "Slow tech: Tecnología consciente, minimalista digital.",
+    "Open source: Software libre, conocimiento compartido (Linux, Wikipedia).",
+    "Hacktivismo: Uso de tecnología para activismo (Anonymous).",
+    "Desconexión digital: Días sin pantallas, retiros tecnológicos.",
+    "Tecnología apropiada: Soluciones simples, sostenibles, locales."
+  ],
+  "conclusion": "La tecnología no es ni buena ni mala, ni neutral tampoco. Es un reflejo de la humanidad: nuestras aspiraciones, nuestros miedos, nuestras contradicciones. Es una herramienta de poder, capaz de curar enfermedades incurables, conectar a miles de millones, automatizar tareas aburridas. Pero también de vigilarnos sin consentimiento, destruir empleos, amplificar el odio, alterar nuestra atención y emociones. 'No somos dueños de la tecnología; somos responsables de ella.' El futuro no está escrito. Depende de cómo decidamos desarrollar, regular y usar la tecnología. No se trata de frenar el progreso, sino de orientarlo hacia el bien común, con ética, democracia y sabiduría. Como dijo Marshall McLuhan: 'Primero hacemos las herramientas, luego las herramientas nos hacen a nosotros.' Y ahora, más que nunca, debemos preguntarnos: ¿Qué tipo de humanos queremos ser en un mundo tecnológico?",
+  "frase_final": "No huyas de la tecnología. Domínala. Úsala para evolucionar."
+}
