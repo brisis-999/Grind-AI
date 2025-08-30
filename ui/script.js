@@ -1,12 +1,40 @@
-// ui/script.js
+// script.js
 document.addEventListener("DOMContentLoaded", () => {
-  const logoContainer = document.querySelector(".logo-container");
-  const suggestion = document.querySelector(".suggestion");
-  const chatContainer = document.querySelector(".chat-container");
+  const logoContainer = document.getElementById("logo-container");
+  const suggestion = document.getElementById("suggestion");
+  const chatContainer = document.getElementById("chat-container");
   const userInput = document.getElementById("user-input");
   const sendBtn = document.getElementById("send-btn");
 
-  // Animación de desaparición del logo
+  // Animación del logo SVG (dibujo progresivo)
+  const logoObject = document.getElementById("logo-object");
+  logoObject.addEventListener("load", () => {
+    const svg = logoObject.contentDocument;
+    const circleOuter = svg.querySelector('circle[stroke="#10A37F"]');
+    const circleInner = svg.querySelector('circle[stroke="#0c7a5c"]');
+    const letterG = svg.querySelector('path[fill="white"]');
+
+    const animate = () => {
+      circleOuter.style.strokeDasharray = "502, 502";
+      circleInner.style.strokeDasharray = "377, 377";
+      letterG.style.opacity = "0";
+
+      setTimeout(() => {
+        circleOuter.style.strokeDasharray = "0, 502";
+        circleInner.style.strokeDasharray = "0, 377";
+      }, 100);
+
+      setTimeout(() => {
+        letterG.style.transition = "opacity 0.5s";
+        letterG.style.opacity = "1";
+      }, 800);
+    };
+
+    animate();
+    setInterval(animate, 3000);
+  });
+
+  // Desaparecer logo después de 2 segundos
   setTimeout(() => {
     logoContainer.style.opacity = "0";
     setTimeout(() => {
@@ -51,7 +79,6 @@ document.addEventListener("DOMContentLoaded", () => {
     addMessage(text, "user");
     userInput.value = "";
 
-    // Simular respuesta de GRIND
     setTimeout(() => {
       let respuesta = "";
 
@@ -60,7 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
       } else if (text.toLowerCase().includes("motivación")) {
         respuesta = "No necesitas motivación. Necesitas acción. Tu mejor entrenamiento fue el que no querías hacer.";
       } else if (text.toLowerCase().includes("suicidarme") || text.toLowerCase().includes("morir")) {
-        respuesta = "Escucho tu dolor. No estás solo. Tu vida importa.\n\nPor favor, visita https://findahelpline.com para encontrar ayuda real en tu idioma.";
+        respuesta = "🌟 Escucho tu dolor. No estás solo. Tu vida importa.\n\nPor favor, visita https://findahelpline.com para encontrar ayuda real en tu idioma.";
       } else {
         respuesta = "¿Qué vamos a entrenar hoy? Recuerda: el grind no es sufrimiento. Es elección.";
       }
@@ -73,32 +100,11 @@ document.addEventListener("DOMContentLoaded", () => {
   userInput.addEventListener("keypress", (e) => {
     if (e.key === "Enter") sendMessage();
   });
-}); // Animación del logo SVG
-document.addEventListener("DOMContentLoaded", () => {
-  const logo = document.getElementById("grind-logo");
-  const circleOuter = logo.querySelector('circle[stroke="#10A37F"]');
-  const circleInner = logo.querySelector('circle[stroke="#0c7a5c"]');
 
-  // Animación de pulso en los anillos
-  const animateCircles = () => {
-    circleOuter.style.transition = "all 1.5s ease-in-out";
-    circleInner.style.transition = "all 1.8s ease-in-out";
-
-    circleOuter.style.strokeDasharray = "502, 502"; // Circunferencia = 2πr
-    circleInner.style.strokeDasharray = "377, 377";
-
-    setTimeout(() => {
-      circleOuter.style.strokeDasharray = "0, 502";
-      circleInner.style.strokeDasharray = "0, 377";
-    }, 100);
-
-    setTimeout(() => {
-      circleOuter.style.strokeDasharray = "502, 502";
-      circleInner.style.strokeDasharray = "377, 377";
-    }, 1600);
-  };
-
-  // Repetir animación
-  animateCircles();
-  setInterval(animateCircles, 3000);
+  // Nueva conversación
+  document.querySelector(".new-chat").addEventListener("click", () => {
+    chatContainer.innerHTML = "";
+    suggestion.style.display = "block";
+    suggestion.style.opacity = "1";
+  });
 });
