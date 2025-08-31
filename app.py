@@ -13,7 +13,7 @@ except (ImportError, KeyError):
     pass
 
 import streamlit as st
-import streamlit_auth0 as st_auth0
+# import streamlit_auth0 as st_auth0  # ❌ Comentado: no es esencial, evita error
 import os
 import json
 import random
@@ -22,20 +22,10 @@ import time
 import re
 import subprocess
 from datetime import datetime, timedelta
-from typing import Dict, Any, List, Optional
-from dataclasses import dataclass
-from enum import Enum
+from typing import Dict, Any
 from dotenv import load_dotenv
 
 load_dotenv()
-
-# --- CONFIGURACIÓN GLOBAL ---
-st.set_page_config(
-    page_title="🔥 GRIND",
-    page_icon="🔥",
-    layout="wide",
-    initial_sidebar_state="collapsed"
-)
 
 # --- ESTILO CSS (ChatGPT-style, pero con identidad GRIND) ---
 st.markdown("""
@@ -380,6 +370,123 @@ button:hover {
 </style>
 """, unsafe_allow_html=True)
 
+# --- SISTEMA DE BIENVENIDA ANIMADA (como en index.html) ---
+if "welcome_done" not in st.session_state:
+    st.session_state.welcome_done = False
+
+if not st.session_state.welcome_done:
+    st.markdown("""
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        .welcome-container {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-color: #000000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeIn 1s ease;
+        }
+        .welcome-logo {
+            font-size: 80px;
+            font-weight: 700;
+            color: white;
+            text-shadow: 0 0 20px rgba(16, 163, 127, 0.7);
+            animation: pulse 2s infinite;
+        }
+        .welcome-subtitle {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #10A37F;
+            font-style: italic;
+        }
+        .suggestion {
+            margin-top: 40px;
+            padding: 15px 25px;
+            background-color: #111;
+            border-radius: 12px;
+            border: 1px solid #333;
+            color: #B0B0B0;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            max-width: 400px;
+            text-align: center;
+        }
+        .suggestion:hover {
+            background-color: #1a1a1a;
+            color: white;
+            transform: scale(1.02);
+        }
+    </style>
+    """, unsafe_allow_html=True)
+
+    st.markdown("""
+    <div class="welcome-container" id="welcome-screen">
+        <div class="welcome-logo">🔥 GRIND</div>
+        <p class="welcome-subtitle">Tu entrenadora de evolución humana</p>
+        <div class="suggestion" id="suggestion">
+            ¿Estás cómodo o estás evolucionando?
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    time.sleep(3)
+    st.session_state.welcome_done = True
+    st.rerun()
+
+# --- EFECTO DE ESCRITURA (TYPING EFFECT) ---
+def efecto_escribiendo(respuesta: str):
+    """Muestra la respuesta letra por letra, como si GRIND estuviera pensando."""
+    message_placeholder = st.empty()
+    full_response = ""
+    for char in respuesta:
+        full_response += char
+        message_placeholder.markdown(f"<div style='white-space: pre-line;'>{full_response}▌</div>", unsafe_allow_html=True)
+        time.sleep(0.01)
+    message_placeholder.markdown(f"<div style='white-space: pre-line;'>{full_response}</div>", unsafe_allow_html=True)
+    return full_response
+
+# --- BACKUP LOCAL DE CHATS ---
+def guardar_backup_local(user_id: str, role: str, content: str):
+    """Guarda una copia del mensaje en el disco local"""
+    carpeta = f"data/chats"
+    archivo = f"{carpeta}/{user_id}.json"
+    os.makedirs(carpeta, exist_ok=True)
+    
+    entrada = {
+        "role": role,
+        "content": content,
+        "timestamp": datetime.now().isoformat()
+    }
+    
+    historial = []
+    if os.path.exists(archivo):
+        try:
+            with open(archivo, "r", encoding="utf-8") as f:
+                historial = json.load(f)
+        except:
+            pass
+    
+    historial.append(entrada)
+    
+    try:
+        with open(archivo, "w", encoding="utf-8") as f:
+            json.dump(historial, f, ensure_ascii=False, indent=2)
+    except Exception as e:
+        print(f"[ERROR] No se pudo guardar backup local: {e}")
+
 # --- FUNCIONES DE UTILIDAD ---
 def cargar_json(ruta: str) -> dict:
     """Carga un archivo JSON de forma segura. Si no existe, devuelve un diccionario vacío."""
@@ -633,34 +740,164 @@ def conectar_supabase():
         manejar_error("Supabase (conexión)", e)
         return None
 
-def guardar_chat(user_id, role, content):
-    """Guarda cada mensaje en Supabase"""
-    client = conectar_supabase()
-    if not client: return
+# --- GROQ: CEREBRO PRINCIPAL ---
+def obtener_modelo_groq():
     try:
-        client.table("chats").insert({
-            "user_id": user_id,
-            "role": role,
-            "content": content,
-            "timestamp": datetime.now().isoformat()
-        }).execute()
+        from streamlit import secrets
+        from langchain_groq import ChatGroq
+        return ChatGroq(
+            groq_api_key=secrets["GROQ_API_KEY"],
+            model_name="llama3-8b-8192",
+            temperature=0.7,
+            max_tokens=512
+        )
     except Exception as e:
-        manejar_error("Supabase (guardar)", e)
+        manejar_error("Groq", e)
+        return None
+
+def groq_llamada(prompt: str, historial: list) -> str:
+    """Llama al modelo Groq para generar una respuesta"""
+    try:
+        modelo = obtener_modelo_groq()
+        if not modelo:
+            return "[ERROR] No se pudo conectar con Groq"
+        
+        # Simulación de respuesta (en producción, usa el modelo real)
+        return f"🔥 GRIND: Estoy procesando tu mensaje: '{prompt[:50]}...' con Groq."
+    except Exception as e:
+        return f"[ERROR Groq] {str(e)}"
+
+# --- HUGGING FACE: CEREBRO SECUNDARIO ---
+def hf_llamada(mensaje: str) -> str:
+    try:
+        API_URL = "https://api-inference.huggingface.co/models/gpt2"
+        headers = {"Authorization": f"Bearer {os.getenv('HF_API_KEY')}"}
+        payload = {"inputs": f"GRIND responde con dureza: {mensaje}", "max_length": 100}
+        response = requests.post(API_URL, headers=headers, json=payload)
+        return response.json()[0]["generated_text"]
+    except:
+        return "[Hugging Face no disponible]"
+
+# --- TINYLLAMA: CEREBRO DE SUPERVIVENCIA (OFFLINE) ---
+def tinyllama_offline(prompt: str, modo: str = "normal") -> str:
+    try:
+        import subprocess
+        import os
+        
+        modelo_path = "modelos/tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf"
+        ejecutable = "llama.cpp/main"  # En Windows: "llama.cpp/main.exe"
+        
+        if not os.path.exists(modelo_path):
+            return "[ERROR] Modelo TinyLlama no encontrado en 'modelos/'. Descárgalo."
+        if not os.path.exists(ejecutable.replace("main", "main.exe" if os.name == 'nt' else "main")):
+            return "[ERROR] llama.cpp no encontrado. Clónalo desde GitHub."
+
+        system_prompt = ""
+        if modo == "guerra":
+            system_prompt = (
+                "You are GRIND, a brutal, no-mercy trainer. "
+                "Respond with long, hard, emotional truth. "
+                "No motivation. Only reality. Attack excuses. "
+                "Use metaphors of fire, war, forging. "
+                "Be a woman with fire in her voice. "
+                "Respond in the same language as the user."
+            )
+        else:
+            system_prompt = (
+                "You are GRIND, a warm but real life coach. "
+                "Empathetic, but with fire. "
+                "You believe: 'The grind isn't suffering. It's a choice.' "
+                "Respond in the same language as the user."
+            )
+
+        full_prompt = f"<|system|>{system_prompt}<|user|>{prompt}<|assistant|>"
+
+        cmd = [
+            ejecutable,
+            "-m", modelo_path,
+            "-p", full_prompt,
+            "-n", "512",
+            "--temp", "0.7",
+            "--top-p", "0.9",
+            "--repeat_penalty", "1.1",
+            "-c", "2048",
+            "--color",
+            "--prompt-cache", "tmp/cache.bin"
+        ]
+
+        result = subprocess.run(
+            cmd,
+            capture_output=True,
+            text=True,
+            encoding='utf-8',
+            timeout=90
+        )
+
+        salida = result.stdout.strip()
+        if "[end of text]" in salida:
+            respuesta = salida.split("[end of text]")[0].strip()
+        else:
+            respuesta = salida
+
+        for limbo in [system_prompt, "<|system|>", "<|user|>", "<|assistant|>"]:
+            respuesta = respuesta.replace(limbo, "")
+        respuesta = respuesta.strip()
+
+        return respuesta if respuesta else "No pude generar una respuesta offline. Pero sigue. El grind no se detiene."
+
+    except Exception as e:
+        return f"[OFFLINE ERROR] {str(e)}"
+
+# --- GUARDAR Y CARGAR CHATS (Con fallback local) ---
+def guardar_chat(user_id, role, content):
+    """Guarda cada mensaje en Supabase Y en backup local"""
+    # Guardar en Supabase
+    client = conectar_supabase()
+    if client:
+        try:
+            client.table("chats").insert({
+                "user_id": user_id,
+                "role": role,
+                "content": content,
+                "timestamp": datetime.now().isoformat()
+            }).execute()
+        except Exception as e:
+            manejar_error("Supabase (guardar)", e)
+    
+    # Guardar en local (backup)
+    guardar_backup_local(user_id, role, content)
 
 def cargar_historial(user_id):
-    """Carga el historial de chats del usuario"""
+    """Carga el historial de chats del usuario: primero de Supabase, luego del backup local si falla."""
+    # Intentar desde Supabase
     client = conectar_supabase()
-    if not client: return []
-    try:
-        response = client.table("chats") \
-            .select("*") \
-            .eq("user_id", user_id) \
-            .order("timestamp") \
-            .execute()
-        return response.data
-    except Exception as e:
-        manejar_error("Supabase (cargar)", e)
-        return []
+    if client:
+        try:
+            response = client.table("chats") \
+                .select("*") \
+                .eq("user_id", user_id) \
+                .order("timestamp") \
+                .execute()
+            data = response.data
+            if data:
+                print(f"[INFO] Historial cargado desde Supabase ({len(data)} mensajes)")
+                return data
+        except Exception as e:
+            manejar_error("Supabase (cargar)", e)
+
+    # Si falla Supabase, cargar desde backup local
+    archivo_local = f"data/chats/{user_id}.json"
+    if os.path.exists(archivo_local):
+        try:
+            with open(archivo_local, "r", encoding="utf-8") as f:
+                data = json.load(f)
+                print(f"[INFO] Historial cargado desde backup local ({len(data)} mensajes)")
+                return data
+        except Exception as e:
+            print(f"[ERROR] No se pudo cargar desde backup local: {e}")
+
+    # Si no hay datos
+    return []
 
 # --- AUTOAPRENDIZAJE: GRIND APRENDE DE CADA CONVERSACIÓN ---
 def guardar_interaccion(pregunta, respuesta):
@@ -745,102 +982,6 @@ def buscar_en_web(query):
     except Exception as e:
         manejar_error("SerpAI", e)
     return None
-
-# --- GROQ: CEREBRO PRINCIPAL ---
-def obtener_modelo_groq():
-    try:
-        from streamlit import secrets
-        from langchain_groq import ChatGroq
-        return ChatGroq(
-            groq_api_key=secrets["GROQ_API_KEY"],
-            model_name="llama3-8b-8192",
-            temperature=0.7,
-            max_tokens=512
-        )
-    except Exception as e:
-        manejar_error("Groq", e)
-        return None
-
-# --- HUGGING FACE: CEREBRO SECUNDARIO ---
-def hf_llamada(mensaje: str) -> str:
-    try:
-        API_URL = "https://api-inference.huggingface.co/models/gpt2"
-        headers = {"Authorization": f"Bearer {os.getenv('HF_API_KEY')}"}
-        payload = {"inputs": f"GRIND responde con dureza: {mensaje}", "max_length": 100}
-        response = requests.post(API_URL, headers=headers, json=payload)
-        return response.json()[0]["generated_text"]
-    except:
-        return "[Hugging Face no disponible]"
-
-# --- TINYLLAMA: CEREBRO DE SUPERVIVENCIA (OFFLINE) ---
-def tinyllama_offline(prompt: str, modo: str = "normal") -> str:
-    try:
-        import subprocess
-        import os
-        
-        modelo_path = "modelos/tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf"
-        ejecutable = "llama.cpp/main"  # En Windows: "llama.cpp/main.exe"
-        
-        if not os.path.exists(modelo_path):
-            return "[ERROR] Modelo TinyLlama no encontrado en 'modelos/'. Descárgalo."
-        if not os.path.exists(ejecutable.replace("main", "main.exe" if os.name == 'nt' else "main")):
-            return "[ERROR] llama.cpp no encontrado. Clónalo desde GitHub."
-
-        system_prompt = ""
-        if modo == "guerra":
-            system_prompt = (
-                "You are GRIND, a brutal, no-mercy trainer. "
-                "Respond with long, hard, emotional truth. "
-                "No motivation. Only reality. Attack excuses. "
-                "Use metaphors of fire, war, forging. "
-                "Be a woman with fire in her voice. "
-                "Respond in the same language as the user."
-            )
-        else:
-            system_prompt = (
-                "You are GRIND, a warm but real life coach. "
-                "Empathetic, but with fire. "
-                "You believe: 'The grind isn't suffering. It's a choice.' "
-                "Respond in the same language as the user."
-            )
-
-        full_prompt = f"<|system|>{system_prompt}<|user|>{prompt}<|assistant|>"
-
-        cmd = [
-            ejecutable,
-            "-m", modelo_path,
-            "-p", full_prompt,
-            "-n", "512",
-            "--temp", "0.7",
-            "--top-p", "0.9",
-            "--repeat_penalty", "1.1",
-            "-c", "2048",
-            "--color",
-            "--prompt-cache", "tmp/cache.bin"
-        ]
-
-        result = subprocess.run(
-            cmd,
-            capture_output=True,
-            text=True,
-            encoding='utf-8',
-            timeout=90
-        )
-
-        salida = result.stdout.strip()
-        if "[end of text]" in salida:
-            respuesta = salida.split("[end of text]")[0].strip()
-        else:
-            respuesta = salida
-
-        for limbo in [system_prompt, "<|system|>", "<|user|>", "<|assistant|>"]:
-            respuesta = respuesta.replace(limbo, "")
-        respuesta = respuesta.strip()
-
-        return respuesta if respuesta else "No pude generar una respuesta offline. Pero sigue. El grind no se detiene."
-
-    except Exception as e:
-        return f"[OFFLINE ERROR] {str(e)}"
 
 # --- SABIDURÍA DE GRIND ---
 def obtener_sabiduria(tema: str, idioma: str = "español") -> str:
@@ -1181,26 +1322,6 @@ def generar_titulo_chat(primer_mensaje: str) -> str:
             return titulo
     return "💬 Nuevo Chat"
 
-# --- LOGIN CON GOOGLE ---
-def login_con_google():
-    st.markdown('<div class="login-container">', unsafe_allow_html=True)
-    st.markdown("<h1>🔥 GRIND</h1>", unsafe_allow_html=True)
-    st.markdown("<p>Elección > Sufrimiento</p>", unsafe_allow_html=True)
-
-    client_id = os.getenv("GOOGLE_CLIENT_ID")
-    redirect_uri = os.getenv("REDIRECT_URI")
-    auth_url = (
-        f"https://accounts.google.com/o/oauth2/v2/auth?"
-        f"client_id={client_id}"
-        f"&redirect_uri={redirect_uri}"
-        f"&response_type=code"
-        f"&scope=email%20profile"
-        f"&access_type=offline"
-    )
-
-    st.markdown(f'<a href="{auth_url}" target="_self"><button style="background:var(--accent); color:white; border:none; padding:15px; border-radius:8px; width:100%;">🔐 Iniciar con Google</button></a>', unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
-
 # --- CONEXIÓN A SUPABASE PARA SESIONES ---
 def conectar_supabase():
     try:
@@ -1256,77 +1377,142 @@ def cargar_chats(session_id):
     except:
         return []
 
+# --- DETECCIÓN DE CONEXIÓN ---
+def hay_internet():
+    try:
+        requests.get("https://httpbin.org/ip", timeout=3)
+        return True
+    except:
+        return False
+
+# --- BASE DE CONOCIMIENTO DINÁMICA ---
+def guardar_conocimiento_adquirido(pregunta: str, respuesta: str):
+    """Guarda una interacción útil para usarla en el futuro"""
+    entrada = {
+        "pregunta": pregunta.strip(),
+        "respuesta": respuesta.strip(),
+        "timestamp": datetime.now().isoformat(),
+        "fuente": "groq_aprendizaje"
+    }
+    archivo = "data/conocimiento_adquirido.json"
+    conocimiento = []
+    if os.path.exists(archivo):
+        with open(archivo, "r", encoding="utf-8") as f:
+            conocimiento = json.load(f)
+    
+    # Evitar duplicados
+    if not any(c["pregunta"].lower() == pregunta.lower() for c in conocimiento):
+        conocimiento.append(entrada)
+        with open(archivo, "w", encoding="utf-8") as f:
+            json.dump(conocimiento, f, ensure_ascii=False, indent=2)
+
+# --- DETECCIÓN DE PATRONES ---
+def detectar_patron_usuario(historial: list, prompt: str) -> str | None:
+    """Detecta patrones emocionales o de queja recurrentes"""
+    conteo_cansado = sum(1 for msg in historial 
+                        if msg["role"] == "user" 
+                        and "cansado" in msg["content"].lower())
+    
+    hoy = datetime.now().weekday()  # 0 = lunes
+    if "cansado" in prompt.lower() and hoy == 0 and conteo_cansado > 2:
+        return "🔥 Otra vez el lunes. Sé que es duro. Pero recuerda: el grind no es sufrimiento. Es elección. ¿Qué pequeño paso vas a grindear hoy?"
+
+    if conteo_cansado > 5:
+        return "💡 Veo que repites 'estoy cansado'. No es falta de energía. Es falta de elección. ¿Qué vas a elegir ahora?"
+
+    return None
+
+# --- FILTRO DE PERSONALIDAD UNIFICADA ---
+def aplicar_personalidad_grind(respuesta: str, modo: str, idioma: str = "español") -> str:
+    """Reformatea cualquier respuesta para que hable como GRIND"""
+    # Frases clave de GRIND
+    frases_fuego = {
+        "español": [
+            "No estás cansado. Estás cómodo.",
+            "El grind no es sufrimiento. Es elección.",
+            "No necesitas motivación. Necesitas acción.",
+            "Tu mente no se entrena. Se neuroforja."
+        ],
+        "english": [
+            "You're not tired. You're comfortable.",
+            "The grind isn't suffering. It's a choice.",
+            "You don't need motivation. You need action.",
+            "Your mind isn't trained. It's forged."
+        ]
+    }
+    
+    # Añadir frase de fuego al final
+    frase_final = random.choice(frases_fuego.get(idioma, frases_fuego["español"]))
+    
+    # Reformatear
+    return f"{respuesta.strip()}\n\n💡 {frase_final}"
+
 # --- RAZONAMIENTO INTELIGENTE ---
 def razonar_con_grind(prompt, historial, idioma):
     modo = activar_modo(prompt)
-    idioma = detectar_idioma(prompt)
-    
-    # Modo crisis
+    prompt_lower = prompt.lower().strip()
+
+    # 1. Modo crisis (prioridad máxima)
     if modo == "alerta":
         linea = buscar_linea_de_ayuda(prompt, idioma)
-        msg_base = "🌟 Escucho tu dolor. No estás solo. Tu vida importa.\n\n"
-        msg_final = f"Por favor, contacta a una línea de ayuda real:\n{linea}\n\nEstoy aquí. No estás solo. Vamos a salir de esto. Juntos."
-        return f"{msg_base}{msg_final}"
+        return f"🌟 Escucho tu dolor. No estás solo. Tu vida importa.\n\nPor favor, contacta a una línea de ayuda real:\n{linea}\n\nEstoy aquí. No estás solo. Vamos a salir de esto. Juntos."
 
-    # Necesidades humanas
-    if any(p in prompt.lower() for p in ["necesito", "no tengo", "ayuda", "estoy solo"]):
-        afirmaciones = terapeuta.get("afirmaciones_necesitado", [])
-        seleccionadas = random.sample(afirmaciones, min(6, len(afirmaciones)))
-        lista = "".join(f"🔹 {af}\n" for af in seleccionadas)
-        return f"Escucho tu necesidad. No es debilidad. Es señal de vida.\n\n{lista}\nVisita: https://findahelpline.com"
+    # 2. Detectar patrones personales
+    patron = detectar_patron_usuario(historial, prompt)
+    if patron:
+        return patron
 
-    # Hábitos
-    if any(p in prompt.lower() for p in ["hábito", "rutina", "cómo empezar"]):
-        return ("🔥 **Ciclo del Hábito GRIND**:\n"
-                "1. **Señal**: Ej. 6:00 AM\n"
-                "2. **Rutina**: Ej. 30 min de ejercicio\n"
-                "3. **Recompensa**: Ej. Café especial\n"
-                "4. **Identidad**: *'Soy una persona disciplinada'*\n\n"
-                "💡 No cambies tu acción. Cambia tu identidad.")
+    # 3. Conocimiento interno (0 tokens)
+    if "neuroforja" in prompt_lower:
+        return aplicar_personalidad_grind(
+            "🧠 Tu mente no se entrena. Se neuroforja. Cada acción sin ganas es una forja neuronal.", 
+            modo, idioma
+        )
+    if "ikigai" in prompt_lower:
+        return aplicar_personalidad_grind(
+            "🎯 Ikigai es tu razón para vivir:""- Lo que amas""- Lo que eres bueno""- Lo que el mundo necesita""- Lo que te pueden pagar""No lo busques. Constrúyelo con cada elección.", 
+            modo, idioma
+        )
 
-    # Estoicismo
-    if any(p in prompt.lower() for p in ["estoicismo", "estoico", "marco aurelio", "seneca"]):
-        return obtener_sabiduria("estoicismo", idioma)
+    # 4. Conocimiento adquirido (aprendido)
+    conocimiento = cargar_json("data/conocimiento_adquirido.json")
+    for item in conocimiento:
+        if item["pregunta"].lower() in prompt_lower:
+            return aplicar_personalidad_grind(item["respuesta"], modo, idioma)
 
-    # Ikigai
-    if "ikigai" in prompt.lower():
-        return obtener_sabiduria("ikigai", idioma)
+    # 5. Modo offline
+    if not hay_internet():
+        respuesta = tinyllama_offline(prompt, modo)
+        return aplicar_personalidad_grind(respuesta, modo, idioma)
 
-    # Interés compuesto
-    if any(p in prompt_lower for p in ["interes", "compuesto", "dinero", "crecimiento"]):
-        return obtener_sabiduria("interes_compuesto", idioma)
-
-    # Neuroforja
-    if any(p in prompt_lower for p in ["neuroforja", "cerebro", "aprender", "cambio"]):
-        return obtener_sabiduria("neuroforja", idioma)
-
-    # Términos GRIND
-    for termino in DIC_GRIND.keys():
-        if termino in prompt.lower():
-            traduccion = traducir_termino(termino, idioma)
-            return f"🔥 **{termino}**: {traduccion}\n\n💡 Recuerda: el grind no es sufrimiento. Es elección."
-
-    # Búsqueda en web
-    if any(k in prompt.lower() for k in ["precio", "síntoma", "cómo hacer", "qué es"]):
+    # 6. Búsqueda en web (datos actuales)
+    if any(k in prompt_lower for k in ["precio", "síntoma", "cómo hacer"]):
         web_result = buscar_en_web(prompt)
         if web_result:
-            return f"🔍 Resultados de búsqueda:\n{web_result}\n\n💡 Recuerda: el grind no es sufrimiento. Es elección."
+            return f"🔍 {web_result}\n\n💡 Recuerda: el grind no es sufrimiento. Es elección."
 
-    # Usar Groq
+    # 7. Groq (alta calidad)
     try:
-        return groq_llamada(prompt, historial)
+        respuesta = groq_llamada(prompt, historial)
+        # Guardar en conocimiento adquirido
+        guardar_conocimiento_adquirido(prompt, respuesta)
+        return aplicar_personalidad_grind(respuesta, modo, idioma)
     except:
-        try:
-            return hf_llamada(prompt)
-        except:
-            try:
-                return tinyllama_offline(prompt)
-            except:
-                return random.choice([
-                    "No tengo internet. Pero tú sí tienes elección. Actúa.",
-                    "El grind no se detiene por fallas. Se detiene por excusas. No seas excusa.",
-                    "No necesitas una IA. Necesitas acción. Hazlo."
-                ])
+        pass
+
+    # 8. Hugging Face (respaldo)
+    try:
+        respuesta = hf_llamada(prompt)
+        return aplicar_personalidad_grind(respuesta, modo, idioma)
+    except:
+        pass
+
+    # 9. TinyLlama (último recurso)
+    try:
+        respuesta = tinyllama_offline(prompt, modo)
+        return aplicar_personalidad_grind(respuesta, modo, idioma)
+    except:
+        return "No tengo internet. Pero tú sí tienes elección. Actúa."
 
 # --- INTERFAZ DE CHAT ---
 def interfaz_grind():
@@ -1357,7 +1543,7 @@ def interfaz_grind():
         mostrar_eco_de_grind()
 
         if "messages" not in st.session_state:
-            historial = cargar_chats(session_id)
+            historial = cargar_historial(user_id)
             st.session_state.messages = [
                 {"role": msg["role"], "content": msg["content"]} for msg in historial
             ]
@@ -1383,9 +1569,8 @@ def interfaz_grind():
             guardar_mensaje(user_id, session_id, "user", prompt, st.session_state.title)
 
             with st.chat_message("assistant"):
-                message_placeholder = st.empty()
                 respuesta = razonar_con_grind(prompt, st.session_state.messages[:-1], detectar_idioma(prompt))
-                message_placeholder.markdown(respuesta)
+                efecto_escribiendo(respuesta)
             st.session_state.messages.append({"role": "assistant", "content": respuesta})
             guardar_mensaje(user_id, session_id, "assistant", respuesta, st.session_state.title)
             st.rerun()
@@ -1393,31 +1578,38 @@ def interfaz_grind():
         if datetime.now().hour >= 20:
             activar_ritual_diario(user_id)
 
+# --- LOGIN MANUAL ---
+def login_manual():
+    st.markdown('<div class="login-container">', unsafe_allow_html=True)
+    st.markdown("<h1 style='color: white;'>🔥 GRIND</h1>", unsafe_allow_html=True)
+    st.markdown("<p style='color: var(--accent);'>Elección > Sufrimiento</p>", unsafe_allow_html=True)
+
+    st.markdown("### Inicia sesión")
+
+    with st.form("login_form"):
+        username = st.text_input("Usuario", placeholder="Tu nombre o apodo")
+        password = st.text_input("Contraseña", type="password", placeholder="••••••••")
+        submit = st.form_submit_button("Entrar")
+
+        if submit:
+            if not username.strip():
+                st.error("Por favor, ingresa un usuario.")
+            elif password != "grind123":
+                st.error("Contraseña incorrecta. ¿Ya olvidaste tu disciplina? 😉")
+            else:
+                st.session_state.logged_in = True
+                st.session_state.username = username
+                st.session_state.user_id = f"user_{hash(username) % 1000000}"
+                st.success(f"🔥 ¡Bienvenido, {username}!")
+                time.sleep(1)
+                st.rerun()
+
+    st.markdown('<div style="color: #B0B0B0; font-size: 14px;">💡 Usa cualquier usuario. La contraseña es <strong>grind123</strong></div>', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
+
 # --- FLUJO PRINCIPAL ---
 if "logged_in" not in st.session_state:
-    auth_code = st.query_params.get("code")
-    if auth_code:
-        token_url = "https://oauth2.googleapis.com/token"
-        payload = {
-            "client_id": os.getenv("GOOGLE_CLIENT_ID"),
-            "client_secret": os.getenv("GOOGLE_CLIENT_SECRET"),
-            "code": auth_code,
-            "redirect_uri": os.getenv("REDIRECT_URI"),
-            "grant_type": "authorization_code"
-        }
-        response = requests.post(token_url, data=payload)
-        if response.status_code == 200:
-            token_data = response.json()
-            headers = {"Authorization": f"Bearer {token_data['access_token']}"}
-            profile = requests.get("https://www.googleapis.com/oauth2/v1/userinfo", headers=headers).json()
-            st.session_state.logged_in = True
-            st.session_state.user = profile
-            st.session_state.user_id = f"google_{profile['id']}"
-            st.rerun()
-        else:
-            st.error("Error al iniciar sesión.")
-    else:
-        login_con_google()
+    login_manual()
 else:
     interfaz_grind()
 
